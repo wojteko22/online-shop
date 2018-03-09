@@ -1,5 +1,7 @@
 package com.example.webshop
 
+import com.example.webshop.entity.Shop
+import com.example.webshop.repository.ShopRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

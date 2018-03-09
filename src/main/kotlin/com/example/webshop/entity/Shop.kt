@@ -1,4 +1,4 @@
-package com.example.webshop
+package com.example.webshop.entity
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
