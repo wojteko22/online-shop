@@ -16,7 +16,7 @@ class Application {
     @Bean
     fun init(repository: ShopRepository) = CommandLineRunner {
         repository.save(Shop("Żabcia", "Wrocław", "Grunwaldzka", "50-387"))
-        repository.save(Shop("Biedroneczka", "Wrocław", "Piękna", "50-388"))
+        repository.save(Shop("Biedroneczka", "Wrocław", "Piękna", "51-388"))
     }
 
     @Bean
