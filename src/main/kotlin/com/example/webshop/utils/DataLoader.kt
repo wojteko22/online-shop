@@ -1,4 +1,4 @@
-package com.example.webshop.utils
+package com.example.webshop.utils // todo: tej klasy bym nie nazwał utilem, sklepy też można by podobnie zrobić
 
 import com.example.webshop.entity.Category
 import com.example.webshop.repository.CategoryRepository
