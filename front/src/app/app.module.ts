@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { ShopsComponent } from './shops/shops.component';
 import { AppRoutingModule } from './app-rounting.module';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ShopsComponent
+    ShopsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
