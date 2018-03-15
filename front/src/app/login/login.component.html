@@ -1,10 +1,10 @@
-<form class="example-form">
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Login">
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Login" formControlName="login">
   </mat-form-field>
 
-  <mat-form-field class="example-full-width">
-    <input type="password" autocomplete matInput placeholder="Hasło">
+  <mat-form-field class="full-width">
+    <input type="password" autocomplete matInput placeholder="Hasło" formControlName="password">
   </mat-form-field>
 
   <button mat-raised-button color="primary">Zaloguj się</button>
