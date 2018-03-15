@@ -1,60 +1,35 @@
 package com.example.webshop.rest
 
 import com.example.webshop.entity.Category
-import com.example.webshop.repository.CategoryRepository
-import org.springframework.web.bind.annotation.*
+import com.example.webshop.service.CategoryService
 import org.apache.logging.log4j.LogManager
-import javax.servlet.http.HttpServletRequest
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 @RestController
-class CategoryController(private val categoryRepository: CategoryRepository) {
+class CategoryController(private val categoryService: CategoryService) {
     companion object {
         private val logger = LogManager.getLogger()
     }
 
-    @GetMapping("/categories") // todo: /categories bym wypieprzył na górę, analogicznie jest w ShopRepository
+    @GetMapping("/categories")
     fun showCategories(): Iterable<Category> {
-        return categoryRepository.findByParentCategoryIsNull()!!
+        return categoryService.findAll()
     }
 
-    @PutMapping("/categories") // todo: Post raczej, put jest, żeby coś wstawić pod wskazany adres
-    fun addCategory(@RequestBody category: Category, request: HttpServletRequest) {
-        // todo: Czemu nie RequestParam?
-        val parentCategoryId = request.getParameter("parentCategoryId")
-        // todo: Nie lepiej w ogóle byłoby wypieprzyć całej tej logiki do nowej warstwy serwisów?
-        if (!parentCategoryId.isEmpty()) {
-            val parentCategory: Category = categoryRepository.getOne(parentCategoryId.toLong())
-            category.parentCategory = parentCategory
-        }
-        categoryRepository.save(category)
+    @PostMapping("/categories")
+    fun addCategory(@RequestBody category: Category, @RequestParam parentCategoryId: String) {
+        return categoryService.save(category, parentCategoryId)
     }
 
-    @DeleteMapping("/categories") // todo: W ścieżce dać {id} + w metodzie @PathVariable
-    fun deleteCategory(request: HttpServletRequest) {
-        val category: Category = categoryRepository.findById(request.getParameter("categoryId").toLong()).get()
-        if (category.subcategories == null || category.subcategories!!.isEmpty()) {
-            categoryRepository.delete(category)
-        } else {
-            // todo: Tu trzeba rzucić jakieś 409 czy coś
-            logger.error("Someone is trying to delete category with subcategories")
-        }
+    @DeleteMapping("/categories/{id}")
+    fun deleteCategory(@PathVariable id: Long): ResponseEntity<Any> {
+        return categoryService.deleteById(id)
     }
 
-    @PatchMapping("/categories") // todo: @PathVariable, @RequestParams
-    fun updateCategory(request: HttpServletRequest) {
-        val category: Category = categoryRepository.findById(request.getParameter("categoryId").toLong()).get()
-        val parentCategoryId = request.getParameter("parentCategoryId")
-        val newName = request.getParameter("categoryNewName")
-        var parent: Category? = null
-        if (!parentCategoryId.isEmpty()) {
-            parent = categoryRepository.findById(parentCategoryId.toLong()).get()
-        }
-        if (category.parentCategory == parent) {
-            logger.error("Cannot insert category in parent place")
-        } else {
-            category.name = newName
-            category.parentCategory = parent
-            categoryRepository.save(category)
-        }
+    @PatchMapping("/categories/{id}")
+    fun updateCategory(@PathVariable id: Long, @RequestParam(required = false) parentCategoryId: String, @RequestParam categoryNewName: String): ResponseEntity<Any> {
+        return categoryService.update(id, parentCategoryId, categoryNewName)
     }
+
 }
