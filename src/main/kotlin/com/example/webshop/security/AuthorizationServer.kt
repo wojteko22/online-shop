@@ -18,6 +18,11 @@ import org.springframework.security.authentication.AuthenticationManager
 @Configuration
 class AuthorizationServer : AuthorizationServerConfigurerAdapter() {
 
+    @Autowired
+    lateinit var authenticationManager: AuthenticationManager // todo: Tego nie można dać w konstruktorze?
+
+    private val expiration: Int = 3600
+
     @Bean
     fun userDetailsService(): UserDetailsService = CustomUserDetailsService()
 
@@ -32,18 +37,12 @@ class AuthorizationServer : AuthorizationServerConfigurerAdapter() {
         return authProvider
     }
 
-    @Autowired
-    lateinit var authenticationManager: AuthenticationManager
-
-    private val expiration: Int = 3600
-
     override fun configure(clients: ClientDetailsServiceConfigurer) {
         clients.inMemory()
                 .withClient("angularApp").secret("BardzoSilneHaslo2018").accessTokenValiditySeconds(expiration)
                 .scopes("read", "write", "trust")
                 .authorizedGrantTypes("refresh_token", "password")
                 .resourceIds("web-shop")
-
     }
 
     override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
