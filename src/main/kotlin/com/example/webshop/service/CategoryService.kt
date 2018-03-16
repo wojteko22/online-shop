@@ -27,18 +27,18 @@ class CategoryService(private val categoryRepository: CategoryRepository) {
 
     fun deleteById(id: Long): ResponseEntity<Any> {
         val category: Category = categoryRepository.findById(id).get()
-        if (category.subcategories.isEmpty()) {
+        return if (category.subcategories.isEmpty()) {
             categoryRepository.delete(category)
-            return ResponseEntity(HttpStatus.OK)
+            ResponseEntity(HttpStatus.OK)
         } else {
             logger.error("Someone is trying to delete category with subcategories")
-            return ResponseEntity(HttpStatus.BAD_REQUEST)
+            ResponseEntity(HttpStatus.BAD_REQUEST)
         }
     }
 
     fun update(id: Long, parentCategoryId: String, categoryNewName: String): ResponseEntity<Any> {
         val category: Category = categoryRepository.findById(id).get()
-        val forbiddenCategories: MutableSet<Category> = getForbiddenParentCategories(category)
+        val forbiddenCategories: Set<Category> = getForbiddenParentCategories(category)
         var newParent: Category? = null
         if (!parentCategoryId.isEmpty()) {
             newParent = categoryRepository.findById(parentCategoryId.toLong()).get()
@@ -54,7 +54,7 @@ class CategoryService(private val categoryRepository: CategoryRepository) {
         return ResponseEntity(HttpStatus.OK)
     }
 
-    private fun getForbiddenParentCategories(category: Category): MutableSet<Category> {
+    private fun getForbiddenParentCategories(category: Category): Set<Category> {
         val forbiddenParentCategories: MutableSet<Category> = mutableSetOf()
         for (c in category.subcategories) {
             forbiddenParentCategories.add(c)

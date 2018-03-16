@@ -19,7 +19,7 @@ class Category(
     var id: Long = 0
 
     @OneToMany(mappedBy = "parentCategory")
-    var subcategories: Set<Category> = mutableSetOf()
+    var subcategories: Set<Category> = mutableSetOf() // todo: setOf() albo MutableSet<Category>, varów generalnie lepiej unikać, jak się da
 
     override fun equals(o: Any?): Boolean {
         if (this === o) return true
