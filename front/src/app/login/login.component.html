@@ -1,11 +1,11 @@
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-form-field class="full-width">
-    <input matInput placeholder="Login" formControlName="login">
+    <input matInput placeholder="Login" formControlName="login" required>
     <mat-error *ngIf="form.get('login').hasError('required')">Pole wymagane</mat-error>
   </mat-form-field>
 
   <mat-form-field class="full-width">
-    <input type="password" autocomplete matInput placeholder="Hasło" formControlName="password">
+    <input type="password" autocomplete matInput placeholder="Hasło" formControlName="password" required>
     <mat-error *ngIf="form.get('password').hasError('required')">Pole wymagane</mat-error>
   </mat-form-field>
 
