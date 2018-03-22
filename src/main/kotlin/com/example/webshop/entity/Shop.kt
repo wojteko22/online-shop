@@ -1,9 +1,6 @@
 package com.example.webshop.entity
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "shops")
@@ -12,6 +9,8 @@ data class Shop(
     val city: String,
     val street: String,
     val postCode: String,
+    @OneToOne
+    val user: User,
     @Id @GeneratedValue
     val id: Long = -1
 )
