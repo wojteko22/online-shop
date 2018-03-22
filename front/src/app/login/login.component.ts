@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginService } from './login.service';
+import { Credentials } from './credentials';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [LoginService]
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private service: LoginService) {
     this.createForm();
   }
 
@@ -18,13 +21,13 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     this.form = this.fb.group({
-      login: ['', Validators.required],
+      email: ['', Validators.email],
       password: ['', Validators.required]
     });
   }
 
   onSubmit() {
-    const value = this.form.value;
-    console.log(value);
+    const credentials = this.form.value as Credentials;
+    this.service.login(credentials).subscribe(result => console.log(result));
   }
 }

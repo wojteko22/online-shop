@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Shop } from './Shop';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ShopsService {
+  shopsUrl = environment.apiUrl + '/shops';
 
-  shopsUrl = 'http://localhost:8080/shops'; // todo: Wyciągnąć do environment
-
-  constructor(
-    private http: HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
   getShops(): Observable<Shop[]> {
