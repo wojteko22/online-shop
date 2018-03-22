@@ -58,7 +58,7 @@ class SignUpService(private val userRepository: UserRepository,
         if (!createUserDto.password.equals(createUserDto.passwordConfirmation))
             return false
 
-        if (userRepository.findByEmail(createUserDto.email) == null) {
+        if (userRepository.findByEmail(createUserDto.email) != null) {
             return false
         }
 
