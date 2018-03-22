@@ -27,12 +27,12 @@ class SignUpService(private val userRepository: UserRepository,
         }
     }
 
-    fun addShop(owner: CreateUserDto, shop: CreateShopDto) {
+    fun addShop(owner: CreateUserDto, shopDto: CreateShopDto) {
         if (isValidCreateUserDto(owner)) {
 
             var role: UserRole = userRoleRepository.findByRole("SHOP_OWNER")
             var user: User = getUserFromDTOAndRole(owner, role);
-            var shop = Shop(shop.name, shop.city, shop.street, shop.postCode, user);
+            var shop = Shop(shopDto.name, shopDto.city, shopDto.street, shopDto.postCode, user);
 
             userRepository.save(user);
             shopRepository.save(shop);
