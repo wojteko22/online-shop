@@ -47,12 +47,12 @@ class AuthorizationServer() : AuthorizationServerConfigurerAdapter() {
                 .withClient("angularApp").secret("BardzoSilneHaslo2018").accessTokenValiditySeconds(expiration)
                 .scopes("read", "write", "trust")
                 .authorizedGrantTypes("refresh_token", "password")
-                .resourceIds("web-shop")
     }
 
     override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
         endpoints.userDetailsService(userDetailsService())
         endpoints.authenticationManager(authenticationManager)
     }
+
 
 }
