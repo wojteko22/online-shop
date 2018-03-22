@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { matchOtherValidator } from './match-other.directive';
 
 @Component({
   selector: 'app-register-owner',
@@ -21,7 +22,7 @@ export class RegisterOwnerComponent implements OnInit {
       name: ['', [Validators.required]],
       email: ['', [Validators.email]],
       password: ['', [Validators.required]],
-      passwordConfirmation: ['', [Validators.required]],
+      passwordConfirmation: ['', [matchOtherValidator('password')]],
     });
   }
 

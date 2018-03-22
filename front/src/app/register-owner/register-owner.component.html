@@ -17,7 +17,7 @@
   <mat-form-field class="full-width">
     <input type="password" autocomplete="new-password" matInput placeholder="Powtórz hasło"
            formControlName="passwordConfirmation" required>
-    <mat-error *ngIf="form.get('passwordConfirmation').hasError('required')">Pole wymagane</mat-error>
+    <mat-error *ngIf="form.get('passwordConfirmation').hasError('matchOther')">Hasła niezgodne</mat-error>
   </mat-form-field>
 
   <button mat-raised-button color="primary" [disabled]="!form.valid">Zaloguj się</button>
