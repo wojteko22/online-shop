@@ -20,42 +20,41 @@ class SignUpService(private val userRepository: UserRepository,
     fun addCustomer(customer: CreateUserDto) {
         if (isValidCreateUserDto(customer)) {
 
-            var role: UserRole = userRoleRepository.findByRole("CUSTOMER")
-            var user = getUserFromDTOAndRole(customer, role);
+            val role: UserRole = userRoleRepository.findByRole("CUSTOMER")
+            val user = getUserFromDTOAndRole(customer, role)
 
-            userRepository.save(user);
+            userRepository.save(user)
         }
     }
 
     fun addShop(owner: CreateUserDto, shopDto: CreateShopDto) {
         if (isValidCreateUserDto(owner)) {
 
-            var role: UserRole = userRoleRepository.findByRole("SHOP_OWNER")
-            var user: User = getUserFromDTOAndRole(owner, role);
-            var shop = Shop(shopDto.name, shopDto.city, shopDto.street, shopDto.postCode, user);
+            val role: UserRole = userRoleRepository.findByRole("SHOP_OWNER")
+            val user: User = getUserFromDTOAndRole(owner, role)
+            val shop = Shop(shopDto.name, shopDto.city, shopDto.street, shopDto.postCode, user)
 
-            userRepository.save(user);
-            shopRepository.save(shop);
+            userRepository.save(user)
+            shopRepository.save(shop)
+
         }
     }
 
     fun addVendorToShop(shopId: Long, vendorDTO: CreateUserDto) {
         if (isValidVendorDTO(shopId, vendorDTO)) {
 
-            var role: UserRole = userRoleRepository.findByRole("VENDOR")
-            var user = getUserFromDTOAndRole(vendorDTO, role)
-            var shop: Shop = shopRepository.findById(shopId)
-            userRepository.save(user);
+            val role: UserRole = userRoleRepository.findByRole("VENDOR")
+            val user: User = getUserFromDTOAndRole(vendorDTO, role)
+            val shop: Shop? = shopRepository.findById(shopId)
+            shop?.vendors?.add(user)
 
-            user = userRepository.findByEmail(user.email);
-            shop.vendors.add(user);
-            shopRepository.save(shop);
+            shopRepository.save(shop)
         }
     }
 
     private fun isValidVendorDTO(shopId: Long, vendor: CreateUserDto): Boolean {
 
-        if (shopRepository.findById(shopId) == null)
+        if(shopRepository.findById(shopId)==null)
             return false
 
         if (!isValidCreateUserDto(vendor))
@@ -65,11 +64,13 @@ class SignUpService(private val userRepository: UserRepository,
     }
 
     private fun isValidCreateUserDto(createUserDto: CreateUserDto): Boolean {
+
         if (!createUserDto.password.equals(createUserDto.passwordConfirmation))
             return false
 
-        if (userRepository.findByEmail(createUserDto.email) != null)
+        if(userRepository.findByEmail(createUserDto.email)==null) {
             return false
+        }
 
         return true
     }
