@@ -5,24 +5,23 @@ import com.example.webshop.service.CategoryService
 import org.springframework.web.bind.annotation.*
 
 @RestController
+@RequestMapping("/categories")
 class CategoryController(private val categoryService: CategoryService) {
 
-    @GetMapping("/categories")
-    fun showCategories(): Iterable<Category> {
-        return categoryService.findAll()
-    }
+    @GetMapping
+    fun showCategories() = categoryService.findAll()
 
-    @PostMapping("/categories")
+    @PostMapping
     fun addCategory(@RequestBody category: Category, @RequestParam parentCategoryId: String) {
-        return categoryService.save(category, parentCategoryId)
+        categoryService.save(category, parentCategoryId)
     }
 
-    @DeleteMapping("/categories/{id}")
+    @DeleteMapping("/{id}")
     fun deleteCategory(@PathVariable id: Long) {
         categoryService.deleteById(id)
     }
 
-    @PatchMapping("/categories/{id}")
+    @PatchMapping("/{id}")
     fun updateCategory(
             @PathVariable id: Long,
             @RequestParam(required = false) parentCategoryId: String?,
@@ -30,5 +29,4 @@ class CategoryController(private val categoryService: CategoryService) {
     ) {
         categoryService.update(id, parentCategoryId, categoryNewName)
     }
-
 }

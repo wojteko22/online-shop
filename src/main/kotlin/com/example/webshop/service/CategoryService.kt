@@ -7,17 +7,20 @@ import org.springframework.stereotype.Service
 @Service
 class CategoryService(private val categoryRepository: CategoryRepository) {
 
-    fun findAll(): Iterable<Category> {
-        return categoryRepository.findByParentCategoryIsNull()
+    fun findAll() = categoryRepository.findByParentCategoryIsNull()
+
+    fun save(categoryWithoutParent: Category, parentCategoryId: String) {
+        val categoryToSave = categoryToSave(categoryWithoutParent, parentCategoryId)
+        categoryRepository.save(categoryToSave)
     }
 
-    fun save(category: Category, parentCategoryId: String) {
-        if (!parentCategoryId.isEmpty()) {
-            val parentCategory: Category = categoryRepository.getOne(parentCategoryId.toLong())
-            category.parentCategory = parentCategory
-        }
-        categoryRepository.save(category)
-    }
+    private fun categoryToSave(categoryWithoutParent: Category, parentCategoryId: String) =
+            if (!parentCategoryId.isEmpty()) {
+                val parentCategory: Category = categoryRepository.getOne(parentCategoryId.toLong())
+                categoryWithoutParent.copy(parentCategory = parentCategory)
+            } else {
+                categoryWithoutParent
+            }
 
     fun deleteById(id: Long) {
         val category: Category = categoryRepository.findById(id).get()
@@ -37,9 +40,8 @@ class CategoryService(private val categoryRepository: CategoryRepository) {
                 error("Cannot set parent category to subcategory")
             }
         }
-        category.name = categoryNewName
-        category.parentCategory = newParent
-        categoryRepository.save(category)
+        val updated = category.copy(name = categoryNewName, parentCategory = newParent)
+        categoryRepository.save(updated)
     }
 
     private fun getForbiddenParentCategories(category: Category): Set<Category> {

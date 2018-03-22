@@ -4,5 +4,5 @@ import com.example.webshop.entity.Category
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface CategoryRepository : JpaRepository<Category, Long> {
-    fun findByParentCategoryIsNull(): List<Category>
+    fun findByParentCategoryIsNull(): Iterable<Category>
 }
