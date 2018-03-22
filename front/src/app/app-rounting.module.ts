@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ShopsComponent } from './shops/shops.component';
-import {LoginComponent} from "./login/login.component";
+import { LoginComponent } from './login/login.component';
+import { RegisterOwnerComponent } from './register-owner/register-owner.component';
 
 const appRoutes: Routes = [
   {
@@ -12,7 +13,15 @@ const appRoutes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
-  { path: '',   redirectTo: '/shops', pathMatch: 'full' },
+  {
+    path: 'register',
+    component: RegisterOwnerComponent,
+  },
+  {
+    path: '',
+    redirectTo: '/shops',
+    pathMatch: 'full'
+  },
 ];
 
 @NgModule({
@@ -25,4 +34,5 @@ const appRoutes: Routes = [
     RouterModule
   ],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

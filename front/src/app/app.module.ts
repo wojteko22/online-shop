@@ -10,13 +10,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RegisterOwnerComponent } from './register-owner/register-owner.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ShopsComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterOwnerComponent
   ],
   imports: [
     BrowserModule,
