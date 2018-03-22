@@ -10,6 +10,6 @@ import java.security.Principal
 class UserController(private val userService: UserService) {
 
     @PostMapping("/me")
-    fun me(principal: Principal) : UserDto = userService.getUserByEmail(principal.name).toDto()
+    fun me(principal: Principal) : UserDto = userService.getUserByEmail(principal.name)!!.toDto()
 
 }

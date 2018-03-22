@@ -1,5 +1,6 @@
 package com.example.webshop.entity
 
+import org.hibernate.annotations.Cascade
 import javax.persistence.*
 
 @Entity
@@ -13,8 +14,8 @@ data class Shop(
     @OneToOne
     @JoinColumn(name = "owner_id")
     val user: User,
-    @OneToMany
-    val vendors: MutableSet<User> = HashSet<User>(),
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val vendors: MutableSet<User> = HashSet(),
     @Id @GeneratedValue
     val id: Long = -1
 )
