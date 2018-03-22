@@ -10,6 +10,7 @@ public class ResourceServer extends WebSecurityConfigurerAdapter{
     /*
     TODO Zapezpieczyć endpointy
     /oauth/token musi być publiczny
+
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
