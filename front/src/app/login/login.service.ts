@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Credentials } from './credentials';
 
@@ -12,17 +12,15 @@ export class LoginService {
   }
 
   login(credentials: Credentials): Observable<any> {
-    let params = new HttpParams();
-    params = params.append('grant_type', 'password');
-    params = params.append('username', credentials.email);
-    params = params.append('password', credentials.password);
-
-    const httpOptions = {
-      headers: new HttpHeaders({
+    return this.http.post(this.url, null, {
+      headers: {
         'Authorization': 'Basic ' + btoa('angularApp' + ':' + 'BardzoSilneHaslo2018')
-      }),
-      params: params,
-    };
-    return this.http.post(this.url, null, httpOptions);
+      },
+      params: {
+        'grant_type': 'password',
+        'username': credentials.email,
+        'password': credentials.password
+      },
+    });
   }
 }
