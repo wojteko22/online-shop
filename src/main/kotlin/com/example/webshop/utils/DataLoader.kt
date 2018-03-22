@@ -21,6 +21,23 @@ import org.springframework.security.crypto.password.PasswordEncoder
 class DataLoader {
 
     @Bean
+    fun initUserRoleRep(repository: UserRoleRepository) = CommandLineRunner{
+        repository.save(UserRole("CUSTOMER", "Rola klienta sklepu..."))
+        repository.save(UserRole("VENDOR", "Rola sprzedawcy...."))
+        repository.save(UserRole("SHOP_OWNER", "Własciciel sklepu..."))
+    }
+
+    @Bean
+    fun initUserRep(repository: UserRepository) = CommandLineRunner {
+        val encoder: PasswordEncoder = BCryptPasswordEncoder()
+        val user = User("test@test.pl",
+                encoder.encode("test"),
+                "Jan Nowak",
+                UserRole("CUSTOMER", "Domyślna rola użytkownika...", 1))
+        repository.save(user)
+    }
+
+    @Bean
     fun initCategories(repository: CategoryRepository) = CommandLineRunner {
         val pieczywo = Category("Pieczywo")
         val nabial = Category("Nabial")
@@ -41,25 +58,14 @@ class DataLoader {
 
     @Bean
     fun init(repository: ShopRepository) = CommandLineRunner {
-        repository.save(Shop("Żabcia", "Wrocław", "Grunwaldzka", "50-387"))
-        repository.save(Shop("Biedroneczka", "Wrocław", "Piękna", "51-388"))
-    }
 
-    @Bean
-    fun initUserRoleRep(repository: UserRoleRepository) = CommandLineRunner{
-        repository.save(UserRole("CUSTOMER", "Rola klienta sklepu..."))
-        repository.save(UserRole("VENDOR", "Rola sprzedawcy...."))
-        repository.save(UserRole("SHOP_OWNER", "Własciciel sklepu..."))
-    }
-
-    @Bean
-    fun initUserRep(repository: UserRepository) = CommandLineRunner {
-        val encoder: PasswordEncoder = BCryptPasswordEncoder()
         val user = User("test@test.pl",
-                encoder.encode("test"),
-                "Jan Nowak",
-                UserRole("CUSTOMER", "Domyślna rola użytkownika...", 1))
-        repository.save(user)
+        BCryptPasswordEncoder().encode("test"),
+        "Jan Nowak",
+        UserRole("CUSTOMER", "Domyślna rola użytkownika...", 1), 1);
+
+        repository.save(Shop("Żabcia", "Wrocław", "Grunwaldzka", "50-387", user))
+
     }
 
 }
