@@ -5,11 +5,17 @@ package com.example.webshop.utils
 
 import com.example.webshop.entity.Category
 import com.example.webshop.entity.Shop
+import com.example.webshop.entity.User
+import com.example.webshop.entity.UserRole
 import com.example.webshop.repository.CategoryRepository
 import com.example.webshop.repository.ShopRepository
+import com.example.webshop.repository.UserRepository
+import com.example.webshop.repository.UserRoleRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
 class DataLoader {
@@ -38,4 +44,22 @@ class DataLoader {
         repository.save(Shop("Żabcia", "Wrocław", "Grunwaldzka", "50-387"))
         repository.save(Shop("Biedroneczka", "Wrocław", "Piękna", "51-388"))
     }
+
+    @Bean
+    fun initUserRoleRep(repository: UserRoleRepository) = CommandLineRunner{
+        repository.save(UserRole("CUSTOMER", "Rola klienta sklepu..."))
+        repository.save(UserRole("VENDOR", "Rola sprzedawcy...."))
+        repository.save(UserRole("SHOP_OWNER", "Własciciel sklepu..."))
+    }
+
+    @Bean
+    fun initUserRep(repository: UserRepository) = CommandLineRunner {
+        val encoder: PasswordEncoder = BCryptPasswordEncoder()
+        val user = User("test@test.pl",
+                encoder.encode("test"),
+                "Jan Nowak",
+                UserRole("CUSTOMER", "Domyślna rola użytkownika...", 1))
+        repository.save(user)
+    }
+
 }
