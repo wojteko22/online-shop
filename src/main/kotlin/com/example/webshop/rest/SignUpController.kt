@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.*
 class SignUpController(private val signUp: SignUpService) {
 
     @PostMapping("/user")
-    fun signUp(@RequestBody user: CreateUserDto) = signUp.addCustomer(user);
+    fun signUp(@RequestBody user: CreateUserDto) = signUp.addCustomer(user)
 
     @PostMapping("/user/shop")
     fun signUpAsShop(@RequestBody owner: CreateUserDto,
-                     @RequestBody shop: CreateShopDto) = signUp.addShop(owner, shop);
+                     @RequestBody shop: CreateShopDto) = signUp.addShop(owner, shop)
 
     @PostMapping("/user/vendor")
     fun signUpVendor(@PathVariable shopId: Long,
-                     @RequestBody vendor: CreateUserDto) = signUp.addVendorToShop(shopId, vendor);
+                     @RequestBody vendor: CreateUserDto) = signUp.addVendorToShop(shopId, vendor)
 
 }
