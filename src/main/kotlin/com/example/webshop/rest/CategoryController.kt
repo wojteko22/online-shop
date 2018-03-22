@@ -2,15 +2,11 @@ package com.example.webshop.rest
 
 import com.example.webshop.entity.Category
 import com.example.webshop.service.CategoryService
-import org.apache.logging.log4j.LogManager
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 class CategoryController(private val categoryService: CategoryService) {
-    companion object {
-        private val logger = LogManager.getLogger()
-    }
 
     @GetMapping("/categories")
     fun showCategories(): Iterable<Category> {
@@ -23,8 +19,8 @@ class CategoryController(private val categoryService: CategoryService) {
     }
 
     @DeleteMapping("/categories/{id}")
-    fun deleteCategory(@PathVariable id: Long): ResponseEntity<Any> {
-        return categoryService.deleteById(id)
+    fun deleteCategory(@PathVariable id: Long) {
+        categoryService.deleteById(id)
     }
 
     @PatchMapping("/categories/{id}")

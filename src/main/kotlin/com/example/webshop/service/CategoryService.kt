@@ -25,15 +25,12 @@ class CategoryService(private val categoryRepository: CategoryRepository) {
         categoryRepository.save(category)
     }
 
-    fun deleteById(id: Long): ResponseEntity<Any> {
+    fun deleteById(id: Long) {
         val category: Category = categoryRepository.findById(id).get()
-        return if (category.subcategories.isEmpty()) {
-            categoryRepository.delete(category)
-            ResponseEntity(HttpStatus.OK)
-        } else {
-            logger.error("Someone is trying to delete category with subcategories")
-            ResponseEntity(HttpStatus.BAD_REQUEST)
+        if (category.subcategories.isNotEmpty()) {
+            error("Cannot delete category with subcategories")
         }
+        categoryRepository.delete(category)
     }
 
     fun update(id: Long, parentCategoryId: String, categoryNewName: String): ResponseEntity<Any> {
