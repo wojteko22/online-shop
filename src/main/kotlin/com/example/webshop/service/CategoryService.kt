@@ -33,22 +33,19 @@ class CategoryService(private val categoryRepository: CategoryRepository) {
         categoryRepository.delete(category)
     }
 
-    fun update(id: Long, parentCategoryId: String, categoryNewName: String): ResponseEntity<Any> {
+    fun update(id: Long, parentCategoryId: String, categoryNewName: String) {
         val category: Category = categoryRepository.findById(id).get()
         val forbiddenCategories: Set<Category> = getForbiddenParentCategories(category)
         var newParent: Category? = null
         if (!parentCategoryId.isEmpty()) {
             newParent = categoryRepository.findById(parentCategoryId.toLong()).get()
-
             if (forbiddenCategories.contains(newParent)) {
-                logger.error("Cannot set parent category to subcategory")
-                return ResponseEntity(HttpStatus.BAD_REQUEST)
+                error("Cannot set parent category to subcategory")
             }
         }
         category.name = categoryNewName
         category.parentCategory = newParent
         categoryRepository.save(category)
-        return ResponseEntity(HttpStatus.OK)
     }
 
     private fun getForbiddenParentCategories(category: Category): Set<Category> {
