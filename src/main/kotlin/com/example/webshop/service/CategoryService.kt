@@ -2,16 +2,10 @@ package com.example.webshop.service
 
 import com.example.webshop.entity.Category
 import com.example.webshop.repository.CategoryRepository
-import org.apache.logging.log4j.LogManager
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
 class CategoryService(private val categoryRepository: CategoryRepository) {
-    companion object {
-        private val logger = LogManager.getLogger()
-    }
 
     fun findAll(): Iterable<Category> {
         return categoryRepository.findByParentCategoryIsNull()
@@ -33,12 +27,12 @@ class CategoryService(private val categoryRepository: CategoryRepository) {
         categoryRepository.delete(category)
     }
 
-    fun update(id: Long, parentCategoryId: String, categoryNewName: String) {
+    fun update(id: Long, parentCategoryId: String?, categoryNewName: String) {
         val category: Category = categoryRepository.findById(id).get()
         val forbiddenCategories: Set<Category> = getForbiddenParentCategories(category)
         var newParent: Category? = null
-        if (!parentCategoryId.isEmpty()) {
-            newParent = categoryRepository.findById(parentCategoryId.toLong()).get()
+        if (!parentCategoryId.isNullOrEmpty()) {
+            newParent = categoryRepository.findById(parentCategoryId!!.toLong()).get()
             if (forbiddenCategories.contains(newParent)) {
                 error("Cannot set parent category to subcategory")
             }

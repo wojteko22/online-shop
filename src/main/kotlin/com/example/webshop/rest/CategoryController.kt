@@ -25,7 +25,7 @@ class CategoryController(private val categoryService: CategoryService) {
     @PatchMapping("/categories/{id}")
     fun updateCategory(
             @PathVariable id: Long,
-            @RequestParam(required = false) parentCategoryId: String,
+            @RequestParam(required = false) parentCategoryId: String?,
             @RequestParam categoryNewName: String
     ) {
         categoryService.update(id, parentCategoryId, categoryNewName)
