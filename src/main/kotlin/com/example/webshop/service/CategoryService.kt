@@ -32,25 +32,27 @@ class CategoryService(private val categoryRepository: CategoryRepository) {
 
     fun update(id: Long, parentCategoryId: String?, categoryNewName: String) {
         val category: Category = categoryRepository.findById(id).get()
-        val forbiddenCategories: Set<Category> = getForbiddenParentCategories(category)
-        var newParent: Category? = null
-        if (!parentCategoryId.isNullOrEmpty()) {
-            newParent = categoryRepository.findById(parentCategoryId!!.toLong()).get()
-            if (forbiddenCategories.contains(newParent)) {
-                error("Cannot set parent category to subcategory")
-            }
-        }
-        val updated = category.copy(name = categoryNewName, parentCategory = newParent)
+        val newParentOrNull = newParentOrNull(parentCategoryId, category)
+        val updated = category.copy(name = categoryNewName, parentCategory = newParentOrNull)
         categoryRepository.save(updated)
     }
 
-    private fun getForbiddenParentCategories(category: Category): Set<Category> {
-        val forbiddenParentCategories: MutableSet<Category> = mutableSetOf()
-        for (c in category.subcategories) {
-            forbiddenParentCategories.add(c)
-            forbiddenParentCategories.addAll(getForbiddenParentCategories(c))
+    private fun newParentOrNull(parentCategoryId: String?, category: Category): Category? =
+            if (parentCategoryId.isNullOrEmpty()) {
+                null
+            } else {
+                newParent(parentCategoryId!!, category)
+            }
+
+    private fun newParent(parentCategoryId: String, category: Category): Category {
+        val newParent = categoryRepository.findById(parentCategoryId.toLong()).get()
+        val forbiddenCategories = getForbiddenParentCategories(category)
+        if (forbiddenCategories.contains(newParent)) {
+            error("Cannot set parent category to subcategory")
         }
-        return forbiddenParentCategories
+        return newParent
     }
 
+    private fun getForbiddenParentCategories(category: Category): Set<Category> =
+            category.subcategories + category.subcategories.flatMap { getForbiddenParentCategories(it) }
 }
