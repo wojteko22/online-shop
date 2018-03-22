@@ -41,10 +41,10 @@ class SignUpService(private val userRepository: UserRepository,
     }
 
     fun addVendorToShop(shopId: Long, vendorDTO: CreateUserDto) {
-        if (isValidVendorData(shopId, vendorDTO)) {
+        if (isValidVendorDTO(shopId, vendorDTO)) {
 
             val role: UserRole = userRoleRepository.findByRole("VENDOR")
-            var user: User = getUserFromDTOAndRole(vendorDTO, role)
+            val user: User = getUserFromDTOAndRole(vendorDTO, role)
             val shop: Shop? = shopRepository.findById(shopId)
             shop?.vendors?.add(user)
 
@@ -52,10 +52,10 @@ class SignUpService(private val userRepository: UserRepository,
         }
     }
 
-    private fun isValidVendorData(shopId: Long, vendor: CreateUserDto): Boolean {
+    private fun isValidVendorDTO(shopId: Long, vendor: CreateUserDto): Boolean {
 
-
-        shopRepository.findById(shopId) ?: return false
+        if(shopRepository.findById(shopId)==null)
+            return false
 
         if (!isValidCreateUserDto(vendor))
             return false
@@ -68,7 +68,9 @@ class SignUpService(private val userRepository: UserRepository,
         if (!createUserDto.password.equals(createUserDto.passwordConfirmation))
             return false
 
-        userRepository.findByEmail(createUserDto.email) ?: return true
+        if(userRepository.findByEmail(createUserDto.email)==null) {
+            return false
+        }
 
         return true
     }
