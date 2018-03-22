@@ -1,7 +1,7 @@
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-form-field class="full-width">
-    <input matInput placeholder="Email" formControlName="email" required>
-    <mat-error *ngIf="form.get('email').hasError('required')">Pole wymagane</mat-error>
+    <input type="email" autocomplete="email" matInput placeholder="Email" formControlName="email" required>
+    <mat-error *ngIf="form.get('email').hasError('email')">Wymagany poprawny email</mat-error>
   </mat-form-field>
 
   <mat-form-field class="full-width">
