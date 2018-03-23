@@ -1,6 +1,6 @@
 package com.example.webshop.rest
 
-import com.example.webshop.entity.api.UserDto
+import com.example.webshop.entity.dto.UserDto
 import com.example.webshop.service.UserService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
