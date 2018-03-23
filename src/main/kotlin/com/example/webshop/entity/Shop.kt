@@ -11,7 +11,7 @@ data class Shop(
     val city: String,
     val street: String,
     val postCode: String,
-    @OneToOne
+    @OneToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "owner_id")
     val user: User,
     @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])

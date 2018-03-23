@@ -19,5 +19,9 @@ export class AppComponent {
       path: "/register",
       label: "Zarejestruj się"
     },
+    {
+      path: "/profil",
+      label: "Profil"
+    }
   ]
 }

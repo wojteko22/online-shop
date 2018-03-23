@@ -6,3 +6,8 @@ class CreateShopDto(
         val street: String,
         val postCode: String
 )
+
+class CreateShopWithOwnerDto(
+        val shop: CreateShopDto,
+        val owner: CreateUserDto
+)
