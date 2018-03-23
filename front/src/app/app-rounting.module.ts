@@ -21,12 +21,6 @@ const appRoutes: Routes = [
     canActivate: [AlwaysAuthGuard]
   },
   {
-    path: 'profil',
-    component: CustomerComponent,
-    canActivate: [AlwaysAuthGuard]
-  },
-  { path: '',   redirectTo: '/shops', pathMatch: 'full' },
-  {
     path: 'register',
     component: RegisterOwnerComponent,
   },
