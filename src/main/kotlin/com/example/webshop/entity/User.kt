@@ -7,12 +7,12 @@ import javax.persistence.*
 @Embeddable
 data class User(
         val email: String,
-        val password: String,
+        var password: String,
         val name: String,
         @ManyToOne
         val role: UserRole,
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = -1
 ) {
-        fun toDto(): UserDto = UserDto(name, email)
+        fun toDto(): UserDto = UserDto(id, name, email)
 }
