@@ -13,7 +13,7 @@ export class RegisterService {
     //TODO wyciągnąć do environment
     let url = "http://localhost:8080/user";
 
-    return this.http.post(url, userDto);
+    return this.http.post(url, userDto, {observe: 'response'});
   }
 
 }
