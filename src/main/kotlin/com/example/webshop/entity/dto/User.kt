@@ -1,4 +1,4 @@
-package com.example.webshop.entity.api
+package com.example.webshop.entity.dto
 
 class UserDto(
         val name: String,
