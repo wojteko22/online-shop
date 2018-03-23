@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomerComponent } from './customer/customer.component';
 import { AlwaysAuthGuard } from "./always-auth.guard";
 import { RegisterOwnerComponent } from './register-owner/register-owner.component';
+import { PasswordComponent } from './password/password.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { RegisterOwnerComponent } from './register-owner/register-owner.componen
     LoginComponent,
     CustomerComponent,
     RegisterOwnerComponent,
+    PasswordComponent,
   ],
   imports: [
     BrowserModule,

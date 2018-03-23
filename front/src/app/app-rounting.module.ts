@@ -5,6 +5,7 @@ import {LoginComponent} from "./login/login.component";
 import {CustomerComponent} from "./customer/customer.component";
 import {AlwaysAuthGuard} from "./always-auth.guard";
 import { RegisterOwnerComponent } from './register-owner/register-owner.component';
+import { PasswordComponent } from './password/password.component';
 
 const appRoutes: Routes = [
   {
@@ -18,6 +19,11 @@ const appRoutes: Routes = [
   {
     path: 'profil',
     component: CustomerComponent,
+    canActivate: [AlwaysAuthGuard]
+  },
+  {
+    path: 'password',
+    component: PasswordComponent,
     canActivate: [AlwaysAuthGuard]
   },
   {

@@ -20,6 +20,10 @@ export class AppComponent {
       label: "Profil"
     },
     {
+      path: "/password",
+      label: "Zmiana hasła"
+    },
+    {
       path: "/register",
       label: "Zarejestruj się"
     },
