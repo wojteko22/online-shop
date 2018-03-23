@@ -1,6 +1,7 @@
 package com.example.webshop.entity.dto
 
 class UserDto(
+        val id: Long,
         val name: String,
         val email: String)
 
