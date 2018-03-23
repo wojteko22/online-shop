@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RegisterOwnerComponent } from './register-owner/register-owner.component';
 import { CustomerComponent } from './customer/customer.component';
 import {AlwaysAuthGuard} from "./always-auth.guard";
 
@@ -18,6 +19,8 @@ import {AlwaysAuthGuard} from "./always-auth.guard";
   declarations: [
     AppComponent,
     ShopsComponent,
+    LoginComponent,
+    RegisterOwnerComponent,
     LoginComponent,
     CustomerComponent
   ],

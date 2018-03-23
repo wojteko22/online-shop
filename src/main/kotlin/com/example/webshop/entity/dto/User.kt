@@ -16,7 +16,8 @@ class UpdateUserDto(
         val id: Long,
         val name: String?,
         val email: String?,
-        val password: String?
+        val password: String?,
+        val passwordConfirmation: String?
 )
 
 class UpdatePasswordUserDto(
