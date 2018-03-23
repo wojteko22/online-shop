@@ -16,16 +16,16 @@ export class AppComponent {
       label: "Zaloguj się"
     },
     {
+      path: "/register",
+      label: "Zarejestruj się"
+    },
+    {
       path: "/profil",
       label: "Profil"
     },
     {
       path: "/password",
       label: "Zmiana hasła"
-    },
-    {
-      path: "/register",
-      label: "Zarejestruj się"
     },
   ]
 }

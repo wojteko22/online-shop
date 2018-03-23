@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ShopsComponent } from './shops/shops.component';
-import {LoginComponent} from "./login/login.component";
+import { LoginComponent } from './login/login.component';
+import { RegisterOwnerComponent } from './register-owner/register-owner.component';
 import {CustomerComponent} from "./customer/customer.component";
 import {AlwaysAuthGuard} from "./always-auth.guard";
-import { RegisterOwnerComponent } from './register-owner/register-owner.component';
 import { PasswordComponent } from './password/password.component';
 
 const appRoutes: Routes = [
