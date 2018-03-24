@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CredentialsService } from './credentials.service';
 
 @Component({
   selector: 'app-root',
@@ -6,22 +7,30 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  constructor(private credentialsService: CredentialsService) {
+  }
+
   navLinks = [
     {
-      path: "/shops",
-      label: "Sklepy"
+      path: '/shops',
+      label: 'Sklepy'
     },
     {
-      path: "/login",
-      label: "Zaloguj się"
+      path: '/login',
+      label: 'Zaloguj się'
     },
     {
-      path: "/register",
-      label: "Zarejestruj się"
+      path: '/register',
+      label: 'Zarejestruj się'
     },
     {
-      path: "/profil",
-      label: "Profil"
+      path: '/profil',
+      label: 'Profil'
     }
-  ]
+  ];
+
+  logOut() {
+    this.credentialsService.logOut();
+  }
 }
