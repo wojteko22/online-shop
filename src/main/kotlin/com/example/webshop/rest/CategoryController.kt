@@ -12,6 +12,9 @@ class CategoryController(private val categoryService: CategoryService) {
     @GetMapping
     fun showCategories() = categoryService.findAll()
 
+    @GetMapping("/{shop_id}")
+    fun showShopCategories(@PathVariable shop_id : Long) = categoryService.findByShopId(shop_id)
+
     @PostMapping
     fun addCategory(@RequestBody category: Category,
                     @RequestParam parentCategoryId: String) {

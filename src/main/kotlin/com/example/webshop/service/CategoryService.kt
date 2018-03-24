@@ -1,11 +1,13 @@
 package com.example.webshop.service
 
 import com.example.webshop.entity.Category
+import com.example.webshop.entity.dto.CategoryDto
 import com.example.webshop.repository.CategoryRepository
+import com.example.webshop.repository.ShopRepository
 import org.springframework.stereotype.Service
 
 @Service
-class CategoryService(private val categoryRepository: CategoryRepository) {
+class CategoryService(private val categoryRepository: CategoryRepository, private val shopRepository: ShopRepository) {
 
     fun findAll() = categoryRepository.findByParentCategoryIsNull()
 
@@ -55,4 +57,9 @@ class CategoryService(private val categoryRepository: CategoryRepository) {
 
     private fun getForbiddenParentCategories(category: Category): Set<Category> =
             category.subcategories + category.subcategories.flatMap { getForbiddenParentCategories(it) }
+
+    fun findByShopId(shopId: Long): Iterable<Category> {
+        val shop = shopRepository.findById(shopId)!!
+        return categoryRepository.findByShopAndParentCategoryIsNull(shop)
+    }
 }

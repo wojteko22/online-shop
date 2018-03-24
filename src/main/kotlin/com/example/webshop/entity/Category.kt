@@ -5,7 +5,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "categories")
-@JsonIgnoreProperties("parentCategory")
+@JsonIgnoreProperties("parentCategory","shop")
 data class Category(
         val name: String,
         @ManyToOne @JoinColumn(name= "shop_id", referencedColumnName = "id")

@@ -24,14 +24,12 @@ class DataLoader {
 
     @Bean
     fun initUser(userRepository: UserRepository, roleRepository: UserRoleRepository) = CommandLineRunner {
-        val sellerUserRole = UserRole("SELLER", "Rola sprzedawcy....",1)
-        val customerUserRole = UserRole("CUSTOMER", "Rola klienta sklepu...",2)
-        val ownerUserRole = UserRole("SHOP_OWNER", "Rola sprzedawcy....",3)
 
-        roleRepository.save(customerUserRole)
-        roleRepository.save(sellerUserRole)
-        roleRepository.save(ownerUserRole)
-        owner = User("test@test.pl", BCryptPasswordEncoder().encode("test"), "Jan Nowak", roleRepository.findByRole("SHOP_OWNER"))
+
+        roleRepository.save(UserRole("CUSTOMER", "Rola klienta sklepu..."))
+        roleRepository.save(UserRole("SELLER", "Rola sprzedawcy...."))
+        roleRepository.save(UserRole("SHOP_OWNER", "Rola sprzedawcy...."))
+        owner = User("test@test.pl", BCryptPasswordEncoder().encode("test"), "Jan Nowak", roleRepository.findByRole("CUSTOMER"))
         userRepository.save(owner)
     }
 
@@ -46,11 +44,11 @@ class DataLoader {
         val shop = shopRepository.findByName("Żabcia")!!
         val pieczywo = Category("Pieczywo", shop)
         val nabial = Category("Nabial", shop)
-        val sery = Category("Sery", shop)
-        val maslo = Category("Maslo", shop)
-        val mleko = Category("Mleko", shop)
-        val bialySer = Category("Biale", shop)
-        val zoltySer = Category("Zolte", shop)
+        val sery = Category("Sery", shop, nabial)
+        val maslo = Category("Maslo", shop, nabial)
+        val mleko = Category("Mleko", shop, nabial)
+        val bialySer = Category("Biale", shop, sery)
+        val zoltySer = Category("Zolte", shop, sery)
 
         repository.save(pieczywo)
         repository.save(nabial)
