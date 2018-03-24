@@ -12,7 +12,7 @@ import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterOwnerComponent } from './register-owner/register-owner.component';
 import { CustomerComponent } from './customer/customer.component';
-import {AlwaysAuthGuard} from "./always-auth.guard";
+import { CredentialsService } from './credentials.service';
 
 
 @NgModule({
@@ -32,7 +32,7 @@ import {AlwaysAuthGuard} from "./always-auth.guard";
     BrowserAnimationsModule,
     ReactiveFormsModule,
   ],
-  providers: [AlwaysAuthGuard],
+  providers: [CredentialsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

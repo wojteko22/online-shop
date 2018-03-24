@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {LoginService} from './login.service';
-import {Credentials} from './credentials';
-import {HttpErrorResponse} from '@angular/common/http';
-import {MatSnackBar} from '@angular/material';
-import {environment} from '../../environments/environment';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginService } from './login.service';
+import { Credentials } from './credentials';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
+import { CredentialsService } from '../credentials.service';
+import { TokenData } from '../token';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,13 @@ import {environment} from '../../environments/environment';
 export class LoginComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private service: LoginService, private snackBar: MatSnackBar) {
+  constructor(
+    private fb: FormBuilder,
+    private loginService: LoginService,
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private credentialsService: CredentialsService,
+  ) {
     this.createForm();
   }
 
@@ -31,13 +39,16 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     const credentials = this.form.value as Credentials;
-    this.service.login(credentials).subscribe(
-      result => {
-        console.log(result);
-        localStorage.setItem(environment.storage_token, result.access_token);
-      },
+    this.loginService.login(credentials).subscribe(
+      (tokenData: TokenData) => this.save(tokenData),
       error => this.handleError(error)
     );
+  }
+
+  private save(tokenData: TokenData) {
+    console.log(tokenData);
+    this.credentialsService.saveToken(tokenData);
+    this.router.navigate(['/profil']);
   }
 
   private handleError(error: HttpErrorResponse) {

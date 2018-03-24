@@ -4,12 +4,15 @@
   </h1>
 </div>
 <nav mat-tab-nav-bar>
-  <a mat-tab-link
-     *ngFor="let link of navLinks"
-     [routerLink]="link.path"
-     routerLinkActive #rla="routerLinkActive"
-     [active]="rla.isActive">
-    {{link.label}}
-  </a>
+  <span *ngFor="let link of navLinks">
+    <a mat-tab-link
+       *ngIf="visible(link.visibility)"
+       [routerLink]="link.path"
+       routerLinkActive #rla="routerLinkActive"
+       [active]="rla.isActive">
+      {{link.label}}
+    </a>
+  </span>
+  <a mat-tab-link *ngIf=signedIn() (click)="logOut()">Wyloguj się</a>
 </nav>
 <router-outlet></router-outlet>
