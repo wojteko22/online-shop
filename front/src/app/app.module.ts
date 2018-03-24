@@ -12,6 +12,8 @@ import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterOwnerComponent } from './register-owner/register-owner.component';
 import { CustomerComponent } from './customer/customer.component';
+import { AlwaysAuthGuard } from "./always-auth.guard";
+import { PasswordComponent } from './password/password.component';
 import { CredentialsService } from './credentials.service';
 
 
@@ -22,7 +24,8 @@ import { CredentialsService } from './credentials.service';
     LoginComponent,
     RegisterOwnerComponent,
     LoginComponent,
-    CustomerComponent
+    CustomerComponent,
+    PasswordComponent,
   ],
   imports: [
     BrowserModule,
