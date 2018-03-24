@@ -6,6 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { CredentialsService } from '../credentials.service';
+import { TokenData } from '../token';
 
 @Component({
   selector: 'app-login',
@@ -39,15 +40,13 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const credentials = this.form.value as Credentials;
     this.loginService.login(credentials).subscribe(
-      tokenData => {
-        console.log(tokenData); // todo: Wypieprzyć
-        this.save(tokenData);
-      },
+      (tokenData: TokenData) => this.save(tokenData),
       error => this.handleError(error)
     );
   }
 
-  private save(tokenData: any) { // todo: Typ
+  private save(tokenData: TokenData) {
+    console.log(tokenData);
     this.credentialsService.saveToken(tokenData);
     this.router.navigate(['/profil']);
   }

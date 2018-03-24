@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Cookie } from 'ng2-cookies';
+import { TokenData } from './token';
 
 @Injectable()
 export class CredentialsService {
@@ -8,7 +9,7 @@ export class CredentialsService {
   constructor() {
   }
 
-  saveToken(tokenData) {
+  saveToken(tokenData: TokenData) {
     const expireDate = new Date().getTime() + (1000 * tokenData.expires_in);
     Cookie.set(this.tokenCookieName, tokenData.access_token, expireDate);
   }
