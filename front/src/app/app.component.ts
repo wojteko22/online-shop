@@ -20,22 +20,25 @@ export class AppComponent {
     {
       path: '/profil',
       label: 'Profil',
-      visible: true,
+      visibility: Visibility.SignedIn,
     },
     {
       path: '/login',
       label: 'Zaloguj się',
-      onlyForSignedOut: true,
+      visibility: Visibility.SignedOut,
     },
     {
       path: '/register',
       label: 'Zarejestruj się',
-      onlyForSignedOut: true,
+      visibility: Visibility.SignedOut,
     },
   ];
 
-  visible(forSignedOut: boolean) {
-    if (forSignedOut) {
+  visible(visibility: Visibility) {
+    if (visibility === Visibility.SignedIn) {
+      return this.signedIn();
+    }
+    if (visibility === Visibility.SignedOut) {
       return !this.signedIn();
     }
     return true;
@@ -49,4 +52,9 @@ export class AppComponent {
     this.credentialsService.logOut();
     this.router.navigate(['/login']);
   }
+}
+
+enum Visibility {
+  SignedIn,
+  SignedOut,
 }

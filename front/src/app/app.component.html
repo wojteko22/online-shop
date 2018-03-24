@@ -6,7 +6,7 @@
 <nav mat-tab-nav-bar>
   <span *ngFor="let link of navLinks">
     <a mat-tab-link
-       *ngIf="visible(link.onlyForSignedOut)"
+       *ngIf="visible(link.visibility)"
        [routerLink]="link.path"
        routerLinkActive #rla="routerLinkActive"
        [active]="rla.isActive">
