@@ -1,0 +1,12 @@
+
+<ul class="mat-list">
+  <ng-template #recursiveList let-categories>
+    <li class="mat-list-item" *ngFor="let category of categories">
+      {{category.name}}
+      <ul class="mat-list" *ngIf="category.subcategories?.length > 0">
+        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: category.subcategories }"></ng-container>
+      </ul>
+    </li>
+  </ng-template>
+  <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: categories }"></ng-container>
+</ul>
