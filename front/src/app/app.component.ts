@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CredentialsService } from './credentials.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,18 +8,24 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  constructor(private credentialsService: CredentialsService, private router: Router) {
+  }
+
   navLinks = [
     {
-      path: "/shops",
-      label: "Sklepy"
+      path: '/shops',
+      label: 'Sklepy',
     },
     {
-      path: "/login",
-      label: "Zaloguj się"
+      path: '/profil',
+      label: 'Profil',
+      visibility: Visibility.SignedIn,
     },
     {
-      path: "/register",
-      label: "Zarejestruj się"
+      path: '/login',
+      label: 'Zaloguj się',
+      visibility: Visibility.SignedOut,
     },
     {
       path: "/profil",
@@ -28,4 +36,33 @@ export class AppComponent {
       label: "Zmiana hasła"
     },
   ]
+      path: '/register',
+      label: 'Zarejestruj się',
+      visibility: Visibility.SignedOut,
+    },
+  ];
+
+  visible(visibility: Visibility) {
+    if (visibility === Visibility.SignedIn) {
+      return this.signedIn();
+    }
+    if (visibility === Visibility.SignedOut) {
+      return !this.signedIn();
+    }
+    return true;
+  }
+
+  signedIn() {
+    return this.credentialsService.isSignedIn();
+  }
+
+  logOut() {
+    this.credentialsService.logOut();
+    this.router.navigate(['/login']);
+  }
+}
+
+enum Visibility {
+  SignedIn,
+  SignedOut,
 }

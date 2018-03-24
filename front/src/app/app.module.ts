@@ -14,6 +14,7 @@ import { RegisterOwnerComponent } from './register-owner/register-owner.componen
 import { CustomerComponent } from './customer/customer.component';
 import { AlwaysAuthGuard } from "./always-auth.guard";
 import { PasswordComponent } from './password/password.component';
+import { CredentialsService } from './credentials.service';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { PasswordComponent } from './password/password.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
   ],
-  providers: [AlwaysAuthGuard],
+  providers: [CredentialsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
