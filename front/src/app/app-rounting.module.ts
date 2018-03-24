@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterOwnerComponent } from './register-owner/register-owner.component';
 import {CustomerComponent} from "./customer/customer.component";
 import {AlwaysAuthGuard} from "./always-auth.guard";
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const appRoutes: Routes = [
   {
@@ -28,6 +29,10 @@ const appRoutes: Routes = [
     path: '',
     redirectTo: '/shops',
     pathMatch: 'full'
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
 ];
 

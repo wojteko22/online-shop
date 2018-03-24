@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterOwnerComponent } from './register-owner/register-owner.component';
 import { CustomerComponent } from './customer/customer.component';
 import { CredentialsService } from './credentials.service';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { CredentialsService } from './credentials.service';
     LoginComponent,
     RegisterOwnerComponent,
     LoginComponent,
-    CustomerComponent
+    CustomerComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
