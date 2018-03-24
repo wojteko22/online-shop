@@ -28,12 +28,9 @@ export class AppComponent {
       visibility: Visibility.SignedOut,
     },
     {
-      path: "/profil",
-      label: "Profil"
-    },
-    {
       path: "/password",
-      label: "Zmiana hasła"
+      label: "Zmiana hasła",
+      visibility: Visibility.SignedIn,
     },
     {
       path: '/register',
