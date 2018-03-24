@@ -11,12 +11,12 @@ export class CustomerService {
   }
 
   getLoggedUser(): Observable<any> {
-    const url = environment.apiUrl + "/me";
+    const url = environment.apiUrl + "/user/me";
     const headers: HttpHeaders = this.getAuthorizedUserHeader();
     return this.http.post(url, 0, {headers: headers})
   }
 
-  private getAuthorizedUserHeader(): HttpHeaders {
+  public getAuthorizedUserHeader(): HttpHeaders {
     return new HttpHeaders({
       'Authorization': 'Bearer ' + this.credentialsService.token(),
       'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
