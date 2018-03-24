@@ -24,7 +24,7 @@ class UserService(private val userRepository: UserRepository) {
     fun changeUserPassword(dto: UpdatePasswordUserDto): User? {
         if(isValidUpdatePasswordDto(dto)){
             val user: User? = userRepository.findById(dto.id)
-            user?.password = dto.password
+            user?.password = passwordEncoder.encode(dto.password)
             return userRepository.save(user)
         }
         return null

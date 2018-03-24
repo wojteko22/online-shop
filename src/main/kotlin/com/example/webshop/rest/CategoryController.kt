@@ -3,6 +3,7 @@ package com.example.webshop.rest
 import com.example.webshop.entity.Category
 import com.example.webshop.service.CategoryService
 import org.springframework.web.bind.annotation.*
+import java.security.Principal
 
 @RestController
 @RequestMapping("/categories")
@@ -12,8 +13,9 @@ class CategoryController(private val categoryService: CategoryService) {
     fun showCategories() = categoryService.findAll()
 
     @PostMapping
-    fun addCategory(@RequestBody category: Category, @RequestParam parentCategoryId: String) {
-        categoryService.save(category, parentCategoryId)
+    fun addCategory(@RequestBody category: Category,
+                    @RequestParam parentCategoryId: String) {
+            categoryService.save(category, parentCategoryId)
     }
 
     @DeleteMapping("/{id}")
