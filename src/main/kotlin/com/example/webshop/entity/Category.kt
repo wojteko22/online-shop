@@ -8,6 +8,8 @@ import javax.persistence.*
 @JsonIgnoreProperties("parentCategory")
 data class Category(
         val name: String,
+        @ManyToOne @JoinColumn(name= "shop_id", referencedColumnName = "id")
+        val shop: Shop,
         @ManyToOne @JoinColumn(name = "parent_category_id", referencedColumnName = "id")
         val parentCategory: Category? = null,
         @Id @GeneratedValue

@@ -47,7 +47,7 @@ class SignUpService(private val userRepository: UserRepository,
             val user: User = getUserFromDTOAndRole(vendorDTO, role)
             val shop: Shop = shopRepository.findById(shopId) ?: throw NoSuchElementException("Shop doesn't exists!")
 
-            shop.vendors.add(user)
+            shop.sellers.add(user)
             return shopRepository.save(shop)
         }
         return null
