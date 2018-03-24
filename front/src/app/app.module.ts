@@ -12,6 +12,7 @@ import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterOwnerComponent } from './register-owner/register-owner.component';
 import { CustomerComponent } from './customer/customer.component';
+import { PasswordComponent } from './password/password.component';
 import { CredentialsService } from './credentials.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 
@@ -24,6 +25,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     RegisterOwnerComponent,
     LoginComponent,
     CustomerComponent,
+    PasswordComponent,
     NotFoundComponent,
   ],
   imports: [
