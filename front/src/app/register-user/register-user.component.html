@@ -1,4 +1,4 @@
-<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+<form class="form" [formGroup]="form">
   <mat-form-field class="full-width">
     <input autocomplete="username" matInput placeholder="Imię i nazwisko" formControlName="name" required>
     <mat-error *ngIf="form.get('name').hasError('required')">Pole wymagane</mat-error>
@@ -19,8 +19,4 @@
            formControlName="passwordConfirmation" required>
     <mat-error *ngIf="form.get('passwordConfirmation').hasError('matchOther')">Hasła niezgodne</mat-error>
   </mat-form-field>
-
-  <button mat-raised-button color="primary" [disabled]="!form.valid">Zarejestruj się</button>
 </form>
-
-{{status}}

@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {matchOtherValidator} from "../match-other.directive";
-import {RegisterService} from "../register/register.service";
 import {UserDto} from "../register/UserDto";
 
 @Component({
@@ -11,8 +10,8 @@ import {UserDto} from "../register/UserDto";
 })
 export class RegisterUserComponent implements OnInit {
   form: FormGroup;
-  status: string;
-  constructor(private fb: FormBuilder, private registerService: RegisterService) {
+
+  constructor(private fb: FormBuilder) {
     this.createForm();
   }
 
@@ -28,14 +27,7 @@ export class RegisterUserComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    const user = this.form.value as UserDto;
-    user.role = "CUSTOMER";
-
-    this.registerService.register(user).subscribe((response) => {
-      if(response.status==200){
-        this.status='Zarejestrowano pomyślnie!';
-      }
-    });
+  data() {
+    return this.form.value as UserDto;
   }
 }

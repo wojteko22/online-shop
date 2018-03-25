@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { matchOtherValidator } from '../match-other.directive';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {RegisterService} from "./register.service";
-import {UserDto} from "./UserDto";
+import {RegisterUserComponent} from "../register-user/register-user.component";
 
 @Component({
   selector: 'app-register-owner',
@@ -13,29 +12,27 @@ import {UserDto} from "./UserDto";
 export class RegisterComponent implements OnInit {
   form: FormGroup;
   status: string;
+  @ViewChild(RegisterUserComponent)
+  private registerUserComponent: RegisterUserComponent;
+
   constructor(private fb: FormBuilder, private registerService: RegisterService) {
-    this.createForm();
   }
 
   ngOnInit() {
+    this.createForm();
   }
 
   createForm() {
-    this.form = this.fb.group({
-      name: ['', [Validators.required]],
-      email: ['', [Validators.email]],
-      password: ['', [Validators.required]],
-      passwordConfirmation: ['', [matchOtherValidator('password')]],
-    });
+    this.form = this.registerUserComponent.form;
   }
 
   onSubmit() {
-    const user = this.form.value as UserDto;
+    const user = this.registerUserComponent.data();
     user.role = "CUSTOMER";
 
     this.registerService.register(user).subscribe((response) => {
-      if(response.status==200){
-        this.status='Zarejestrowano pomyślnie!';
+      if (response.status == 200) {
+        this.status = 'Zarejestrowano pomyślnie!';
       }
     });
   }
