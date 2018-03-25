@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { RegisterService } from './register.service';
 import { RegisterUserComponent } from '../register-user/register-user.component';
 import { RegisterShopComponent } from '../register-shop/register-shop.component';
+import { UserDto } from './UserDto';
 
 @Component({
   selector: 'app-register-owner',
@@ -38,12 +39,24 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     const user = this.registerUserComponent.data();
-    user.role = 'CUSTOMER';
+    const response$ = this.prepareProperRequest(user);
+    response$.subscribe(() => this.status = 'Zarejestrowano pomyślnie!');
+  }
 
-    this.registerService.register(user).subscribe((response) => {
-      if (response.status == 200) {
-        this.status = 'Zarejestrowano pomyślnie!';
-      }
-    });
+  private prepareProperRequest(user: UserDto) {
+    if (this.isShop()) {
+      return this.createShop(user);
+    }
+    return this.createUser(user);
+  }
+
+  private createShop(user: UserDto) {
+    user.role = 'CUSTOMER'; // todo: poprawić
+    return this.registerService.register(user); // todo: poprawić
+  }
+
+  private createUser(user: UserDto) {
+    user.role = 'CUSTOMER';
+    return this.registerService.register(user);
   }
 }
