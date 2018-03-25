@@ -35,12 +35,9 @@ export class RegisterOwnerComponent implements OnInit {
     user.role = "CUSTOMER";
 
     this.registerService.register(user).subscribe((response) => {
-      console.log(JSON.stringify(response));
       if(response.status==200){
         this.status='Zarejestrowano pomyślnie!';
       }
     });
-
-    console.log(value);
   }
 }
