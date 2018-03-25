@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { matchOtherValidator } from './match-other.directive';
+import { matchOtherValidator } from '../match-other.directive';
 import {RegisterService} from "./register.service";
 import {UserDto} from "./UserDto";
 
 @Component({
   selector: 'app-register-owner',
-  templateUrl: './register-owner.component.html',
-  styleUrls: ['./register-owner.component.css'],
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css'],
   providers: [RegisterService]
 })
-export class RegisterOwnerComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   form: FormGroup;
   status: string;
   constructor(private fb: FormBuilder, private registerService: RegisterService) {
@@ -30,8 +30,7 @@ export class RegisterOwnerComponent implements OnInit {
   }
 
   onSubmit() {
-    const value = this.form.value;
-    let user = this.form.value as UserDto;
+    const user = this.form.value as UserDto;
     user.role = "CUSTOMER";
 
     this.registerService.register(user).subscribe((response) => {

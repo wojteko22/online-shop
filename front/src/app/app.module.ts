@@ -10,11 +10,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RegisterOwnerComponent } from './register-owner/register-owner.component';
+import { RegisterComponent } from './register/register.component';
 import { CustomerComponent } from './customer/customer.component';
 import { PasswordComponent } from './password/password.component';
 import { CredentialsService } from './credentials.service';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { RegisterUserComponent } from './register-user/register-user.component';
 
 
 @NgModule({
@@ -22,11 +23,12 @@ import { NotFoundComponent } from './not-found/not-found.component';
     AppComponent,
     ShopsComponent,
     LoginComponent,
-    RegisterOwnerComponent,
+    RegisterComponent,
     LoginComponent,
     CustomerComponent,
     PasswordComponent,
     NotFoundComponent,
+    RegisterUserComponent,
   ],
   imports: [
     BrowserModule,
