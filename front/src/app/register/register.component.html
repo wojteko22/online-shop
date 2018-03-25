@@ -1,6 +1,13 @@
-<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+<div>Rola:</div>
+<mat-radio-group [(ngModel)]="selectedRole">
+  <mat-radio-button class="radio-button" *ngFor="let role of roles" [value]="role">
+    {{role}}
+  </mat-radio-button>
+</mat-radio-group>
+
+<form class="form" (ngSubmit)="onSubmit()">
   <app-register-user></app-register-user>
-  <app-register-shop></app-register-shop>
-  <button mat-raised-button color="primary" [disabled]="!form.valid">Zarejestruj się</button>
+  <app-register-shop [hidden]="!isShop()"></app-register-shop>
+  <button mat-raised-button color="primary" [disabled]="!isValid()">Zarejestruj się</button>
 </form>
 {{status}}

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
@@ -39,8 +39,10 @@ import { RegisterShopComponent } from './register-shop/register-shop.component';
     MaterialModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [CredentialsService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
