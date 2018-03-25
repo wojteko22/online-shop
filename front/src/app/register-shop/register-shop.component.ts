@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {matchOtherValidator} from "../match-other.directive";
-import {UserDto} from "../register/UserDto";
+import {Shop} from "./Shop";
 
 @Component({
   selector: 'app-register-shop',
@@ -22,13 +21,13 @@ export class RegisterShopComponent implements OnInit {
   createForm() {
     this.form = this.fb.group({
       name: ['', [Validators.required]],
-      email: ['', [Validators.email]],
-      password: ['', [Validators.required]],
-      passwordConfirmation: ['', [matchOtherValidator('password')]],
+      city: ['', [Validators.required]],
+      street: ['', [Validators.required]],
+      postCode: ['', [Validators.required]],
     });
   }
 
   data() {
-    return this.form.value as UserDto;
+    return this.form.value as Shop;
   }
 }
