@@ -6,6 +6,8 @@ import { RegisterOwnerComponent } from './register-owner/register-owner.componen
 import {CustomerComponent} from "./customer/customer.component";
 import {AlwaysAuthGuard} from "./always-auth.guard";
 import { PasswordComponent } from './password/password.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import {SignedOutGuard} from "./signed-out-guard.service";
 
 const appRoutes: Routes = [
   {
@@ -13,27 +15,33 @@ const appRoutes: Routes = [
     component: ShopsComponent,
   },
   {
-    path: 'login',
-    component: LoginComponent,
-  },
-  {
     path: 'profil',
     component: CustomerComponent,
-    canActivate: [AlwaysAuthGuard]
+    canActivate: [AlwaysAuthGuard],
   },
   {
     path: 'password',
     component: PasswordComponent,
-    canActivate: [AlwaysAuthGuard]
+    canActivate: [AlwaysAuthGuard],
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [SignedOutGuard],
   },
   {
     path: 'register',
     component: RegisterOwnerComponent,
+    canActivate: [SignedOutGuard],
   },
   {
     path: '',
     redirectTo: '/shops',
-    pathMatch: 'full'
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
 ];
 
@@ -43,7 +51,7 @@ const appRoutes: Routes = [
       appRoutes
     )
   ],
-  providers: [AlwaysAuthGuard],
+  providers: [AlwaysAuthGuard, SignedOutGuard],
   exports: [
     RouterModule
   ],
