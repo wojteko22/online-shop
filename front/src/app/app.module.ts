@@ -16,6 +16,7 @@ import { PasswordComponent } from './password/password.component';
 import { CredentialsService } from './credentials.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
+import { RegisterShopComponent } from './register-shop/register-shop.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { RegisterUserComponent } from './register-user/register-user.component';
     PasswordComponent,
     NotFoundComponent,
     RegisterUserComponent,
+    RegisterShopComponent,
   ],
   imports: [
     BrowserModule,

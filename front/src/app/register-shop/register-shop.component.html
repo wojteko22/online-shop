@@ -1,0 +1,22 @@
+<form class="form" [formGroup]="form">
+  <mat-form-field class="full-width">
+    <input autocomplete="username" matInput placeholder="Imię i nazwisko" formControlName="name" required>
+    <mat-error *ngIf="form.get('name').hasError('required')">Pole wymagane</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input type="email" autocomplete="email" matInput placeholder="Email" formControlName="email" required>
+    <mat-error *ngIf="form.get('email').hasError('email')">Wymagany poprawny email</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input type="password" autocomplete="new-password" matInput placeholder="Hasło" formControlName="password" required>
+    <mat-error *ngIf="form.get('password').hasError('required')">Pole wymagane</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input type="password" autocomplete="new-password" matInput placeholder="Powtórz hasło"
+           formControlName="passwordConfirmation" required>
+    <mat-error *ngIf="form.get('passwordConfirmation').hasError('matchOther')">Hasła niezgodne</mat-error>
+  </mat-form-field>
+</form>

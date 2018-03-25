@@ -1,5 +1,6 @@
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
   <app-register-user></app-register-user>
+  <app-register-shop></app-register-shop>
   <button mat-raised-button color="primary" [disabled]="!form.valid">Zarejestruj się</button>
 </form>
 {{status}}
