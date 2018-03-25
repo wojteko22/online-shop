@@ -14,8 +14,7 @@ export class PasswordService {
   changeUserPassword(updateUserPassword: UpdateUserPassword) : Observable<any> {
     const url = environment.apiUrl+"/user/password";
     const headers: HttpHeaders = new HttpHeaders({
-      'Authorization': 'Bearer ' + this.credentialsService.token(),
-      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+      'Authorization': 'Bearer ' + this.credentialsService.token()
     });
     return this.http.put(url, updateUserPassword, {headers: headers});
   }

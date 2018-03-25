@@ -33,10 +33,9 @@ export class PasswordComponent implements OnInit {
     let updateUserPassDto = this.form.value as UpdateUserPassword;
     this.cSrv.getLoggedUser().subscribe((user) => {
       updateUserPassDto.id=user.id;
-      updateUserPassDto.oldPassword=this.form.value.oldProgram;
+      updateUserPassDto.oldPassword=this.form.value.oldPassword;
       updateUserPassDto.password=this.form.value.password;
       updateUserPassDto.passwordConfirmation=this.form.value.passwordConfirmation;
-      console.log(JSON.stringify(updateUserPassDto));
       this.passSrv.changeUserPassword(updateUserPassDto).subscribe((result) =>
         console.log(result));
     });
