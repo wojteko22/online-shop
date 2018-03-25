@@ -19,8 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 @Configuration
 class DataLoader {
 
-    var owner : User? = null
-    var shop : Shop? = null
+
 
     @Bean
     fun initUser(userRepository: UserRepository, roleRepository: UserRoleRepository) = CommandLineRunner {
@@ -29,13 +28,13 @@ class DataLoader {
         roleRepository.save(UserRole("CUSTOMER", "Rola klienta sklepu..."))
         roleRepository.save(UserRole("SELLER", "Rola sprzedawcy...."))
         roleRepository.save(UserRole("SHOP_OWNER", "Rola sprzedawcy...."))
-        owner = User("test@test.pl", BCryptPasswordEncoder().encode("test"), "Jan Nowak", roleRepository.findByRole("CUSTOMER"))
+        val owner = User("test@test.pl", BCryptPasswordEncoder().encode("test"), "Jan Nowak", roleRepository.findByRole("SHOP_OWNER"))
         userRepository.save(owner)
     }
 
     @Bean
     fun initShop(shopRepository: ShopRepository, userRepository: UserRepository) = CommandLineRunner {
-        shop = Shop("Żabcia", "Wrocław", "Grunwaldzka", "50-387", userRepository.findByEmail("test@test.pl")!!)
+        val shop = Shop("Żabcia", "Wrocław", "Grunwaldzka", "50-387", userRepository.findByEmail("test@test.pl")!!)
         shopRepository.save(shop)
     }
 

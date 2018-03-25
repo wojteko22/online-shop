@@ -16,7 +16,6 @@ import { TokenData } from '../token';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
@@ -40,12 +39,13 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const credentials = this.form.value as Credentials;
     this.loginService.login(credentials).subscribe(
-      (tokenData: TokenData) => this.save(tokenData),
+      (tokenData: TokenData) => this.saveToken(tokenData),
       error => this.handleError(error)
     );
+
   }
 
-  private save(tokenData: TokenData) {
+  private saveToken(tokenData: TokenData) {
     console.log(tokenData);
     this.credentialsService.saveToken(tokenData);
     this.router.navigate(['/profil']);
@@ -58,4 +58,6 @@ export class LoginComponent implements OnInit {
       });
     }
   }
+
+
 }

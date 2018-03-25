@@ -1,10 +1,12 @@
 package com.example.webshop.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.*
 
 @Entity
 @Embeddable
 @Table(name = "shops")
+@JsonIgnoreProperties("user")
 data class Shop(
         val name: String,
         val city: String,

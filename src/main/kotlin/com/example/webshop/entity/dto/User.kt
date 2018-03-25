@@ -3,7 +3,10 @@ package com.example.webshop.entity.dto
 class UserDto(
         val id: Long,
         val name: String,
-        val email: String)
+        val email: String,
+        val role: String,
+        val shopId: Long?
+)
 
 class CreateUserDto(
         val name: String,

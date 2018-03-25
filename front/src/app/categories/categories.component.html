@@ -1,12 +1,35 @@
+<!--<mat-accordion>-->
+  <!--<mat-expansion-panel>-->
+    <!--<mat-expansion-panel-header>-->
+      <!--<ng-template #recursiveList let-categories>-->
+        <!--<mat-panel-title *ngFor="let category of categories">-->
+          <!--{{category.name}}-->
+          <!--<mat-expansion-panel *ngIf="category.subcategories?.length > 0">-->
+            <!--<ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: category.subcategories }"></ng-container>-->
+          <!--</mat-expansion-panel>-->
+        <!--</mat-panel-title>-->
+      <!--</ng-template>-->
+      <!--<ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: categories }"></ng-container>-->
 
-<ul class="mat-list">
-  <ng-template #recursiveList let-categories>
-    <li class="mat-list-item" *ngFor="let category of categories">
-      {{category.name}}
-      <ul class="mat-list" *ngIf="category.subcategories?.length > 0">
-        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: category.subcategories }"></ng-container>
-      </ul>
-    </li>
-  </ng-template>
-  <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: categories }"></ng-container>
-</ul>
+    <!--</mat-expansion-panel-header>-->
+  <!--</mat-expansion-panel>-->
+<!--</mat-accordion>-->
+
+
+<!--<mat-list>-->
+  <!--<ng-template #recursiveList let-categories>-->
+    <!--<mat-list-item *ngFor="let category of categories">-->
+      <!--{{category.name}}-->
+      <!--<mat-list class="mat-list" *ngIf="category.subcategories?.length > 0">-->
+        <!--<ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: category.subcategories }"></ng-container>-->
+      <!--</mat-list>-->
+    <!--</mat-list-item>-->
+  <!--</ng-template>-->
+  <!--<ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: categories }"></ng-container>-->
+<!--</mat-list>-->
+
+
+<tree-root [nodes]="categories" [options]="options"></tree-root>
+
+
+

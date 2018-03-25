@@ -5,12 +5,12 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "categories")
-@JsonIgnoreProperties("parentCategory","shop")
+@JsonIgnoreProperties("name","shop","parentCategory","id")
 data class Category(
         val name: String,
-        @ManyToOne @JoinColumn(name= "shop_id", referencedColumnName = "id")
+        @ManyToOne @JoinColumn(name = "shop_id")
         val shop: Shop,
-        @ManyToOne @JoinColumn(name = "parent_category_id", referencedColumnName = "id")
+        @ManyToOne @JoinColumn(name = "parent_category_id")
         val parentCategory: Category? = null,
         @Id @GeneratedValue
         val id: Long = 0
@@ -18,4 +18,21 @@ data class Category(
 
     @OneToMany(mappedBy = "parentCategory")
     val subcategories = setOf<Category>()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Category
+
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+
+
 }
