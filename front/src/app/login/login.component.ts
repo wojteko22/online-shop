@@ -46,16 +46,25 @@ export class LoginComponent implements OnInit {
   }
 
   private save(tokenData: TokenData) {
-    console.log(tokenData);
     this.credentialsService.saveToken(tokenData);
     this.router.navigate(['/profil']);
   }
 
   private handleError(error: HttpErrorResponse) {
+    const errorMessage = this.errorMesssage(error);
+    this.snackBar.open(errorMessage, null, {
+      duration: 3000
+    });
+  }
+
+  private errorMesssage(error: HttpErrorResponse) {
     if (error.error.error_description === 'Bad credentials') {
-      this.snackBar.open('Takie konto nie istnieje', null, {
-        duration: 3000
-      });
+      return 'Niepoprawne hasło';
     }
+    if (error.error.error_description === 'Username not found') {
+      return 'Użytkownik z takim mailem nie istnieje';
+    }
+    console.log(error);
+    return 'Nieoczekiwany błąd podczas logowania';
   }
 }
