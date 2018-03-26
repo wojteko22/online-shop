@@ -30,4 +30,8 @@ export class RegisterUserComponent implements OnInit {
   data() {
     return this.form.value as UserDto;
   }
+
+  isValid() {
+    return this.form.valid;
+  }
 }

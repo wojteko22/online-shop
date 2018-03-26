@@ -30,4 +30,8 @@ export class RegisterShopComponent implements OnInit {
   data() {
     return this.form.value as Shop;
   }
+
+  isValid() {
+    return this.form.valid;
+  }
 }

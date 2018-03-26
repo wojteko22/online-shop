@@ -28,10 +28,10 @@ export class RegisterComponent implements OnInit {
   }
 
   isValid() {
-    if (this.isShop()) { // todo: W dzieciach zrobić
-      return this.registerUserComponent.form.valid && this.registerShopComponent.form.valid;
+    if (this.isShop()) {
+      return this.registerUserComponent.isValid() && this.registerShopComponent.isValid();
     }
-    return this.registerUserComponent.form.valid;
+    return this.registerUserComponent.isValid();
   }
 
   isShop() {
