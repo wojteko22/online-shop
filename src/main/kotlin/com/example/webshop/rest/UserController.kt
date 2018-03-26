@@ -5,10 +5,7 @@ import com.example.webshop.entity.dto.UserDto
 import com.example.webshop.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.security.Principal
 
 @RestController
@@ -19,7 +16,7 @@ class UserController(private val userService: UserService) {
     fun me(principal: Principal): UserDto = userService.getUserByEmail(principal.name)!!.toDto()
 
     @PutMapping("/password")
-    fun changePassword(dto: UpdatePasswordUserDto, principal: Principal): ResponseEntity<HttpStatus> =
+    fun changePassword(@RequestBody dto: UpdatePasswordUserDto, principal: Principal): ResponseEntity<HttpStatus> =
             if (userService.getUserById(dto.id)?.email == principal.name) {
                 if (userService.changeUserPassword(dto) != null) {
                     ResponseEntity.status(HttpStatus.OK).build()

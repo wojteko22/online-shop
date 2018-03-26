@@ -22,8 +22,8 @@ class UpdateUserDto(
 )
 
 class UpdatePasswordUserDto(
-        val id: Long = 1,
-        val oldPassword: String = "test",
-        val password: String = "qwe",
-        val passwordConfirmation: String = "qwe"
+        val id: Long,
+        val oldPassword: String,
+        val password: String,
+        val passwordConfirmation: String
 )
