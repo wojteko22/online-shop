@@ -4,6 +4,7 @@ import { RegisterService } from './register.service';
 import { RegisterUserComponent } from '../register-user/register-user.component';
 import { RegisterShopComponent } from '../register-shop/register-shop.component';
 import { UserDto } from './UserDto';
+import { ShopWithOwner } from './shop-with-owner';
 
 @Component({
   selector: 'app-register-owner',
@@ -51,8 +52,12 @@ export class RegisterComponent implements OnInit {
   }
 
   private createShop(user: UserDto) {
-    user.role = 'CUSTOMER'; // todo: poprawić
-    return this.registerService.register(user); // todo: poprawić
+    user.role = 'SHOP_OWNER';
+    const shopWithOwner: ShopWithOwner = {
+      shop: this.registerShopComponent.data(),
+      owner: user
+    };
+    return this.registerService.registerShop(shopWithOwner);
   }
 
   private createUser(user: UserDto) {
