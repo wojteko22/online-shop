@@ -5,6 +5,8 @@ import { RegisterUserComponent } from '../register-user/register-user.component'
 import { RegisterShopComponent } from '../register-shop/register-shop.component';
 import { UserDto } from './UserDto';
 import { ShopWithOwner } from './shop-with-owner';
+import { MatSnackBar } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register-owner',
@@ -21,7 +23,7 @@ export class RegisterComponent implements OnInit {
   roles = ['klient', 'sklep'];
   selectedRole: string = this.roles[0];
 
-  constructor(private fb: FormBuilder, private registerService: RegisterService) {
+  constructor(private fb: FormBuilder, private registerService: RegisterService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -41,7 +43,10 @@ export class RegisterComponent implements OnInit {
   onSubmit() {
     const user = this.registerUserComponent.data();
     const response$ = this.prepareProperRequest(user);
-    response$.subscribe(() => this.status = 'Zarejestrowano pomyślnie!');
+    response$.subscribe(
+      () => this.status = 'Zarejestrowano pomyślnie!',
+      error => this.handle(error)
+    );
   }
 
   private prepareProperRequest(user: UserDto) {
@@ -63,5 +68,11 @@ export class RegisterComponent implements OnInit {
   private createUser(user: UserDto) {
     user.role = 'CUSTOMER';
     return this.registerService.register(user);
+  }
+
+  private handle(error: HttpErrorResponse) {
+    this.snackBar.open(error.error.message, null, {
+      duration: 3000
+    });
   }
 }

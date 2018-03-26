@@ -17,59 +17,46 @@ class SignUpService(private val userRepository: UserRepository,
                     private val shopRepository: ShopRepository,
                     private val passwordEncoder: PasswordEncoder) {
 
-    fun addCustomer(customer: CreateUserDto): User? {
-
-        if (isValidCreateUserDto(customer)) {
-
-            val role: UserRole = userRoleRepository.findByRole("CUSTOMER")
-            val user = getUserFromDTOAndRole(customer, role)
-
-            return userRepository.save(user)
-        }
-        return null
+    fun addCustomer(customer: CreateUserDto): Long {
+        validate(customer)
+        val role: UserRole = userRoleRepository.findByRole("CUSTOMER")
+        val user = getUserFromDTOAndRole(customer, role)
+        val savedUser = userRepository.save(user)
+        return savedUser.id
     }
 
-    fun addShop(owner: CreateUserDto, shopDto: CreateShopDto): Shop? {
-        if (isValidCreateUserDto(owner)) {
-            val role: UserRole = userRoleRepository.findByRole("SHOP_OWNER")
-            val user: User = getUserFromDTOAndRole(owner, role)
-            val shop = Shop(shopDto.name, shopDto.city, shopDto.street, shopDto.postCode, user)
-
-            return shopRepository.save(shop)
-        }
-        return null
+    fun addShop(owner: CreateUserDto, shopDto: CreateShopDto): Long {
+        validate(owner)
+        val role: UserRole = userRoleRepository.findByRole("SHOP_OWNER")
+        val user: User = getUserFromDTOAndRole(owner, role)
+        val shop = Shop(shopDto.name, shopDto.city, shopDto.street, shopDto.postCode, user)
+        val savedShop =  shopRepository.save(shop)
+        return savedShop.id
     }
 
-    fun addVendorToShop(shopId: Long, vendorDTO: CreateUserDto): Shop? {
-
-        if (isValidCreateUserDto(vendorDTO)) {
-            val role: UserRole = userRoleRepository.findByRole("VENDOR")
-            val user: User = getUserFromDTOAndRole(vendorDTO, role)
-            val shop: Shop = shopRepository.findById(shopId) ?: throw NoSuchElementException("Shop doesn't exists!")
-
-            shop.vendors.add(user)
-            return shopRepository.save(shop)
-        }
-        return null
+    fun addVendorToShop(shopId: Long, vendorDTO: CreateUserDto): Long {
+        validate(vendorDTO)
+        val role: UserRole = userRoleRepository.findByRole("VENDOR")
+        val user: User = getUserFromDTOAndRole(vendorDTO, role)
+        val shop: Shop = shopRepository.findById(shopId) ?: throw NoSuchElementException("Shop doesn't exists!")
+        shop.vendors.add(user)
+        return user.id
     }
 
 
-    private fun isValidCreateUserDto(createUserDto: CreateUserDto): Boolean {
-
-        if (!createUserDto.password.equals(createUserDto.passwordConfirmation))
-            return false
-
+    private fun validate(createUserDto: CreateUserDto) {
+        if (createUserDto.password != createUserDto.passwordConfirmation) {
+            throw IllegalArgumentException("Passwords are different")
+        }
         if (userRepository.findByEmail(createUserDto.email) != null) {
-            return false
+            throw IllegalStateException("There is already user with such email")
         }
-
-        return true
     }
 
     private fun getUserFromDTOAndRole(createUserDto: CreateUserDto, role: UserRole): User {
         return User(createUserDto.email,
                 passwordEncoder.encode(createUserDto.password),
-                createUserDto.passwordConfirmation,
+                createUserDto.name,
                 role)
     }
 }
