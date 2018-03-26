@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { matchOtherValidator } from '../register-owner/match-other.directive';
+import { matchOtherValidator } from '../match-other.directive';
 import {PasswordService} from "./password.service";
 import {UpdateUserPassword} from "./updateUserPassword";
 import {CustomerService} from "../customer/customer.service";

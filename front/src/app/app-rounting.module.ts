@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ShopsComponent } from './shops/shops.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterOwnerComponent } from './register-owner/register-owner.component';
+import { RegisterComponent } from './register/register.component';
 import {CustomerComponent} from "./customer/customer.component";
 import {AlwaysAuthGuard} from "./always-auth.guard";
 import { PasswordComponent } from './password/password.component';
@@ -31,7 +31,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'register',
-    component: RegisterOwnerComponent,
+    component: RegisterComponent,
     canActivate: [SignedOutGuard],
   },
   {
