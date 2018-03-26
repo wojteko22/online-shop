@@ -22,9 +22,10 @@ class UserService(private val userRepository: UserRepository) {
     }
 
     fun changeUserPassword(dto: UpdatePasswordUserDto): User? {
-        if(isValidUpdatePasswordDto(dto)){
+        if (isValidUpdatePasswordDto(dto)) {
             val user: User? = userRepository.findById(dto.id)
-            user?.password = passwordEncoder.encode(dto.password)
+            if (passwordEncoder.matches(dto.oldPassword, user?.password))
+                user?.password = passwordEncoder.encode(dto.password)
             return userRepository.save(user)
         }
         return null
@@ -33,4 +34,4 @@ class UserService(private val userRepository: UserRepository) {
     private fun isValidUpdatePasswordDto(dto: UpdatePasswordUserDto): Boolean {
         return dto.password.equals(dto.passwordConfirmation)
     }
-}
+}   

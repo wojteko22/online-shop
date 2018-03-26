@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { matchOtherValidator } from '../register-owner/match-other.directive';
+import { matchOtherValidator } from '../match-other.directive';
 import {PasswordService} from "./password.service";
 import {UpdateUserPassword} from "./updateUserPassword";
 import {UserService} from "../user/user.service";
@@ -37,9 +37,6 @@ export class PasswordComponent implements OnInit {
       updateUserPassDto.oldPassword=this.form.value.oldProgram;
       updateUserPassDto.password=this.form.value.password;
       updateUserPassDto.passwordConfirmation=this.form.value.passwordConfirmation;
-      console.log(JSON.stringify(updateUserPassDto));
-      this.passSrv.changeUserPassword(updateUserPassDto).subscribe((result) =>
-        console.log(result));
-
+      this.passSrv.changeUserPassword(updateUserPassDto).subscribe((result) => console.log(result));
   }
 }

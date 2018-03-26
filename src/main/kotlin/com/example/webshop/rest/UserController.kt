@@ -16,7 +16,7 @@ class UserController(private val userService: UserService) {
     fun me(principal: Principal): UserDto = userService.getUserByEmail(principal.name)!!.toDto()
 
     @PutMapping("/password")
-    fun changePassword(dto: UpdatePasswordUserDto, principal: Principal): ResponseEntity<HttpStatus> =
+    fun changePassword(@RequestBody dto: UpdatePasswordUserDto, principal: Principal): ResponseEntity<HttpStatus> =
             if (userService.getUserById(dto.id)?.email == principal.name) {
                 if (userService.changeUserPassword(dto) != null) {
                     ResponseEntity.status(HttpStatus.OK).build()

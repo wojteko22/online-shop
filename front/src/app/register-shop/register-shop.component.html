@@ -1,0 +1,21 @@
+<form [formGroup]="form">
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Nazwa sklepu" formControlName="name" required>
+    <mat-error *ngIf="form.get('name').hasError('required')">Pole wymagane</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Miejscowość" formControlName="city" required>
+    <mat-error *ngIf="form.get('city').hasError('required')">Pole wymagane</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Ulica" formControlName="street" required>
+    <mat-error *ngIf="form.get('street').hasError('required')">Pole wymagane</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Kod pocztowy" formControlName="postCode" required>
+    <mat-error *ngIf="form.get('postCode').hasError('required')">Pole wymagane</mat-error>
+  </mat-form-field>
+</form>

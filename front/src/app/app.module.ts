@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
@@ -10,10 +10,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RegisterOwnerComponent } from './register-owner/register-owner.component';
+import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
 import { PasswordComponent } from './password/password.component';
 import { CredentialsService } from './credentials.service';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { RegisterUserComponent } from './register-user/register-user.component';
+import { RegisterShopComponent } from './register-shop/register-shop.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { TreeModule } from 'angular-tree-component';
 
@@ -23,10 +26,13 @@ import { TreeModule } from 'angular-tree-component';
     AppComponent,
     ShopsComponent,
     LoginComponent,
-    RegisterOwnerComponent,
+    RegisterComponent,
     LoginComponent,
     UserComponent,
     PasswordComponent,
+    NotFoundComponent,
+    RegisterUserComponent,
+    RegisterShopComponent,
     CategoriesComponent,
   ],
   imports: [
@@ -36,9 +42,11 @@ import { TreeModule } from 'angular-tree-component';
     MaterialModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    FormsModule,
     TreeModule,
   ],
   providers: [CredentialsService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

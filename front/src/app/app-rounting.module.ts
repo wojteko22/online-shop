@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ShopsComponent } from './shops/shops.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterOwnerComponent } from './register-owner/register-owner.component';
-import {UserComponent} from "./user/user.component";
-import {AlwaysAuthGuard} from "./always-auth.guard";
+import { UserComponent } from './user/user.component';
+import { RegisterComponent } from './register/register.component';
+import { AlwaysAuthGuard } from './always-auth.guard';
 import { PasswordComponent } from './password/password.component';
-import {CategoriesComponent} from "./categories/categories.component";
+import { CategoriesComponent } from './categories/categories.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { SignedOutGuard } from './signed-out-guard.service';
 
 const appRoutes: Routes = [
   {
@@ -14,13 +16,9 @@ const appRoutes: Routes = [
     component: ShopsComponent,
   },
   {
-    path: 'login',
-    component: LoginComponent,
-  },
-  {
     path: 'profil',
     component: UserComponent,
-    canActivate: [AlwaysAuthGuard]
+    canActivate: [AlwaysAuthGuard],
   },
   {
     path: 'password',
@@ -30,16 +28,26 @@ const appRoutes: Routes = [
   {
     path: 'categories',
     component: CategoriesComponent,
-    canActivate: [AlwaysAuthGuard]
+    canActivate: [AlwaysAuthGuard],
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [SignedOutGuard],
   },
   {
     path: 'register',
-    component: RegisterOwnerComponent,
+    component: RegisterComponent,
+    canActivate: [SignedOutGuard],
   },
   {
     path: '',
     redirectTo: '/shops',
-    pathMatch: 'full'
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
 ];
 
@@ -49,7 +57,7 @@ const appRoutes: Routes = [
       appRoutes
     )
   ],
-  providers: [AlwaysAuthGuard],
+  providers: [AlwaysAuthGuard, SignedOutGuard],
   exports: [
     RouterModule
   ],
