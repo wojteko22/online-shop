@@ -11,12 +11,14 @@ import { LoginComponent } from './login/login.component';
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterComponent } from './register/register.component';
-import { CustomerComponent } from './customer/customer.component';
+import { UserComponent } from './user/user.component';
 import { PasswordComponent } from './password/password.component';
 import { CredentialsService } from './credentials.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { RegisterShopComponent } from './register-shop/register-shop.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { TreeModule } from 'angular-tree-component';
 
 
 @NgModule({
@@ -26,11 +28,12 @@ import { RegisterShopComponent } from './register-shop/register-shop.component';
     LoginComponent,
     RegisterComponent,
     LoginComponent,
-    CustomerComponent,
+    UserComponent,
     PasswordComponent,
     NotFoundComponent,
     RegisterUserComponent,
     RegisterShopComponent,
+    CategoriesComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +43,7 @@ import { RegisterShopComponent } from './register-shop/register-shop.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
+    TreeModule,
   ],
   providers: [CredentialsService],
   bootstrap: [AppComponent]

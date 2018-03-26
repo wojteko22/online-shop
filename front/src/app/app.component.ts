@@ -37,6 +37,11 @@ export class AppComponent {
       label: 'Zarejestruj się',
       visibility: Visibility.SignedOut,
     },
+    {
+      path: '/categories',
+      label: 'Kategorie',
+      visibility: Visibility.SignedIn,
+    },
   ];
 
   visible(visibility: Visibility) {

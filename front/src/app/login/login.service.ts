@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Credentials } from './credentials';
+import {CredentialsService} from "../credentials.service";
+
 
 @Injectable()
 export class LoginService {
   url = environment.apiUrl + '/oauth/token';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private credentialsService: CredentialsService) {
   }
 
   login(credentials: Credentials): Observable<any> {
@@ -23,4 +25,8 @@ export class LoginService {
       },
     });
   }
+
+
+
+
 }

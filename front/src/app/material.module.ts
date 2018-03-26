@@ -5,6 +5,7 @@ import {
   MatRadioModule,
   MatSnackBarModule,
   MatTabsModule,
+  MatExpansionModule,
 } from '@angular/material';
 
 @NgModule({
@@ -14,6 +15,7 @@ import {
     MatTabsModule,
     MatSnackBarModule,
     MatRadioModule,
+    MatExpansionModule
   ]
 })
 export class MaterialModule {

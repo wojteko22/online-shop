@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ShopsComponent } from './shops/shops.component';
 import { LoginComponent } from './login/login.component';
+import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
-import {CustomerComponent} from "./customer/customer.component";
-import {AlwaysAuthGuard} from "./always-auth.guard";
+import { AlwaysAuthGuard } from './always-auth.guard';
 import { PasswordComponent } from './password/password.component';
+import { CategoriesComponent } from './categories/categories.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import {SignedOutGuard} from "./signed-out-guard.service";
+import { SignedOutGuard } from './signed-out-guard.service';
 
 const appRoutes: Routes = [
   {
@@ -16,12 +17,17 @@ const appRoutes: Routes = [
   },
   {
     path: 'profil',
-    component: CustomerComponent,
+    component: UserComponent,
     canActivate: [AlwaysAuthGuard],
   },
   {
     path: 'password',
     component: PasswordComponent,
+    canActivate: [AlwaysAuthGuard]
+  },
+  {
+    path: 'categories',
+    component: CategoriesComponent,
     canActivate: [AlwaysAuthGuard],
   },
   {

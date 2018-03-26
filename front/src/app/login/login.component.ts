@@ -40,12 +40,12 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const credentials = this.form.value as Credentials;
     this.loginService.login(credentials).subscribe(
-      (tokenData: TokenData) => this.save(tokenData),
+      (tokenData: TokenData) => this.saveToken(tokenData),
       error => this.handleError(error)
     );
   }
 
-  private save(tokenData: TokenData) {
+  private saveToken(tokenData: TokenData) {
     this.credentialsService.saveToken(tokenData);
     this.router.navigate(['/profil']);
   }

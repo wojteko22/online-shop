@@ -15,37 +15,39 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
 class DataLoader {
 
+
+
     @Bean
-    fun initUserRoleRep(repository: UserRoleRepository) = CommandLineRunner{
-        repository.save(UserRole("CUSTOMER", "Rola klienta sklepu..."))
-        repository.save(UserRole("VENDOR", "Rola sprzedawcy...."))
-        repository.save(UserRole("SHOP_OWNER", "Własciciel sklepu..."))
+    fun initUser(userRepository: UserRepository, roleRepository: UserRoleRepository) = CommandLineRunner {
+
+
+        roleRepository.save(UserRole("CUSTOMER", "Rola klienta sklepu..."))
+        roleRepository.save(UserRole("SELLER", "Rola sprzedawcy...."))
+        roleRepository.save(UserRole("SHOP_OWNER", "Rola sprzedawcy...."))
+        val owner = User("test@test.pl", BCryptPasswordEncoder().encode("test"), "Jan Nowak", roleRepository.findByRole("SHOP_OWNER"))
+        userRepository.save(owner)
     }
 
     @Bean
-    fun initUserRep(repository: UserRepository) = CommandLineRunner {
-        val encoder: PasswordEncoder = BCryptPasswordEncoder()
-        val user = User("test@test.pl",
-                encoder.encode("test"),
-                "Jan Nowak",
-                UserRole("CUSTOMER", "Domyślna rola użytkownika...", 1))
-        repository.save(user)
+    fun initShop(shopRepository: ShopRepository, userRepository: UserRepository) = CommandLineRunner {
+        val shop = Shop("Żabcia", "Wrocław", "Grunwaldzka", "50-387", userRepository.findByEmail("test@test.pl")!!)
+        shopRepository.save(shop)
     }
 
     @Bean
-    fun initCategories(repository: CategoryRepository) = CommandLineRunner {
-        val pieczywo = Category("Pieczywo")
-        val nabial = Category("Nabial")
-        val sery = Category("Sery", nabial)
-        val maslo = Category("Maslo", nabial)
-        val mleko = Category("Mleko", nabial)
-        val bialySer = Category("Biale", sery)
-        val zoltySer = Category("Zolte", sery)
+    fun initCategories(repository: CategoryRepository, shopRepository: ShopRepository) = CommandLineRunner {
+        val shop = shopRepository.findByName("Żabcia")!!
+        val pieczywo = Category("Pieczywo", shop)
+        val nabial = Category("Nabial", shop)
+        val sery = Category("Sery", shop, nabial)
+        val maslo = Category("Maslo", shop, nabial)
+        val mleko = Category("Mleko", shop, nabial)
+        val bialySer = Category("Biale", shop, sery)
+        val zoltySer = Category("Zolte", shop, sery)
 
         repository.save(pieczywo)
         repository.save(nabial)
@@ -54,18 +56,6 @@ class DataLoader {
         repository.save(mleko)
         repository.save(bialySer)
         repository.save(zoltySer)
-    }
-
-    @Bean
-    fun init(repository: ShopRepository) = CommandLineRunner {
-
-        val user = User("test@test.pl",
-        BCryptPasswordEncoder().encode("test"),
-        "Jan Nowak",
-        UserRole("CUSTOMER", "Domyślna rola użytkownika...", 1), 1);
-
-        repository.save(Shop("Żabcia", "Wrocław", "Grunwaldzka", "50-387", user))
-
     }
 
 }

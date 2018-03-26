@@ -12,7 +12,7 @@ import java.security.Principal
 @RequestMapping(("/user"))
 class UserController(private val userService: UserService) {
 
-    @PostMapping("/me")
+    @GetMapping("/me")
     fun me(principal: Principal): UserDto = userService.getUserByEmail(principal.name)!!.toDto()
 
     @PutMapping("/password")

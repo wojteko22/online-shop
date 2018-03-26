@@ -3,18 +3,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { matchOtherValidator } from '../match-other.directive';
 import {PasswordService} from "./password.service";
 import {UpdateUserPassword} from "./updateUserPassword";
-import {CustomerService} from "../customer/customer.service";
+import {UserService} from "../user/user.service";
+import {CredentialsService} from "../credentials.service";
 
 @Component({
   selector: 'app-password',
   templateUrl: './password.component.html',
   styleUrls: ['./password.component.css'],
-  providers: [PasswordService, CustomerService]
+  providers: [PasswordService, UserService]
 })
 export class PasswordComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private passSrv: PasswordService, private cSrv: CustomerService) {
+  constructor(private fb: FormBuilder, private passSrv: PasswordService, private cSrv: CredentialsService) {
     this.createForm();
   }
 
@@ -31,13 +32,11 @@ export class PasswordComponent implements OnInit {
 
   onSubmit() {
     let updateUserPassDto = this.form.value as UpdateUserPassword;
-    this.cSrv.getLoggedUser().subscribe((user) => {
-      updateUserPassDto.id=user.id;
-      updateUserPassDto.oldPassword=this.form.value.oldPassword;
+
+      updateUserPassDto.id=localStorage.getItem("userId");
+      updateUserPassDto.oldPassword=this.form.value.oldProgram;
       updateUserPassDto.password=this.form.value.password;
       updateUserPassDto.passwordConfirmation=this.form.value.passwordConfirmation;
-      this.passSrv.changeUserPassword(updateUserPassDto).subscribe((result) =>
-        console.log(result));
-    });
+      this.passSrv.changeUserPassword(updateUserPassDto).subscribe((result) => console.log(result));
   }
 }

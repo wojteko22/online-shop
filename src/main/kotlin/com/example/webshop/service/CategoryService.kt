@@ -1,13 +1,13 @@
 package com.example.webshop.service
 
 import com.example.webshop.entity.Category
+import com.example.webshop.entity.dto.CategoryDto
 import com.example.webshop.repository.CategoryRepository
+import com.example.webshop.repository.ShopRepository
 import org.springframework.stereotype.Service
 
 @Service
-class CategoryService(private val categoryRepository: CategoryRepository) {
-
-    fun findAll() = categoryRepository.findByParentCategoryIsNull()
+class CategoryService(private val categoryRepository: CategoryRepository, private val shopRepository: ShopRepository) {
 
     fun save(categoryWithoutParent: Category, parentCategoryId: String) {
         val categoryToSave = categoryToSave(categoryWithoutParent, parentCategoryId)
@@ -55,4 +55,27 @@ class CategoryService(private val categoryRepository: CategoryRepository) {
 
     private fun getForbiddenParentCategories(category: Category): Set<Category> =
             category.subcategories + category.subcategories.flatMap { getForbiddenParentCategories(it) }
+
+    fun findByShopId(shopId: Long): Iterable<CategoryDto> {
+        val shop = shopRepository.findById(shopId)!!
+        val categories = categoryRepository.findByShop(shop)
+        return toCategoryDto(categories)
+    }
+
+    private fun toCategoryDto(categories: Iterable<Category>): MutableList<CategoryDto> {
+        val categoriesDto: MutableSet<CategoryDto> = mutableSetOf<CategoryDto>()
+        categories.forEach { categoriesDto.add(CategoryDto(it.name,it.parentCategory?.id,it.id, mutableSetOf())) }
+
+        for (categoryDto1 in categoriesDto){
+            for (categoryDto2 in categoriesDto){
+                if (categoryDto1.parentCategory==categoryDto2.id){
+                    categoryDto2.subcategories.add(categoryDto1)
+                }
+            }
+        }
+        val categoryDtoDistinct = mutableListOf<CategoryDto>()
+        categoriesDto.forEach { if (it.parentCategory==null) categoryDtoDistinct.add(it) }
+        return categoryDtoDistinct
+    }
+
 }

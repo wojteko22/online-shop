@@ -3,31 +3,30 @@ package com.example.webshop.rest
 import com.example.webshop.entity.Category
 import com.example.webshop.service.CategoryService
 import org.springframework.web.bind.annotation.*
-import java.security.Principal
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping
 class CategoryController(private val categoryService: CategoryService) {
 
-    @GetMapping
-    fun showCategories() = categoryService.findAll()
+    @GetMapping("/{shop_id}/categories")
+    fun showCategories(@PathVariable shop_id: Long) = categoryService.findByShopId(shop_id)
 
-    @PostMapping
-    fun addCategory(@RequestBody category: Category,
+    @PostMapping("{shop_id}/categories")
+    fun addCategory(@PathVariable shop_id: Long, @RequestBody category: Category,
                     @RequestParam parentCategoryId: String) {
-            categoryService.save(category, parentCategoryId)
+        categoryService.save(category, parentCategoryId)
     }
 
-    @DeleteMapping("/{id}")
-    fun deleteCategory(@PathVariable id: Long) {
+    @DeleteMapping("{shop_id}/categories/{id}")
+    fun deleteCategory(@PathVariable shop_id: Long, @PathVariable id: Long) {
         categoryService.deleteById(id)
     }
 
-    @PatchMapping("/{id}")
-    fun updateCategory(
-            @PathVariable id: Long,
-            @RequestParam(required = false) parentCategoryId: String?,
-            @RequestParam categoryNewName: String
+    @PatchMapping("{shop_id}/categories/{id}")
+    fun updateCategory(@PathVariable shop_id: Long,
+                       @PathVariable id: Long,
+                       @RequestParam(required = false) parentCategoryId: String?,
+                       @RequestParam categoryNewName: String
     ) {
         categoryService.update(id, parentCategoryId, categoryNewName)
     }
