@@ -38,7 +38,13 @@ export class CategoriesComponent implements OnInit {
       $event.to.parent.name,
       "at index",
       $event.to.index);
-    this.categoryService.editCategory($event.node.id, $event.to.parent.id, $event.node.name).subscribe(() => `Category ${$event.node.name} updated`);
+    this.categoryService.editCategory($event.node.id, $event.to.parent.id, $event.node.name)
+      .subscribe(
+        () => {
+          `Category ${$event.node.name} updated`
+        }
+      );
+
   }
 
   ngOnInit() {
@@ -62,7 +68,6 @@ export class CategoriesComponent implements OnInit {
     const node = this.treeComponent.treeModel.getNodeBy((it) => it.id == id);
     node.hide();
     this.treeComponent.treeModel.update();
-    // location.reload();
   }
 }
 

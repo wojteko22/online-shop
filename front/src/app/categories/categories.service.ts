@@ -34,10 +34,7 @@ export class CategoriesService {
   }
 
   editCategory(id: number, parentId: number, newName: string) {
-    const header = this.headers;
-    header.append("parentCategoryId", parentId.toString());
-    header.append("categoryNewName", newName);
-    return this.http.post<Category[]>(this.categoriesUrl + `/${id}`, 0, {headers: header});
+    return this.http.post(this.categoriesUrl + `/${id}?newName=${newName}&parentId=${parentId}`, 0, {headers: this.headers});
   }
 
 }
