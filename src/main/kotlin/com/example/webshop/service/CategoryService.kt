@@ -18,8 +18,8 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
     private fun categoryToSave(createCategoryDto: CreateCategoryDto): Category {
         val shop = shopRepository.findById(createCategoryDto.shopId)
         val category = Category(createCategoryDto.name, shop!!)
-        return if (createCategoryDto.parentCategory != null) {
-            val parentCategory: Category = categoryRepository.getOne(createCategoryDto.parentCategory.toLong())
+        return if (createCategoryDto.parentCategoryId != null) {
+            val parentCategory: Category = categoryRepository.getOne(createCategoryDto.parentCategoryId)
             category.copy(parentCategory = parentCategory)
         } else {
             category
