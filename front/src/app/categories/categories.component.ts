@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Category} from './Category';
 import {CategoriesService} from "./categories.service";
 import {ITreeOptions} from "angular-tree-component";
-import {FormGroup} from "@angular/forms";
 import {UserService} from "../user/user.service";
 
 @Component({
@@ -25,15 +24,10 @@ export class CategoriesComponent implements OnInit {
     allowDrop: true
   };
 
-  constructor(private categoryService: CategoriesService, private customerService : UserService) {
+  constructor(private categoryService: CategoriesService) {
   }
 
   ngOnInit() {
-    if (localStorage.getItem("userEmail")==null){
-      this.customerService.getUserInfo().subscribe(
-        (userDto => this.customerService.saveUserSession(userDto))
-      );
-    }
     this.getCategories()
   }
 

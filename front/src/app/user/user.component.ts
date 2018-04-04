@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "./user.service";
 
 @Component({
@@ -18,10 +18,8 @@ export class UserComponent implements OnInit {
   id: string;
 
   ngOnInit() {
-    if (localStorage.getItem("userEmail")==null){
-      this.userService.getUserInfo().subscribe(
-        (userDto => this.userService.saveUserSession(userDto))
-      );
+    if (!this.userService.isUserInfoInLocalStorage()) {
+      this.userService.getAndSaveUserInfoToLocalStorage();
     }
     this.id=localStorage.getItem("userId");
     this.email=localStorage.getItem("userEmail");

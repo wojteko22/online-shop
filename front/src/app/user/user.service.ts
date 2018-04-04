@@ -10,14 +10,24 @@ export class UserService {
   constructor(private http: HttpClient, private credentialsService: CredentialsService) {
   }
 
-  getUserInfo(): Observable<any> {
+  getAndSaveUserInfoToLocalStorage() {
+    this.getUserInfo().subscribe(
+      (userDto => this.saveUserSession(userDto))
+    );
+  }
+
+  isUserInfoInLocalStorage(): boolean {
+    return localStorage.getItem("userEmail") != null;
+  }
+
+  private getUserInfo(): Observable<any> {
     const url = environment.apiUrl + "/user/me";
     const headers: HttpHeaders = this.credentialsService.getAuthorizedHeader();
     location.reload();
     return this.http.get(url, {headers: headers})
   }
 
-  saveUserSession(userDto: UserDto) {
+  private saveUserSession(userDto: UserDto) {
     localStorage.setItem("userId", userDto.id.toString());
     localStorage.setItem("userEmail", userDto.email);
     localStorage.setItem("userRole", userDto.role);
