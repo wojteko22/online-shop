@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Category} from './Category';
 import {CategoriesService} from "./categories.service";
-import {ITreeOptions} from "angular-tree-component";
+import {ITreeOptions, TreeComponent} from "angular-tree-component";
 import {UserService} from "../user/user.service";
 
 @Component({
@@ -12,9 +12,11 @@ import {UserService} from "../user/user.service";
 })
 export class CategoriesComponent implements OnInit {
 
-
   categories: Category[];
-  modifiedCategories: Category[];
+  flatCategories: Category[];
+  @ViewChild(TreeComponent)
+  private treeComponent: TreeComponent;
+
 
   options: ITreeOptions = {
     idField: 'id',
@@ -25,15 +27,46 @@ export class CategoriesComponent implements OnInit {
   };
 
   constructor(private categoryService: CategoriesService) {
+
+  }
+
+  onMoveNode($event) {
+    console.log(
+      "Moved",
+      $event.node.name,
+      "to",
+      $event.to.parent.name,
+      "at index",
+      $event.to.index);
+    this.categoryService.editCategory($event.node.id, $event.to.parent.id, $event.node.name).subscribe(() => `Category ${$event.node.name} updated`);
   }
 
   ngOnInit() {
-    this.getCategories()
+    this.getCategories();
   }
 
   getCategories(): void {
     this.categoryService.getCategories().subscribe(categories => this.categories = categories)
   }
 
+  edit(id: number): void {
 
+  }
+
+  add(parentId?: number) {
+
+  }
+
+  delete(id: number): void {
+    this.categoryService.deleteCategory(id).subscribe(() => console.log(`category ${id} deleted`));
+    const node = this.treeComponent.treeModel.getNodeBy((it) => it.id == id);
+    node.hide();
+    this.treeComponent.treeModel.update();
+    // location.reload();
+  }
 }
+
+
+
+
+

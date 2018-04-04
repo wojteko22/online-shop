@@ -21,7 +21,7 @@ class CategoryController(private val categoryService: CategoryService) {
         categoryService.deleteById(id)
     }
 
-    @PatchMapping("{shop_id}/categories/{id}")
+    @PostMapping("{shop_id}/categories/{id}")
     fun updateCategory(@PathVariable shop_id: Long,
                        @PathVariable id: Long,
                        @RequestParam(required = false) parentCategoryId: String?,

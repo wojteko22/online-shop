@@ -5,20 +5,39 @@ import {Observable} from "rxjs/Observable";
 import {Category} from "./Category";
 import {CredentialsService} from "../credentials.service";
 import {UserService} from "../user/user.service";
+import {CategoryDto} from "./CategoryDto";
+
 
 @Injectable()
 export class CategoriesService {
-  shopId : string = localStorage.getItem("shopId");
-  categoriesUrl = environment.apiUrl  + '/' + this.shopId + '/categories';
+  shopId: string = localStorage.getItem("shopId");
+  private categoriesUrl = environment.apiUrl + '/' + this.shopId + '/categories';
+  private headers: HttpHeaders;
 
   constructor(private http: HttpClient, private credentialsService: CredentialsService, private customerService: UserService) {
     if (!this.customerService.isUserInfoInLocalStorage()) {
       this.customerService.getAndSaveUserInfoToLocalStorage();
     }
+    this.headers = this.credentialsService.getAuthorizedHeader();
   }
 
   getCategories(): Observable<Category[]> {
-    const headers: HttpHeaders = this.credentialsService.getAuthorizedHeader();
-    return this.http.get<Category[]>(this.categoriesUrl,{headers: headers});
+    return this.http.get<Category[]>(this.categoriesUrl, {headers: this.headers});
   }
+
+  addCategory(createCategoryDto: CategoryDto) {
+    return this.http.post<Category[]>(this.categoriesUrl, createCategoryDto, {headers: this.headers});
+  }
+
+  deleteCategory(id: number) {
+    return this.http.delete<Category[]>(this.categoriesUrl + `/${id}`, {headers: this.headers});
+  }
+
+  editCategory(id: number, parentId: number, newName: string) {
+    const header = this.headers;
+    header.append("parentCategoryId", parentId.toString());
+    header.append("categoryNewName", newName);
+    return this.http.post<Category[]>(this.categoriesUrl + `/${id}`, 0, {headers: header});
+  }
+
 }

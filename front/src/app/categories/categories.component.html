@@ -1,4 +1,46 @@
-<tree-root [nodes]="categories" [options]="options"></tree-root>
+<!--<mat-card class="example-card">-->
+<!--<mat-card-header>-->
+<!--<div mat-card-avatar class="example-header-image"></div>-->
+<!--<mat-card-title>Shiba Inu</mat-card-title>-->
+<!--<mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
+<!--</mat-card-header>-->
+<!--<img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">-->
+<!--<mat-card-content>-->
+<!--<p>-->
+<!--The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.-->
+<!--A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally-->
+<!--bred for hunting.-->
+<!--</p>-->
+<!--</mat-card-content>-->
+<!--<mat-card-actions>-->
+<!--<button mat-button>LIKE</button>-->
+<!--<button mat-button>SHARE</button>-->
+<!--</mat-card-actions>-->
+<!--</mat-card>-->
+
+
+<!--<form class="example-form" id="form">-->
+<!--<span>Dodaj Nową kategorię</span>-->
+<!--<mat-form-field class="example-full-width">-->
+<!--<input matInput placeholder="Nazwa kategorii">-->
+<!--</mat-form-field>-->
+
+
+<!--</form>-->
+
+
+<!--<tree-root [nodes]="categories" [options]="options"></tree-root>-->
+
+
+<button mat-button color="accent" (click)="add()">+</button>
+<tree-root [nodes]="categories" [options]="options" (moveNode)="onMoveNode($event)">
+  <ng-template #treeNodeTemplate let-node let-index="index">
+    <span>{{ node.data.name }}</span>
+    <button mat-button color="accent" (click)="edit(node.id)">Edytuj</button>
+    <button mat-button color="accent" (click)="add(node.id)">+</button>
+    <button *ngIf="node.isLeaf" mat-button color="accent" (click)="delete(node.id)">x</button>
+  </ng-template>
+</tree-root>
 
 
 
