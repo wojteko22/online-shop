@@ -13,6 +13,7 @@ export class UserService {
   getUserInfo(): Observable<any> {
     const url = environment.apiUrl + "/user/me";
     const headers: HttpHeaders = this.credentialsService.getAuthorizedHeader();
+    location.reload();
     return this.http.get(url, {headers: headers})
   }
 

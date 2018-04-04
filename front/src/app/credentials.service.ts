@@ -16,6 +16,7 @@ export class CredentialsService {
   }
 
   logOut() {
+    localStorage.clear()
     Cookie.delete(this.tokenCookieName);
   }
 
