@@ -1,6 +1,6 @@
 package com.example.webshop.rest
 
-import com.example.webshop.entity.Category
+import com.example.webshop.entity.dto.CreateCategoryDto
 import com.example.webshop.service.CategoryService
 import org.springframework.web.bind.annotation.*
 
@@ -12,9 +12,8 @@ class CategoryController(private val categoryService: CategoryService) {
     fun showCategories(@PathVariable shop_id: Long) = categoryService.findByShopId(shop_id)
 
     @PostMapping("{shop_id}/categories")
-    fun addCategory(@PathVariable shop_id: Long, @RequestBody category: Category,
-                    @RequestParam parentCategoryId: String) {
-        categoryService.save(category, parentCategoryId)
+    fun addCategory(@RequestBody createCategoryDto: CreateCategoryDto) {
+        categoryService.save(createCategoryDto)
     }
 
     @DeleteMapping("{shop_id}/categories/{id}")
