@@ -26,7 +26,7 @@ export class CategoriesService {
   }
 
   addCategory(createCategoryDto: CategoryDto) {
-    return this.http.post<Category[]>(this.categoriesUrl, createCategoryDto, {headers: this.headers});
+    return this.http.post(this.categoriesUrl, createCategoryDto, {headers: this.headers});
   }
 
   deleteCategory(id: number) {
