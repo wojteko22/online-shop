@@ -9,12 +9,14 @@ import {CategoryDto} from "./CategoryDto";
 
 @Injectable()
 export class CategoriesService {
-  shopId: string = localStorage.getItem("shopId");
-  private categoriesUrl = environment.apiUrl + '/' + this.shopId + '/categories';
+  shopId: string;
+  private categoriesUrl: string;
   private headers: HttpHeaders;
 
   constructor(private http: HttpClient, private credentialsService: CredentialsService) {
     this.headers = this.credentialsService.getAuthorizedHeader();
+    this.shopId = this.credentialsService.getUser().shopId.toString();
+    this.categoriesUrl = environment.apiUrl + '/' + this.shopId + '/categories';
   }
 
   getCategories(): Observable<Category[]> {
