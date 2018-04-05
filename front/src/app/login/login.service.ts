@@ -2,8 +2,6 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Credentials} from './credentials';
-import {catchError} from 'rxjs/operators';
-import {handleHttpError} from '../http-error-handler';
 
 @Injectable()
 export class LoginService {
@@ -22,8 +20,6 @@ export class LoginService {
         'username': credentials.email,
         'password': credentials.password
       },
-    }).pipe(
-      catchError(handleHttpError)
-    );
+    })
   }
 }
