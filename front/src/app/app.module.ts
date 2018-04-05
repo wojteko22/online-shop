@@ -19,6 +19,7 @@ import { RegisterUserComponent } from './register-user/register-user.component';
 import { RegisterShopComponent } from './register-shop/register-shop.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { TreeModule } from 'angular-tree-component';
+import {SnackBarService} from './snack-bar.service';
 
 
 @NgModule({
@@ -45,7 +46,10 @@ import { TreeModule } from 'angular-tree-component';
     FormsModule,
     TreeModule,
   ],
-  providers: [CredentialsService],
+  providers: [
+    CredentialsService,
+    SnackBarService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
