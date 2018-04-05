@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Cookie } from 'ng2-cookies';
-import { TokenData } from './token';
-import {HttpHeaders} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {Cookie} from 'ng2-cookies';
+import {TokenData} from './token';
+import {HttpHeaders} from '@angular/common/http';
 
 @Injectable()
 export class CredentialsService {
@@ -16,7 +16,7 @@ export class CredentialsService {
   }
 
   logOut() {
-    localStorage.clear()
+    localStorage.clear();
     Cookie.delete(this.tokenCookieName);
   }
 
@@ -31,7 +31,7 @@ export class CredentialsService {
   getAuthorizedHeader(): HttpHeaders {
     return new HttpHeaders({
       'Authorization': 'Bearer ' + this.token(),
-      'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
     });
   }
 }
