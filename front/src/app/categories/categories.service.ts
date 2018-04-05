@@ -4,7 +4,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {Category} from "./Category";
 import {CredentialsService} from "../credentials.service";
-import {UserService} from "../user/user.service";
 import {CategoryDto} from "./CategoryDto";
 
 
@@ -14,10 +13,7 @@ export class CategoriesService {
   private categoriesUrl = environment.apiUrl + '/' + this.shopId + '/categories';
   private headers: HttpHeaders;
 
-  constructor(private http: HttpClient, private credentialsService: CredentialsService, private customerService: UserService) {
-    if (!this.customerService.isUserInfoInLocalStorage()) {
-      this.customerService.getAndSaveUserInfoToLocalStorage();
-    }
+  constructor(private http: HttpClient, private credentialsService: CredentialsService) {
     this.headers = this.credentialsService.getAuthorizedHeader();
   }
 

@@ -30,8 +30,6 @@ export class CategoriesComponent implements OnInit {
 
   }
 
-
-
   ngOnInit() {
     this.getCategories();
   }
@@ -80,25 +78,4 @@ export class CategoriesComponent implements OnInit {
     this.treeComponent.treeModel.update();
   }
 
-  findCategory(id: number) {
-    return this.findCategoryHelper(id, this.categories)
-  }
-
-  private findCategoryHelper(id: number, categories: Category[]): Category {
-    for (let category  of categories) {
-      if (category.id == id) {
-        return category
-      } else {
-        if (category.subcategories.length != 0) {
-          this.findCategoryHelper(id, category.subcategories)
-        }
-      }
-    }
-
-  }
 }
-
-
-
-
-
