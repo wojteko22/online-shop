@@ -2,14 +2,13 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Category} from './Category';
 import {CategoriesService} from "./categories.service";
 import {ITreeOptions, TreeComponent} from "angular-tree-component";
-import {UserService} from "../user/user.service";
 import {CategoryDto} from "./CategoryDto";
 
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.css'],
-  providers: [CategoriesService, UserService],
+  providers: [CategoriesService],
 })
 export class CategoriesComponent implements OnInit {
 
@@ -59,7 +58,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   editName(id: number, parentId: number, newName: string): void {
-    console.log(`id: ${id},  parentId: ${parentId}, newName: ${newName}`)
+    console.log(`id: ${id},  parentId: ${parentId}, newName: ${newName}`);
     this.categoryService.editCategory(id, parentId, newName).subscribe();
   }
 

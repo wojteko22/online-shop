@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from './user.service';
+import {CredentialsService} from '../-services/credentials.service';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-customer',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css'],
-  providers: [UserService]
+  styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
 
-  constructor(private userService: UserService) {
+  constructor(private credentialsService: CredentialsService) {
   }
 
   email: string;
@@ -19,29 +19,19 @@ export class UserComponent implements OnInit {
   id: string;
 
   ngOnInit() {
-    if (localStorage.getItem('userEmail') == null) {
-      this.getUserData();
-    } else {
-      this.fillFields();
-    }
-  }
-
-  private getUserData() {
-    this.userService.getUserInfo().subscribe(
-      userDto => this.saveUserData(userDto)
-    );
-  }
-
-  private saveUserData(userDto) {
-    this.userService.saveUserSession(userDto);
     this.fillFields();
   }
 
   private fillFields() {
-    this.id = localStorage.getItem('userId');
-    this.email = localStorage.getItem('userEmail');
-    this.name = localStorage.getItem('userName');
-    this.role = localStorage.getItem('userRole');
-    this.shop = localStorage.getItem('shopId');
+    const user = this.credentialsService.getUser();
+    console.log(JSON.stringify(user));
+    if (user != null) {
+      this.id = user.id.toString();
+      this.email = user.email;
+      this.name = user.name;
+      this.role = user.role;
+      if (!isNullOrUndefined(user.shopId))
+        this.shop = user.shopId.toString();
+    }
   }
 }

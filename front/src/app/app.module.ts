@@ -13,7 +13,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RegisterComponent} from './register/register.component';
 import {UserComponent} from './user/user.component';
 import {PasswordComponent} from './password/password.component';
-import {CredentialsService} from './credentials.service';
+import { CredentialsService } from './-services/credentials.service';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {RegisterUserComponent} from './register-user/register-user.component';
 import {RegisterShopComponent} from './register-shop/register-shop.component';

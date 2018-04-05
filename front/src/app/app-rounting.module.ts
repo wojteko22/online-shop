@@ -4,11 +4,13 @@ import { ShopsComponent } from './shops/shops.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
-import { AlwaysAuthGuard } from './always-auth.guard';
+import { SignedInGuard } from './-guards/signed-in/signed-in.guard';
 import { PasswordComponent } from './password/password.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { SignedOutGuard } from './signed-out-guard.service';
+import { SignedOutGuard } from './-guards/signed-out/signed-out-guard.service';
+import {ShopOwnerGuard} from './-guards/shop-owner/shop-owner.guard';
+import {CustomerGuard} from './-guards/customer/customer.guard';
 
 const appRoutes: Routes = [
   {
@@ -18,17 +20,17 @@ const appRoutes: Routes = [
   {
     path: 'profil',
     component: UserComponent,
-    canActivate: [AlwaysAuthGuard],
+    canActivate: [SignedInGuard],
   },
   {
     path: 'password',
     component: PasswordComponent,
-    canActivate: [AlwaysAuthGuard]
+    canActivate: [SignedInGuard]
   },
   {
     path: 'categories',
     component: CategoriesComponent,
-    canActivate: [AlwaysAuthGuard],
+    canActivate: [SignedInGuard, ShopOwnerGuard],
   },
   {
     path: 'login',
@@ -57,7 +59,7 @@ const appRoutes: Routes = [
       appRoutes
     )
   ],
-  providers: [AlwaysAuthGuard, SignedOutGuard],
+  providers: [SignedInGuard, SignedOutGuard, ShopOwnerGuard, CustomerGuard],
   exports: [
     RouterModule
   ],
