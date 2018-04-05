@@ -13,5 +13,11 @@ class GlobalControllerExceptionHandler {
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(DataIntegrityViolationException::class, IllegalStateException::class)
-    fun handleConflict(e: Exception) = ErrorDto(e.message)
+    fun handleIllegalState(e: Exception) = handle(e)
+
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleIllegalArgument(e: Exception) = handle(e)
+
+    fun handle(e: Exception) = ErrorDto(e.message)
 }

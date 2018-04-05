@@ -1,19 +1,18 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { Credentials } from './credentials';
-import {CredentialsService} from "../credentials.service";
-
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {Credentials} from './credentials';
+import {catchError} from 'rxjs/operators';
+import {handleHttpError} from '../http-error-handler';
 
 @Injectable()
 export class LoginService {
   url = environment.apiUrl + '/oauth/token';
 
-  constructor(private http: HttpClient, private credentialsService: CredentialsService) {
+  constructor(private http: HttpClient) {
   }
 
-  login(credentials: Credentials): Observable<any> {
+  login(credentials: Credentials) {
     return this.http.post(this.url, null, {
       headers: {
         'Authorization': 'Basic ' + btoa('angularApp' + ':' + 'BardzoSilneHaslo2018')
@@ -23,10 +22,8 @@ export class LoginService {
         'username': credentials.email,
         'password': credentials.password
       },
-    });
+    }).pipe(
+      catchError(handleHttpError)
+    );
   }
-
-
-
-
 }

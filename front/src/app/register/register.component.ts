@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { RegisterService } from './register.service';
-import { RegisterUserComponent } from '../register-user/register-user.component';
-import { RegisterShopComponent } from '../register-shop/register-shop.component';
-import { UserDto } from './UserDto';
-import { ShopWithOwner } from './shop-with-owner';
-import { MatSnackBar } from '@angular/material';
-import { HttpErrorResponse } from '@angular/common/http';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
+import {RegisterService} from './register.service';
+import {RegisterUserComponent} from '../register-user/register-user.component';
+import {RegisterShopComponent} from '../register-shop/register-shop.component';
+import {UserDto} from './UserDto';
+import {ShopWithOwner} from './shop-with-owner';
+import {SnackBarService} from '../snack-bar.service';
 
 @Component({
   selector: 'app-register-owner',
@@ -23,7 +22,7 @@ export class RegisterComponent implements OnInit {
   roles = ['klient', 'sklep'];
   selectedRole: string = this.roles[0];
 
-  constructor(private fb: FormBuilder, private registerService: RegisterService, private snackBar: MatSnackBar) {
+  constructor(private fb: FormBuilder, private registerService: RegisterService, private snackBar: SnackBarService) {
   }
 
   ngOnInit() {
@@ -42,14 +41,13 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     const user = this.registerUserComponent.data();
-    const response$ = this.prepareProperRequest(user);
-    response$.subscribe(
+    this.register(user).subscribe(
       () => this.status = 'Zarejestrowano pomyślnie!',
-      error => this.handle(error)
+      error => this.snackBar.show(error)
     );
   }
 
-  private prepareProperRequest(user: UserDto) {
+  private register(user: UserDto) {
     if (this.isShop()) {
       return this.createShop(user);
     }
@@ -68,11 +66,5 @@ export class RegisterComponent implements OnInit {
   private createUser(user: UserDto) {
     user.role = 'CUSTOMER';
     return this.registerService.register(user);
-  }
-
-  private handle(error: HttpErrorResponse) {
-    this.snackBar.open(error.error.message, null, {
-      duration: 3000
-    });
   }
 }
