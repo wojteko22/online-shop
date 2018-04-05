@@ -31,7 +31,6 @@ export class CredentialsService {
   getAuthorizedHeader(): HttpHeaders {
     return new HttpHeaders({
       'Authorization': 'Bearer ' + this.token(),
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
     });
   }
 }

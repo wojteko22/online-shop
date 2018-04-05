@@ -2,6 +2,7 @@ package com.example.webshop.service
 
 import com.example.webshop.entity.Category
 import com.example.webshop.entity.dto.CategoryDto
+import com.example.webshop.entity.dto.CreateCategoryDto
 import com.example.webshop.repository.CategoryRepository
 import com.example.webshop.repository.ShopRepository
 import org.springframework.stereotype.Service
@@ -9,18 +10,21 @@ import org.springframework.stereotype.Service
 @Service
 class CategoryService(private val categoryRepository: CategoryRepository, private val shopRepository: ShopRepository) {
 
-    fun save(categoryWithoutParent: Category, parentCategoryId: String) {
-        val categoryToSave = categoryToSave(categoryWithoutParent, parentCategoryId)
+    fun save(category: CreateCategoryDto) {
+        val categoryToSave = categoryToSave(category)
         categoryRepository.save(categoryToSave)
     }
 
-    private fun categoryToSave(categoryWithoutParent: Category, parentCategoryId: String) =
-            if (!parentCategoryId.isEmpty()) {
-                val parentCategory: Category = categoryRepository.getOne(parentCategoryId.toLong())
-                categoryWithoutParent.copy(parentCategory = parentCategory)
-            } else {
-                categoryWithoutParent
-            }
+    private fun categoryToSave(createCategoryDto: CreateCategoryDto): Category {
+        val shop = shopRepository.findById(createCategoryDto.shopId)
+        val category = Category(createCategoryDto.name, shop!!)
+        return if (createCategoryDto.parentCategoryId != null) {
+            val parentCategory: Category = categoryRepository.getOne(createCategoryDto.parentCategoryId)
+            category.copy(parentCategory = parentCategory)
+        } else {
+            category
+        }
+    }
 
     fun deleteById(id: Long) {
         val category: Category = categoryRepository.findById(id)
@@ -64,17 +68,17 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
 
     private fun toCategoryDto(categories: Iterable<Category>): MutableList<CategoryDto> {
         val categoriesDto: MutableSet<CategoryDto> = mutableSetOf<CategoryDto>()
-        categories.forEach { categoriesDto.add(CategoryDto(it.name,it.parentCategory?.id,it.id, mutableSetOf())) }
+        categories.forEach { categoriesDto.add(CategoryDto(it.name, it.parentCategory?.id, it.id, mutableSetOf())) }
 
-        for (categoryDto1 in categoriesDto){
-            for (categoryDto2 in categoriesDto){
-                if (categoryDto1.parentCategory==categoryDto2.id){
+        for (categoryDto1 in categoriesDto) {
+            for (categoryDto2 in categoriesDto) {
+                if (categoryDto1.parentCategory == categoryDto2.id) {
                     categoryDto2.subcategories.add(categoryDto1)
                 }
             }
         }
         val categoryDtoDistinct = mutableListOf<CategoryDto>()
-        categoriesDto.forEach { if (it.parentCategory==null) categoryDtoDistinct.add(it) }
+        categoriesDto.forEach { if (it.parentCategory == null) categoryDtoDistinct.add(it) }
         return categoryDtoDistinct
     }
 
