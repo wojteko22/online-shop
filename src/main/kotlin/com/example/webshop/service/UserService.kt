@@ -21,17 +21,13 @@ class UserService(private val userRepository: UserRepository) {
         return userRepository.findById(id)
     }
 
-    fun changeUserPassword(dto: UpdatePasswordUserDto): User? {
-        if (isValidUpdatePasswordDto(dto)) {
-            val user: User? = userRepository.findById(dto.id)
-            if (passwordEncoder.matches(dto.oldPassword, user?.password))
-                user?.password = passwordEncoder.encode(dto.password)
-            return userRepository.save(user)
+    fun changeUserPassword(dto: UpdatePasswordUserDto) {
+        val userId = dto.id
+        val user = userRepository.findById(userId) ?: throw IllegalArgumentException("No user with id $userId")
+        if (!passwordEncoder.matches(dto.oldPassword, user.password)) {
+            throw IllegalArgumentException("Invalid password")
         }
-        return null
+        user.password = passwordEncoder.encode(dto.password)
+        userRepository.save(user)
     }
-
-    private fun isValidUpdatePasswordDto(dto: UpdatePasswordUserDto): Boolean {
-        return dto.password.equals(dto.passwordConfirmation)
-    }
-}   
+}

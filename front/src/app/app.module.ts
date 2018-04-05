@@ -19,6 +19,7 @@ import {RegisterUserComponent} from './register-user/register-user.component';
 import {RegisterShopComponent} from './register-shop/register-shop.component';
 import {CategoriesComponent} from './categories/categories.component';
 import {TreeModule} from 'angular-tree-component';
+import {SnackBarService} from './snack-bar.service';
 import {httpInterceptorProviders} from './http-interceptors';
 
 
@@ -48,6 +49,7 @@ import {httpInterceptorProviders} from './http-interceptors';
   ],
   providers: [
     CredentialsService,
+    SnackBarService,
     httpInterceptorProviders,
   ],
   bootstrap: [AppComponent]
