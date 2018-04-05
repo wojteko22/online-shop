@@ -24,12 +24,13 @@ export class UserComponent implements OnInit {
 
   private fillFields() {
     const user = this.credentialsService.getUser();
+    console.log(JSON.stringify(user));
     if (user != null) {
       this.id = user.id.toString();
       this.email = user.email;
       this.name = user.name;
       this.role = user.role;
-      if (!isNullOrUndefined(this.shop))
+      if (!isNullOrUndefined(user.shopId))
         this.shop = user.shopId.toString();
     }
   }
