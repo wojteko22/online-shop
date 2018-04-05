@@ -4,12 +4,12 @@ import {environment} from '../../environments/environment';
 import {CredentialsService} from '../credentials.service';
 import {UpdateUserPassword} from './updateUserPassword';
 import {catchError} from 'rxjs/operators';
-import {HttpErrorHandler} from '../http-error-handler.service';
+import {handleHttpError} from '../http-error-handler';
 
 @Injectable()
 export class PasswordService {
 
-  constructor(private http: HttpClient, private credentialsService: CredentialsService, private handler: HttpErrorHandler) {
+  constructor(private http: HttpClient, private credentialsService: CredentialsService) {
   }
 
   changeUserPassword(updateUserPassword: UpdateUserPassword) {
@@ -18,7 +18,7 @@ export class PasswordService {
       'Authorization': 'Bearer ' + this.credentialsService.token()
     });
     return this.http.put(url, updateUserPassword, {headers: headers}).pipe(
-      catchError(this.handler.handleError)
+      catchError(handleHttpError)
     );
   }
 }
