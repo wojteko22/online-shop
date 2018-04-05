@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import {CredentialsService} from '../-services/credentials.service';
 import {TokenData} from '../-models/token';
 import {User} from '../-models/User';
+import {SnackBarService} from '../snack-bar.service';
 
 @Component({
   selector: 'app-login',
@@ -18,11 +19,13 @@ import {User} from '../-models/User';
 export class LoginComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder,
-              private loginService: LoginService,
-              private snackBar: MatSnackBar,
-              private router: Router,
-              private credentialsService: CredentialsService) {
+  constructor(
+    private fb: FormBuilder,
+    private loginService: LoginService,
+    private snackBar: SnackBarService,
+    private router: Router,
+    private credentialsService: CredentialsService,
+  ) {
     this.createForm();
   }
 
@@ -43,9 +46,9 @@ export class LoginComponent implements OnInit {
         this.saveToken(tokenData);
         this.loginService.getUserInfo().subscribe((user) => {
           this.saveUserDetails(user);
-        }, error => this.handleError(error))
+        }, error => this.snackBar.show(error))
       },
-      error => this.handleError(error)
+      error => this.snackBar.show(error)
     );
   }
 
@@ -56,23 +59,5 @@ export class LoginComponent implements OnInit {
   private saveUserDetails(user: User) {
     this.credentialsService.saveUser(user);
     this.router.navigate(['/profil']);
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    const errorMessage = this.errorMesssage(error);
-    this.snackBar.open(errorMessage, null, {
-      duration: 3000
-    });
-  }
-
-  private errorMesssage(error: HttpErrorResponse) {
-    if (error.error.error_description === 'Bad credentials') {
-      return 'Niepoprawne hasło';
-    }
-    if (error.error.error_description === 'Username not found') {
-      return 'Użytkownik z takim mailem nie istnieje';
-    }
-    console.log(error);
-    return 'Nieoczekiwany błąd podczas logowania';
   }
 }

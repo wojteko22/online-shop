@@ -3,17 +3,15 @@ import { environment } from '../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Credentials } from './credentials';
-import {CredentialsService} from "../-services/credentials.service";
-
 
 @Injectable()
 export class LoginService {
   url = environment.apiUrl + '/oauth/token';
 
-  constructor(private http: HttpClient, private credentialsService: CredentialsService) {
+  constructor(private http: HttpClient) {
   }
 
-  login(credentials: Credentials): Observable<any> {
+  login(credentials: Credentials) {
     return this.http.post(this.url, null, {
       headers: {
         'Authorization': 'Basic ' + btoa('angularApp' + ':' + 'BardzoSilneHaslo2018')

@@ -20,19 +20,18 @@ export class CategoriesService {
   }
 
   getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.categoriesUrl, {headers: this.headers});
+    return this.http.get<Category[]>(this.categoriesUrl);
   }
 
   addCategory(createCategoryDto: CategoryDto) {
-    return this.http.post(this.categoriesUrl, createCategoryDto, {headers: this.headers});
+    return this.http.post(this.categoriesUrl, createCategoryDto);
   }
 
   deleteCategory(id: number) {
-    return this.http.delete<Category[]>(this.categoriesUrl + `/${id}`, {headers: this.headers});
+    return this.http.delete<Category[]>(this.categoriesUrl + `/${id}`);
   }
 
   editCategory(id: number, parentId: number, newName: string) {
-    return this.http.post(this.categoriesUrl + `/${id}?newName=${newName}&parentId=${parentId}`, 0, {headers: this.headers});
+    return this.http.post(this.categoriesUrl + `/${id}?newName=${newName}&parentId=${parentId}`, 0);
   }
-
 }

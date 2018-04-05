@@ -1,21 +1,16 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import { environment } from '../../environments/environment';
-import {Observable} from "rxjs/Observable";
-import {CredentialsService} from "../-services/credentials.service";
-import {UpdateUserPassword} from "./updateUserPassword";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {UpdateUserPassword} from './updateUserPassword';
 
 @Injectable()
 export class PasswordService {
 
-  constructor(private http: HttpClient, private credentialsService: CredentialsService) { }
+  constructor(private http: HttpClient) {
+  }
 
-
-  changeUserPassword(updateUserPassword: UpdateUserPassword) : Observable<any> {
-    const url = environment.apiUrl+"/user/password";
-    const headers: HttpHeaders = new HttpHeaders({
-      'Authorization': 'Bearer ' + this.credentialsService.token()
-    });
-    return this.http.put(url, updateUserPassword, {headers: headers});
+  changeUserPassword(updateUserPassword: UpdateUserPassword) {
+    const url = environment.apiUrl + '/user/password';
+    return this.http.put(url, updateUserPassword)
   }
 }

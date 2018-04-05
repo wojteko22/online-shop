@@ -18,11 +18,8 @@ class UserController(private val userService: UserService) {
     @PutMapping("/password")
     fun changePassword(@RequestBody dto: UpdatePasswordUserDto, principal: Principal): ResponseEntity<HttpStatus> =
             if (userService.getUserById(dto.id)?.email == principal.name) {
-                if (userService.changeUserPassword(dto) != null) {
-                    ResponseEntity.status(HttpStatus.OK).build()
-                } else {
-                    ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build()
-                }
+                userService.changeUserPassword(dto)
+                ResponseEntity.status(HttpStatus.NO_CONTENT).build()
             } else {
                 ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build()
             }
