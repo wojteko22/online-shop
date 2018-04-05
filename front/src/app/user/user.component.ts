@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {UserService} from "./user.service";
+import {Component, OnInit} from '@angular/core';
+import {UserService} from './user.service';
 
 @Component({
   selector: 'app-customer',
@@ -9,7 +9,8 @@ import {UserService} from "./user.service";
 })
 export class UserComponent implements OnInit {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {
+  }
 
   email: string;
   name: string;
@@ -18,18 +19,29 @@ export class UserComponent implements OnInit {
   id: string;
 
   ngOnInit() {
-    if (localStorage.getItem("userEmail")==null){
-      this.userService.getUserInfo().subscribe(
-        (userDto => this.userService.saveUserSession(userDto))
-      );
+    if (localStorage.getItem('userEmail') == null) {
+      this.getUserData();
+    } else {
+      this.fillFields();
     }
-    this.id=localStorage.getItem("userId");
-    this.email=localStorage.getItem("userEmail");
-    this.name=localStorage.getItem("userName");
-    this.role=localStorage.getItem("userRole");
-    this.shop=localStorage.getItem("shopId")
   }
 
+  private getUserData() {
+    this.userService.getUserInfo().subscribe(
+      userDto => this.saveUserData(userDto)
+    );
+  }
 
+  private saveUserData(userDto) {
+    this.userService.saveUserSession(userDto);
+    this.fillFields();
+  }
 
+  private fillFields() {
+    this.id = localStorage.getItem('userId');
+    this.email = localStorage.getItem('userEmail');
+    this.name = localStorage.getItem('userName');
+    this.role = localStorage.getItem('userRole');
+    this.shop = localStorage.getItem('shopId');
+  }
 }
