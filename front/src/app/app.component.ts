@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { CredentialsService } from './-services/credentials.service';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {CredentialsService} from './-services/credentials.service';
+import {Router} from '@angular/router';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-root',
@@ -28,8 +29,8 @@ export class AppComponent {
       visibility: Visibility.SignedOut,
     },
     {
-      path: "/password",
-      label: "Zmiana hasła",
+      path: '/password',
+      label: 'Zmiana hasła',
       visibility: Visibility.SignedIn,
     },
     {
@@ -40,7 +41,7 @@ export class AppComponent {
     {
       path: '/categories',
       label: 'Kategorie',
-      visibility: Visibility.SignedIn,
+      visibility: Visibility.ShopOwner,
     },
   ];
 
@@ -51,11 +52,22 @@ export class AppComponent {
     if (visibility === Visibility.SignedOut) {
       return !this.signedIn();
     }
+    if (visibility === Visibility.ShopOwner) {
+      return this.role() === 'SHOP_OWNER';
+    }
     return true;
   }
 
   signedIn() {
     return this.credentialsService.isSignedIn();
+  }
+
+  role() {
+    let user = this.credentialsService.getUser();
+    if (isNullOrUndefined(user)) {
+      return '';
+    }
+    return user.role;
   }
 
   logOut() {
@@ -67,4 +79,5 @@ export class AppComponent {
 enum Visibility {
   SignedIn,
   SignedOut,
+  ShopOwner
 }

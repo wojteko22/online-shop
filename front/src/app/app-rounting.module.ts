@@ -9,6 +9,8 @@ import { PasswordComponent } from './password/password.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SignedOutGuard } from './-guards/signed-out/signed-out-guard.service';
+import {ShopOwnerGuard} from './-guards/shop-owner/shop-owner.guard';
+import {CustomerGuard} from './-guards/customer/customer.guard';
 
 const appRoutes: Routes = [
   {
@@ -28,7 +30,7 @@ const appRoutes: Routes = [
   {
     path: 'categories',
     component: CategoriesComponent,
-    canActivate: [SignedInGuard],
+    canActivate: [SignedInGuard, ShopOwnerGuard],
   },
   {
     path: 'login',
@@ -57,7 +59,7 @@ const appRoutes: Routes = [
       appRoutes
     )
   ],
-  providers: [SignedInGuard, SignedOutGuard],
+  providers: [SignedInGuard, SignedOutGuard, ShopOwnerGuard, CustomerGuard],
   exports: [
     RouterModule
   ],
