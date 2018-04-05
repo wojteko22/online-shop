@@ -4,8 +4,8 @@ class CategoryDto(
         val name: String,
         val parentCategory: Long?,
         val id: Long = 0,
-        val subcategories : MutableSet<CategoryDto>
-){
+        val subcategories: MutableSet<CategoryDto>
+) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -21,3 +21,8 @@ class CategoryDto(
         return id.hashCode()
     }
 }
+
+class CreateCategoryDto(val name: String,
+                        val shopId: Long,
+                        val parentCategoryId: Long?
+)

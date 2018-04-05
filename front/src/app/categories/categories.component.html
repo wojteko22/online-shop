@@ -1,4 +1,16 @@
-<tree-root [nodes]="categories" [options]="options"></tree-root>
+<button mat-button color="accent" (click)="add()">+</button>
+<tree-root [nodes]="categories" [options]="options" (moveNode)="onMoveNode($event)">
+  <ng-template #treeNodeTemplate let-node let-index="index">
+    <!--<span>{{ node.data.name }}</span>-->
+    <form>
+      <input matInput type="text" value="{{node.data.name}}" id="newName" #nameInput>
+    </form>
+    <button mat-button color="accent" (click)="editName(node.id,node.data.parentCategory,nameInput.value)">Zapisz
+    </button>
+    <button mat-button color="accent" (click)="add(node.id)">+</button>
+    <button *ngIf="node.isLeaf" mat-button color="accent" (click)="delete(node.id)">x</button>
+  </ng-template>
+</tree-root>
 
 
 
