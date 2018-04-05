@@ -20,6 +20,7 @@ import { RegisterShopComponent } from './register-shop/register-shop.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { TreeModule } from 'angular-tree-component';
 import {SnackBarService} from './snack-bar.service';
+import {HttpErrorHandler} from './http-error-handler.service';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import {SnackBarService} from './snack-bar.service';
   providers: [
     CredentialsService,
     SnackBarService,
+    HttpErrorHandler,
   ],
   bootstrap: [AppComponent]
 })
