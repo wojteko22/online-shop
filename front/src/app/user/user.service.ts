@@ -1,19 +1,17 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../environments/environment';
-import {CredentialsService} from '../credentials.service';
 
 @Injectable()
 export class UserService {
 
-  constructor(private http: HttpClient, private credentialsService: CredentialsService) {
+  constructor(private http: HttpClient) {
   }
 
   getUserInfo(): Observable<any> {
     const url = environment.apiUrl + '/user/me';
-    const headers: HttpHeaders = this.credentialsService.getAuthorizedHeader();
-    return this.http.get(url, {headers: headers});
+    return this.http.get(url);
   }
 
   saveUserSession(userDto: UserDto) {
