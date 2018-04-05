@@ -36,15 +36,11 @@ export class CredentialsService {
     });
   }
 
-  loggedAsShopOwner(): boolean {
-    return true;
-  }
-
   saveUser(user: User) {
     localStorage.setItem(this.userStorageKey, JSON.stringify(user));
   }
 
-  getUser() : User {
+  getUser(): User {
     const user = localStorage.getItem(this.userStorageKey);
     return JSON.parse(user);
   }
