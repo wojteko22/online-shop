@@ -3,7 +3,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {Category} from "./Category";
-import {CredentialsService} from "../credentials.service";
+import {CredentialsService} from "../-services/credentials.service";
 import {CategoryDto} from "./CategoryDto";
 
 

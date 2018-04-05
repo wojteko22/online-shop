@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Credentials } from './credentials';
-import {CredentialsService} from "../credentials.service";
+import {CredentialsService} from "../-services/credentials.service";
 
 
 @Injectable()
@@ -26,7 +26,10 @@ export class LoginService {
     });
   }
 
-
-
+  getUserInfo(): Observable<any> {
+    const url = environment.apiUrl + '/user/me';
+    const headers: HttpHeaders = this.credentialsService.getAuthorizedHeader();
+    return this.http.get(url, {headers: headers});
+  }
 
 }

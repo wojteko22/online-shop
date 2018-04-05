@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import {Observable} from "rxjs/Observable";
-import {CredentialsService} from "../credentials.service";
+import {CredentialsService} from "../-services/credentials.service";
 import {UpdateUserPassword} from "./updateUserPassword";
 
 @Injectable()

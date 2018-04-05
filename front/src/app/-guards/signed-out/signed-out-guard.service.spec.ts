@@ -1,6 +1,6 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {TestBed, inject} from '@angular/core/testing';
 
-import { SignedOutGuard } from './signed-out-guard.service';
+import {SignedOutGuard} from './signed-out-guard.service';
 
 describe('SignedOutGuard', () => {
   beforeEach(() => {
