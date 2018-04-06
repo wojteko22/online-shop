@@ -42,15 +42,15 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
         categoryRepository.save(updated)
     }
 
-    private fun newParentOrNull(parentCategoryId: String?, category: Category): Category? =
-            if (parentCategoryId.isNullOrEmpty()) {
+    private fun newParentOrNull(parentCategoryId: Long?, category: Category): Category? =
+            if (parentCategoryId == null) {
                 null
             } else {
-                newParent(parentCategoryId!!, category)
+                newParent(parentCategoryId, category)
             }
 
-    private fun newParent(parentCategoryId: String, category: Category): Category {
-        val newParent = categoryRepository.findById(parentCategoryId.toLong())
+    private fun newParent(parentCategoryId: Long, category: Category): Category {
+        val newParent = categoryRepository.findById(parentCategoryId)
         val forbiddenCategories = getForbiddenParentCategories(category)
         if (forbiddenCategories.contains(newParent)) {
             error("Cannot set parent category to subcategory")
@@ -68,7 +68,7 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
     }
 
     private fun toCategoryDto(categories: Iterable<Category>): MutableList<CategoryDto> {
-        val categoriesDto: MutableSet<CategoryDto> = mutableSetOf<CategoryDto>()
+        val categoriesDto = mutableSetOf<CategoryDto>()
         categories.forEach { categoriesDto.add(CategoryDto(it.name, it.parentCategory?.id, it.id, mutableSetOf())) }
 
         for (categoryDto1 in categoriesDto) {
@@ -82,5 +82,4 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
         categoriesDto.forEach { if (it.parentCategory == null) categoryDtoDistinct.add(it) }
         return categoryDtoDistinct
     }
-
 }
