@@ -19,5 +19,8 @@ class GlobalControllerExceptionHandler {
     @ExceptionHandler(IllegalArgumentException::class)
     fun handleIllegalArgument(e: Exception) = handle(e)
 
-    fun handle(e: Exception) = ErrorDto(e.message)
+    fun handle(e: Exception): ErrorDto {
+        e.printStackTrace()
+        return ErrorDto(e.message)
+    }
 }
