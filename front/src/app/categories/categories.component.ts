@@ -37,7 +37,7 @@ export class CategoriesComponent implements OnInit {
     setTimeout(() => {
         this.categoryService.getCategories().subscribe(categories => this.categories = categories);
       }
-      , 200)
+      , 50)
 
   }
 

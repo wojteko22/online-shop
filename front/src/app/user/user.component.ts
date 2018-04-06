@@ -24,7 +24,6 @@ export class UserComponent implements OnInit {
 
   private fillFields() {
     const user = this.credentialsService.getUser();
-    console.log(JSON.stringify(user));
     if (user != null) {
       this.id = user.id.toString();
       this.email = user.email;
