@@ -19,7 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   private static handleHttpError(error: HttpErrorResponse) {
     ErrorInterceptor.logDetails(error);
-    return new ErrorObservable(error.error && error.error.message || error.error.error_description || 'Unknown error. Check console');
+    return new ErrorObservable(error.error && (error.error.message || error.error.error_description) || 'Unknown error. Check console');
   }
 
   private static logDetails(error: HttpErrorResponse) {
