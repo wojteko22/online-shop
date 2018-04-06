@@ -32,6 +32,6 @@ export class CategoriesService {
   }
 
   editCategory(id: number, parentId: number, newName: string) {
-    return this.http.post(this.categoriesUrl + `/${id}?newName=${newName}&parentId=${parentId}`, 0);
+    return this.http.patch(this.categoriesUrl + `/${id}?newName=${newName}&parentId=${parentId}`, 0);
   }
 }
