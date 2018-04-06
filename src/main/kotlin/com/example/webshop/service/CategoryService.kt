@@ -28,7 +28,7 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
     }
 
     fun deleteById(id: Long) {
-        val category: Category = categoryRepository.findById(id)
+        val category: Category = categoryRepository.findById(id) ?: handleLackOfResource(id)
         if (category.subcategories.isNotEmpty()) {
             error("Cannot delete category with subcategories")
         }
@@ -36,11 +36,13 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
     }
 
     fun update(id: Long, dto: UpdateCategoryDto) {
-        val category: Category = categoryRepository.findById(id)
+        val category = categoryRepository.findById(id) ?: handleLackOfResource(id)
         val newParentOrNull = newParentOrNull(dto.parentId, category)
         val updated = category.copy(name = dto.newName, parentCategory = newParentOrNull)
         categoryRepository.save(updated)
     }
+
+    private fun handleLackOfResource(id: Long): Nothing = throw NoSuchElementException("No category with id $id")
 
     private fun newParentOrNull(parentCategoryId: Long?, category: Category): Category? =
             if (parentCategoryId == null) {
@@ -51,6 +53,7 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
 
     private fun newParent(parentCategoryId: Long, category: Category): Category {
         val newParent = categoryRepository.findById(parentCategoryId)
+                ?: throw IllegalArgumentException("Invalid parent category")
         val forbiddenCategories = getForbiddenParentCategories(category)
         if (forbiddenCategories.contains(newParent)) {
             error("Cannot set parent category to subcategory")

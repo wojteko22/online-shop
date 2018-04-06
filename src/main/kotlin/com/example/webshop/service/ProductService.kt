@@ -32,6 +32,7 @@ class ProductService(private val productRepository: ProductRepository,
     private fun getProductFromDto(dto: CreateProductDto): Product {
         val shop: Shop = shopRepository.findById(dto.shopId)!!
         val category: Category = categoryRepository.findById(dto.categoryId)
+                ?: throw IllegalArgumentException("No category with id ${dto.categoryId}")
         return Product(dto.name, dto.price, dto.unit, dto.status,
                 dto.description, dto.photo, category, shop)
     }
