@@ -4,6 +4,7 @@ import {matchOtherValidator} from '../match-other.directive';
 import {PasswordService} from './password.service';
 import {UpdateUserPassword} from './updateUserPassword';
 import {SnackBarService} from '../snack-bar.service';
+import {CredentialsService} from '../-services/credentials.service';
 
 @Component({
   selector: 'app-password',
@@ -14,7 +15,12 @@ import {SnackBarService} from '../snack-bar.service';
 export class PasswordComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private passSrv: PasswordService, private snackBar: SnackBarService) {
+  constructor(
+    private fb: FormBuilder,
+    private passSrv: PasswordService,
+    private snackBar: SnackBarService,
+    private credentials: CredentialsService,
+  ) {
     this.createForm();
   }
 
@@ -30,11 +36,12 @@ export class PasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    const id = localStorage.getItem('userId');
+    const user = this.credentials.getUser();
+    const id = user.id;
     const updateUserPassDto = {...this.form.value, id: id} as UpdateUserPassword;
     this.passSrv.changeUserPassword(updateUserPassDto).subscribe(
       () => this.snackBar.show('Hasło zmienione pomyślnie'),
-        error => this.snackBar.show(error)
+      error => this.snackBar.show(error)
     );
   }
 }
