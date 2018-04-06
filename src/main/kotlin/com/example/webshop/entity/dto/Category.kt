@@ -26,3 +26,5 @@ class CreateCategoryDto(val name: String,
                         val shopId: Long,
                         val parentCategoryId: Long?
 )
+
+class UpdateCategoryDto(val newName: String, val parentId: String?)

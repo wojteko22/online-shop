@@ -3,6 +3,7 @@ package com.example.webshop.service
 import com.example.webshop.entity.Category
 import com.example.webshop.entity.dto.CategoryDto
 import com.example.webshop.entity.dto.CreateCategoryDto
+import com.example.webshop.entity.dto.UpdateCategoryDto
 import com.example.webshop.repository.CategoryRepository
 import com.example.webshop.repository.ShopRepository
 import org.springframework.stereotype.Service
@@ -34,10 +35,10 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
         categoryRepository.delete(category)
     }
 
-    fun update(id: Long, parentCategoryId: String?, categoryNewName: String) {
+    fun update(id: Long, dto: UpdateCategoryDto) {
         val category: Category = categoryRepository.findById(id)
-        val newParentOrNull = newParentOrNull(parentCategoryId, category)
-        val updated = category.copy(name = categoryNewName, parentCategory = newParentOrNull)
+        val newParentOrNull = newParentOrNull(dto.parentId, category)
+        val updated = category.copy(name = dto.newName, parentCategory = newParentOrNull)
         categoryRepository.save(updated)
     }
 

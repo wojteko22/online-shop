@@ -11,10 +11,8 @@ import {CategoryDto} from "./CategoryDto";
 export class CategoriesService {
   shopId: string;
   private categoriesUrl: string;
-  private headers: HttpHeaders;
 
   constructor(private http: HttpClient, private credentialsService: CredentialsService) {
-    this.headers = this.credentialsService.getAuthorizedHeader();
     this.shopId = this.credentialsService.getUser().shopId.toString();
     this.categoriesUrl = environment.apiUrl + '/' + this.shopId + '/categories';
   }
@@ -32,6 +30,10 @@ export class CategoriesService {
   }
 
   editCategory(id: number, parentId: number, newName: string) {
-    return this.http.patch(this.categoriesUrl + `/${id}?newName=${newName}&parentId=${parentId}`, 0);
+    const body = {
+      newName: newName,
+      parentId: parentId,
+    };
+    return this.http.patch(`${this.categoriesUrl}/${id}`, body);
   }
 }
