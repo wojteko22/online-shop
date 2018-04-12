@@ -21,6 +21,7 @@ import {CategoriesComponent} from './categories/categories.component';
 import {TreeModule} from 'angular-tree-component';
 import {SnackBarService} from './snack-bar.service';
 import {httpInterceptorProviders} from './-http-interceptors';
+import { OrdersComponent } from './orders/orders.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import {httpInterceptorProviders} from './-http-interceptors';
     RegisterUserComponent,
     RegisterShopComponent,
     CategoriesComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule,

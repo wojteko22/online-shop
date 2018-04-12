@@ -11,6 +11,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { SignedOutGuard } from './-guards/signed-out/signed-out-guard.service';
 import {ShopOwnerGuard} from './-guards/shop-owner/shop-owner.guard';
 import {CustomerGuard} from './-guards/customer/customer.guard';
+import {OrdersComponent} from './orders/orders.component';
 
 const appRoutes: Routes = [
   {
@@ -26,6 +27,11 @@ const appRoutes: Routes = [
     path: 'password',
     component: PasswordComponent,
     canActivate: [SignedInGuard]
+  },
+  {
+    path: 'orders',
+    component: OrdersComponent,
+    canActivate: [SignedInGuard, ShopOwnerGuard],
   },
   {
     path: 'categories',
