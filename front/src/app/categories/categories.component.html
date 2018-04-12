@@ -1,5 +1,5 @@
 <button mat-button color="accent" (click)="add()">+</button>
-<tree-root [nodes]="categories" [options]="options" (moveNode)="onMoveNode($event)">
+<tree-root [nodes]="categories$ | async" [options]="options" (moveNode)="onMoveNode($event)">
   <ng-template #treeNodeTemplate let-node let-index="index">
     <!--<span>{{ node.data.name }}</span>-->
     <form>
