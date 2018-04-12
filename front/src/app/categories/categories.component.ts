@@ -4,6 +4,7 @@ import {CategoriesService} from './categories.service';
 import {ITreeOptions, TreeComponent} from 'angular-tree-component';
 import {CategoryDto} from './CategoryDto';
 import {Observable} from 'rxjs/Observable';
+import {SnackBarService} from "../snack-bar.service";
 
 @Component({
   selector: 'app-categories',
@@ -26,7 +27,7 @@ export class CategoriesComponent implements OnInit {
     allowDrop: true
   };
 
-  constructor(private categoryService: CategoriesService) {
+  constructor(private categoryService: CategoriesService, private snackBar: SnackBarService) {
   }
 
   ngOnInit() {
@@ -36,7 +37,6 @@ export class CategoriesComponent implements OnInit {
   getCategories(): void {
     this.categories$ = this.categoryService.getCategories();
   }
-
   onMoveNode($event) {
     console.log(
       'Moved', $event.node.name,
@@ -48,7 +48,10 @@ export class CategoriesComponent implements OnInit {
 
   editName(id: number, parentId: number, newName: string): void {
     console.log(`id: ${id},  parentId: ${parentId}, newName: ${newName}`);
-    this.categoryService.editCategory(id, parentId, newName).subscribe();
+    this.categoryService.editCategory(id, parentId, newName).subscribe(
+      () => this.snackBar.show('Zapisano nową nazwę'),
+      error => this.snackBar.show(error)
+    );
   }
 
   add(parentId?: number) {
