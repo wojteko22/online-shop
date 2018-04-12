@@ -3,23 +3,42 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest}
 import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
 import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
+import {CredentialsService} from '../-services/credentials.service';
+import {of} from 'rxjs/observable/of';
 
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor() {
+  constructor(private credentialsService: CredentialsService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
-      catchError(ErrorInterceptor.handleHttpError)
+      catchError(this.createErrorHandler())
     );
   }
 
-  private static handleHttpError(error: HttpErrorResponse) {
+  private createErrorHandler() {
+    return (error: HttpErrorResponse) => this.handle(error);
+  }
+
+  private handle(error: HttpErrorResponse) {
     ErrorInterceptor.logDetails(error);
-    return new ErrorObservable(error.error && (error.error.message || error.error.error_description) || 'Unknown error. Check console');
+    const errorBody = error.error;
+    if (errorBody && errorBody.error == 'invalid_token') {
+      return this.handleTokenExpiration();
+    }
+    const userFriendlyMessage = ErrorInterceptor.userFriendlyMessage(errorBody);
+    return new ErrorObservable(userFriendlyMessage);
+  }
+
+  private static userFriendlyMessage(errorBody) {
+    return ErrorInterceptor.receivedErrorMessage(errorBody) || 'Unknown error. Check console';
+  }
+
+  private static receivedErrorMessage(errorBody) {
+    return errorBody && (errorBody.message || errorBody.error_description);
   }
 
   private static logDetails(error: HttpErrorResponse) {
@@ -28,5 +47,11 @@ export class ErrorInterceptor implements HttpInterceptor {
     } else {
       console.error(`Backend returned code ${error.status}, body was: `, error.error);
     }
+  }
+
+  private handleTokenExpiration() {
+    this.credentialsService.logOut();
+    const emptyObject = {} as HttpEvent<any>;
+    return of(emptyObject);
   }
 }
