@@ -1,5 +1,6 @@
 package com.example.webshop.entity
 
+import com.example.webshop.entity.dto.ShopDto
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.*
 
@@ -19,5 +20,9 @@ data class Shop(
         val sellers: MutableSet<User> = HashSet(),
         @Id @GeneratedValue
         val id: Long = -1
-)
+) {
+    fun toDto(): ShopDto {
+        return ShopDto(id, name, city, street, postCode)
+    }
+}
 
