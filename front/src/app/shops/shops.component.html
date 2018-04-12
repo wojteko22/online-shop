@@ -1,3 +1,14 @@
-<div *ngFor="let shop of shops">
-  <p>{{shop.name}}</p>
-</div>
+<mat-grid-list cols="3" rowHeight="2:1">
+  <mat-grid-tile *ngFor="let shop of shops">
+    <mat-card
+      routerLink="/shops/{{shop.id}}">
+      <mat-card-header>
+        <mat-card-title><h3>{{shop.name}}</h3></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h4> Ulica: {{shop.street}}
+        </h4>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

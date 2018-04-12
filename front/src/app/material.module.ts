@@ -1,7 +1,9 @@
 import {NgModule} from '@angular/core';
 import {
   MatButtonModule,
+  MatCardModule,
   MatExpansionModule,
+  MatGridListModule,
   MatInputModule,
   MatRadioModule,
   MatSelectModule,
@@ -18,6 +20,8 @@ import {
     MatRadioModule,
     MatExpansionModule,
     MatSelectModule,
+    MatGridListModule,
+    MatCardModule,
   ]
 })
 export class MaterialModule {
