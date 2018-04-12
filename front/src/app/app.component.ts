@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {CredentialsService} from './-services/credentials.service';
-import {Router} from '@angular/router';
 import {isNullOrUndefined} from 'util';
 
 @Component({
@@ -10,7 +9,7 @@ import {isNullOrUndefined} from 'util';
 })
 export class AppComponent {
 
-  constructor(private credentialsService: CredentialsService, private router: Router) {
+  constructor(private credentialsService: CredentialsService) {
   }
 
   navLinks = [
@@ -72,7 +71,6 @@ export class AppComponent {
 
   logOut() {
     this.credentialsService.logOut();
-    this.router.navigate(['/login']);
   }
 }
 
