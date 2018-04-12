@@ -21,7 +21,7 @@ typealias Seconds = Int
 @Configuration
 class AuthorizationServer : AuthorizationServerConfigurerAdapter() {
 
-    private val expiration: Seconds = 5
+    private val expiration: Seconds = 3600
 
     @Autowired
     lateinit var authenticationManager: AuthenticationManager
