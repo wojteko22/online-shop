@@ -3,14 +3,8 @@ package com.example.webshop.utils
 // todo: tej klasy bym nie nazwał utilem,
 // jak macie jakiś pomysł to można zmienić
 
-import com.example.webshop.entity.Category
-import com.example.webshop.entity.Shop
-import com.example.webshop.entity.User
-import com.example.webshop.entity.UserRole
-import com.example.webshop.repository.CategoryRepository
-import com.example.webshop.repository.ShopRepository
-import com.example.webshop.repository.UserRepository
-import com.example.webshop.repository.UserRoleRepository
+import com.example.webshop.entity.*
+import com.example.webshop.repository.*
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -18,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 @Configuration
 class DataLoader {
-
 
 
     @Bean
@@ -80,6 +73,12 @@ class DataLoader {
         repository.save(mleko)
         repository.save(bialySer)
         repository.save(zoltySer)
+    }
+
+    @Bean
+    fun initOrders(repository: OrderRepository) = CommandLineRunner {
+        val order = Order("serwerowy")
+        repository.save(order)
     }
 
 }
