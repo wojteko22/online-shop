@@ -15,11 +15,13 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer
 
+typealias Seconds = Int
+
 @EnableAuthorizationServer
 @Configuration
-class AuthorizationServer() : AuthorizationServerConfigurerAdapter() {
+class AuthorizationServer : AuthorizationServerConfigurerAdapter() {
 
-    private val expiration: Int = 3600
+    private val expiration: Seconds = 5
 
     @Autowired
     lateinit var authenticationManager: AuthenticationManager

@@ -3,23 +3,30 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest}
 import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
 import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
+import {CredentialsService} from '../-services/credentials.service';
 
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor() {
+  constructor(private credentialsService: CredentialsService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
-      catchError(ErrorInterceptor.handleHttpError)
+      catchError(this.createErrorHandler())
     );
   }
 
-  private static handleHttpError(error: HttpErrorResponse) {
+  private createErrorHandler() {
+    return (error: HttpErrorResponse) => this.handle(error);
+  }
+
+  private handle(error: HttpErrorResponse) {
     ErrorInterceptor.logDetails(error);
-    return new ErrorObservable(error.error && (error.error.message || error.error.error_description) || 'Unknown error. Check console');
+    const errorBody = error.error;
+    this.handleTokenExpiration(errorBody);
+    return new ErrorObservable(errorBody && (errorBody.message || errorBody.error_description) || 'Unknown error. Check console');
   }
 
   private static logDetails(error: HttpErrorResponse) {
@@ -27,6 +34,15 @@ export class ErrorInterceptor implements HttpInterceptor {
       console.error(`Client-side error occurred: ${error.error.message}`);
     } else {
       console.error(`Backend returned code ${error.status}, body was: `, error.error);
+    }
+  }
+
+  private handleTokenExpiration(errorBody: any | null) {
+    if (errorBody) {
+      const errorType = errorBody.error;
+      if (errorType == 'invalid_token') {
+        this.credentialsService.logOut();
+      }
     }
   }
 }
