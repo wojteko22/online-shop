@@ -1,0 +1,22 @@
+mat-grid-tile {
+  margin: 20px;
+}
+
+mat-card {
+  width: 400px;
+  height: 200px;
+}
+
+mat-card:hover {
+  background-color: #EEE;
+  cursor: pointer;
+  color: #607d8b;
+}
+
+a {
+  text-decoration: none;
+}
+
+
+
+
