@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
 import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 import {CredentialsService} from '../-services/credentials.service';
+import {of} from 'rxjs/observable/of';
 
 
 @Injectable()
@@ -25,7 +26,14 @@ export class ErrorInterceptor implements HttpInterceptor {
   private handle(error: HttpErrorResponse) {
     ErrorInterceptor.logDetails(error);
     const errorBody = error.error;
-    this.handleTokenExpiration(errorBody);
+    if (errorBody) {
+      const errorType = errorBody.error;
+      if (errorType == 'invalid_token') {
+        this.credentialsService.logOut();
+        const x = {} as HttpEvent<any>;
+        return of(x);
+      }
+    }
     return new ErrorObservable(errorBody && (errorBody.message || errorBody.error_description) || 'Unknown error. Check console');
   }
 
@@ -34,15 +42,6 @@ export class ErrorInterceptor implements HttpInterceptor {
       console.error(`Client-side error occurred: ${error.error.message}`);
     } else {
       console.error(`Backend returned code ${error.status}, body was: `, error.error);
-    }
-  }
-
-  private handleTokenExpiration(errorBody: any | null) {
-    if (errorBody) {
-      const errorType = errorBody.error;
-      if (errorType == 'invalid_token') {
-        this.credentialsService.logOut();
-      }
     }
   }
 }
