@@ -39,18 +39,11 @@ export class CategoriesComponent implements OnInit {
 
   onMoveNode($event) {
     console.log(
-      'Moved',
-      $event.node.name,
-      'to',
-      $event.to.parent.name,
-      'at index',
-      $event.to.index);
-    this.categoryService.editCategory($event.node.id, $event.to.parent.id, $event.node.name)
-      .subscribe(
-        () => {
-          `Category ${$event.node.name} updated`;
-        }
-      );
+      'Moved', $event.node.name,
+      'to', $event.to.parent.name,
+      'at index', $event.to.index
+    );
+    this.categoryService.editCategory($event.node.id, $event.to.parent.id, $event.node.name).subscribe();
   }
 
   editName(id: number, parentId: number, newName: string): void {
