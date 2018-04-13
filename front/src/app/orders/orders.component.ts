@@ -20,4 +20,10 @@ export class OrdersComponent implements OnInit {
     this.orders$ = this.ordersService.getOrders();
   }
 
+  print(id: number) {
+    this.ordersService.getOrderDetails(id).subscribe(
+      result => console.log(result)
+    );
+  }
+
 }
