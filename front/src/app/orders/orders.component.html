@@ -1,0 +1,5 @@
+<div *ngFor="let order of orders$ | async" (click)="print(order.id)">
+  {{order.id}}
+  {{order.status}}
+</div>
+

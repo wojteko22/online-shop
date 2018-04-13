@@ -1,4 +1,4 @@
-export class ShopDto {
+export class Shop {
   id: number;
   name: string;
   city: string;

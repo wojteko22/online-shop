@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {ShopDto} from './ShopDto';
+import {Shop} from './shop';
 import {environment} from '../../environments/environment';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class ShopsService {
   constructor(private http: HttpClient) {
   }
 
-  getShops(): Observable<ShopDto[]> {
-    return this.http.get<ShopDto[]>(this.shopsUrl);
+  getShops(): Observable<Shop[]> {
+    return this.http.get<Shop[]>(this.shopsUrl);
   }
 }

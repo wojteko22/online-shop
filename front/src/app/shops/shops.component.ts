@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ShopsService} from './shops.service';
-import {ShopDto} from './ShopDto';
+import {Shop} from './shop';
 
 @Component({
   selector: 'app-shops',
@@ -9,7 +9,7 @@ import {ShopDto} from './ShopDto';
   providers: [ ShopsService ],
 })
 export class ShopsComponent implements OnInit {
-  shops: ShopDto[];
+  shops: Shop[];
 
   constructor(private shopsService: ShopsService) { }
 

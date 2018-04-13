@@ -3,14 +3,8 @@ package com.example.webshop.utils
 // todo: tej klasy bym nie nazwał utilem,
 // jak macie jakiś pomysł to można zmienić
 
-import com.example.webshop.entity.Category
-import com.example.webshop.entity.Shop
-import com.example.webshop.entity.User
-import com.example.webshop.entity.UserRole
-import com.example.webshop.repository.CategoryRepository
-import com.example.webshop.repository.ShopRepository
-import com.example.webshop.repository.UserRepository
-import com.example.webshop.repository.UserRoleRepository
+import com.example.webshop.entity.*
+import com.example.webshop.repository.*
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -19,22 +13,27 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 @Configuration
 class DataLoader {
 
-
+    private val owner = UserRole("SHOP_OWNER", "Rola sprzedawcy....", 1)
 
     @Bean
-    fun initUser(userRepository: UserRepository, roleRepository: UserRoleRepository) = CommandLineRunner {
+    fun initRoles(roleRepository: UserRoleRepository) = CommandLineRunner {
+        val customer = UserRole("CUSTOMER", "Rola klienta sklepu...", 2)
+        val seller = UserRole("SELLER", "Rola sprzedawcy....", 3)
+        roleRepository.save(owner)
+        roleRepository.save(customer)
+        roleRepository.save(seller)
+    }
 
+    private val owner1 = User("test@test.pl", BCryptPasswordEncoder().encode("test"), "Jan Nowak", owner, 1)
+    private val owner2 = User("test2@test.pl", BCryptPasswordEncoder().encode("test"), "Jan Zdzislaw", owner, 2)
+    private val owner3 = User("test3@test.pl", BCryptPasswordEncoder().encode("test"), "Jakub Rolnik", owner, 3)
+    private val owner4 = User("test4@test.pl", BCryptPasswordEncoder().encode("test"), "Bartosz Wodnik", owner, 4)
+    private val owner5 = User("test5@test.pl", BCryptPasswordEncoder().encode("test"), "Janusz Swawolny", owner, 5)
+    private val owner6 = User("test6@test.pl", BCryptPasswordEncoder().encode("test"), "Milosz Laty", owner,6 )
+    private val owner7 = User("test7@test.pl", BCryptPasswordEncoder().encode("test"), "Mikolaj Wasik", owner, 7)
 
-        roleRepository.save(UserRole("CUSTOMER", "Rola klienta sklepu..."))
-        roleRepository.save(UserRole("SELLER", "Rola sprzedawcy...."))
-        roleRepository.save(UserRole("SHOP_OWNER", "Rola sprzedawcy...."))
-        val owner1 = User("test@test.pl", BCryptPasswordEncoder().encode("test"), "Jan Nowak", roleRepository.findByRole("SHOP_OWNER"))
-        val owner2 = User("test2@test.pl", BCryptPasswordEncoder().encode("test"), "Jan Zdzislaw", roleRepository.findByRole("SHOP_OWNER"))
-        val owner3 = User("test3@test.pl", BCryptPasswordEncoder().encode("test"), "Jakub Rolnik", roleRepository.findByRole("SHOP_OWNER"))
-        val owner4 = User("test4@test.pl", BCryptPasswordEncoder().encode("test"), "Bartosz Wodnik", roleRepository.findByRole("SHOP_OWNER"))
-        val owner5 = User("test5@test.pl", BCryptPasswordEncoder().encode("test"), "Janusz Swawolny", roleRepository.findByRole("SHOP_OWNER"))
-        val owner6 = User("test6@test.pl", BCryptPasswordEncoder().encode("test"), "Milosz Laty", roleRepository.findByRole("SHOP_OWNER"))
-        val owner7 = User("test7@test.pl", BCryptPasswordEncoder().encode("test"), "Mikolaj Wasik", roleRepository.findByRole("SHOP_OWNER"))
+    @Bean
+    fun initUser(userRepository: UserRepository) = CommandLineRunner {
         userRepository.save(owner1)
         userRepository.save(owner2)
         userRepository.save(owner3)
@@ -44,15 +43,16 @@ class DataLoader {
         userRepository.save(owner7)
     }
 
+    private val shop1 = Shop("Żabcia", "Wrocław", "Grunwaldzka", "50-387", owner1, id = 1)
+
     @Bean
-    fun initShop(shopRepository: ShopRepository, userRepository: UserRepository) = CommandLineRunner {
-        val shop1 = Shop("Żabcia", "Wrocław", "Grunwaldzka", "50-387", userRepository.findByEmail("test@test.pl")!!)
-        val shop2 = Shop("Biedronka", "Wrocław", "Polna", "50-387", userRepository.findByEmail("test2@test.pl")!!)
-        val shop3 = Shop("Bartosz", "Wrocław", "Bacarellego", "50-387", userRepository.findByEmail("test3@test.pl")!!)
-        val shop4 = Shop("Ikea", "Wrocław", "Mila", "50-387", userRepository.findByEmail("test4@test.pl")!!)
-        val shop5 = Shop("Mila", "Wrocław", "Kolorowa", "50-387", userRepository.findByEmail("test5@test.pl")!!)
-        val shop6 = Shop("Kasa", "Wrocław", "Wiosenna", "50-387", userRepository.findByEmail("test6@test.pl")!!)
-        val shop7 = Shop("Maza", "Wrocław", "Piekna", "50-387", userRepository.findByEmail("test7@test.pl")!!)
+    fun initShop(shopRepository: ShopRepository) = CommandLineRunner {
+        val shop2 = Shop("Biedronka", "Wrocław", "Polna", "50-387", owner2)
+        val shop3 = Shop("Bartosz", "Wrocław", "Bacarellego", "50-387", owner3)
+        val shop4 = Shop("Ikea", "Wrocław", "Mila", "50-387", owner4)
+        val shop5 = Shop("Mila", "Wrocław", "Kolorowa", "50-387", owner5)
+        val shop6 = Shop("Kasa", "Wrocław", "Wiosenna", "50-387", owner6)
+        val shop7 = Shop("Maza", "Wrocław", "Piekna", "50-387", owner7)
         shopRepository.save(shop1)
         shopRepository.save(shop2)
         shopRepository.save(shop3)
@@ -62,16 +62,16 @@ class DataLoader {
         shopRepository.save(shop7)
     }
 
+    private val pieczywo = Category("Pieczywo", shop1)
+
     @Bean
     fun initCategories(repository: CategoryRepository, shopRepository: ShopRepository) = CommandLineRunner {
-        val shop = shopRepository.findByName("Żabcia")!!
-        val pieczywo = Category("Pieczywo", shop)
-        val nabial = Category("Nabial", shop)
-        val sery = Category("Sery", shop, nabial)
-        val maslo = Category("Maslo", shop, nabial)
-        val mleko = Category("Mleko", shop, nabial)
-        val bialySer = Category("Biale", shop, sery)
-        val zoltySer = Category("Zolte", shop, sery)
+        val nabial = Category("Nabial", shop1)
+        val sery = Category("Sery", shop1, nabial)
+        val maslo = Category("Maslo", shop1, nabial)
+        val mleko = Category("Mleko", shop1, nabial)
+        val bialySer = Category("Biale", shop1, sery)
+        val zoltySer = Category("Zolte", shop1, sery)
 
         repository.save(pieczywo)
         repository.save(nabial)
@@ -82,4 +82,23 @@ class DataLoader {
         repository.save(zoltySer)
     }
 
+    private val product = Product("Heineken", 3, "unit", "status", "description", "photo", pieczywo, shop1, 1)
+
+    @Bean
+    fun initProducts(repository: ProductRepository) = CommandLineRunner {
+        repository.save(product)
+    }
+
+    private val order = Order("serwerowy", 1)
+
+    @Bean
+    fun initOrders(repository: OrderRepository) = CommandLineRunner {
+        repository.save(order)
+    }
+
+    @Bean
+    fun initOrderPositions(repository: OrderPositionRepository) = CommandLineRunner {
+        val orderPosition = OrderPosition(order, product, 3)
+        repository.save(orderPosition)
+    }
 }

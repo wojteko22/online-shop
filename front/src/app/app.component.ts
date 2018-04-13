@@ -38,6 +38,11 @@ export class AppComponent {
       visibility: Visibility.SignedOut,
     },
     {
+      path: '/orders',
+      label: 'Zamówienia',
+      visibility: Visibility.ShopOwner,
+    },
+    {
       path: '/categories',
       label: 'Kategorie',
       visibility: Visibility.ShopOwner,
