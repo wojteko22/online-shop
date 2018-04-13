@@ -7,7 +7,6 @@ import {OrdersService} from './orders.service';
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css'],
-  providers: [OrdersService]
 })
 export class OrdersComponent implements OnInit {
 

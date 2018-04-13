@@ -1,3 +1,6 @@
-export class OrderPosition {
+import {Product} from './product';
 
+export class OrderPosition {
+  amount: number;
+  product: Product;
 }
