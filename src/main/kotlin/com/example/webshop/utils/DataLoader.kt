@@ -82,23 +82,31 @@ class DataLoader {
         repository.save(zoltySer)
     }
 
-    private val product = Product("Heineken", 3, "unit", "status", "description", "photo", pieczywo, shop1, 1)
+    private val product1 = Product("Heineken", 3, "unit", "status", "description", "photo", pieczywo, shop1, 1)
+    private val product2 = Product("Warka", 2, "unit", "status", "description", "photo", pieczywo, shop1, 2)
 
     @Bean
     fun initProducts(repository: ProductRepository) = CommandLineRunner {
-        repository.save(product)
+        repository.save(product1)
+        repository.save(product2)
     }
 
-    private val order = Order("serwerowy", 1)
+    private val order1 = Order("złożone", 1)
+    private val order2 = Order("złożone", 2)
 
     @Bean
     fun initOrders(repository: OrderRepository) = CommandLineRunner {
-        repository.save(order)
+        repository.save(order1)
+        repository.save(order2)
     }
 
     @Bean
     fun initOrderPositions(repository: OrderPositionRepository) = CommandLineRunner {
-        val orderPosition = OrderPosition(order, product, 3)
-        repository.save(orderPosition)
+        val orderPosition1 = OrderPosition(order1, product1, 3)
+        val orderPosition2 = OrderPosition(order1, product2, 2)
+        val orderPosition3 = OrderPosition(order2, product1, 1)
+        repository.save(orderPosition1)
+        repository.save(orderPosition2)
+        repository.save(orderPosition3)
     }
 }
