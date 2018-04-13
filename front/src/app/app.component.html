@@ -1,9 +1,13 @@
-<div style="text-align:center">
+<div>
+  <img class="logo"
+       src="http://assistly-production.s3.amazonaws.com/145387/portal_attachments/556099/PO_approved_original.png?AWSAccessKeyId=AKIAJNSFWOZ6ZS23BMKQ&Expires=1523572340&Signature=YqbhVBGni6jtlm%2BZ2fOhFW3fYcw%3D&response-content-disposition=filename%3D%22PO_approved.png%22&response-content-type=image%2Fpng">
   <h1>
     System realizacji zamówień
   </h1>
 </div>
+
 <nav mat-tab-nav-bar>
+
   <span *ngFor="let link of navLinks">
     <a mat-tab-link
        *ngIf="visible(link.visibility)"
