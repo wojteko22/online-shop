@@ -13,7 +13,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RegisterComponent} from './register/register.component';
 import {UserComponent} from './user/user.component';
 import {PasswordComponent} from './password/password.component';
-import { CredentialsService } from './-services/credentials.service';
+import {CredentialsService} from './-services/credentials.service';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {RegisterUserComponent} from './register-user/register-user.component';
 import {RegisterShopComponent} from './register-shop/register-shop.component';
@@ -21,6 +21,9 @@ import {CategoriesComponent} from './categories/categories.component';
 import {TreeModule} from 'angular-tree-component';
 import {SnackBarService} from './snack-bar.service';
 import {httpInterceptorProviders} from './-http-interceptors';
+import {OrdersComponent} from './orders/orders.component';
+import {OrderDetailsComponent} from './order-details/order-details.component';
+import {OrdersService} from './orders/orders.service';
 
 
 @NgModule({
@@ -36,6 +39,8 @@ import {httpInterceptorProviders} from './-http-interceptors';
     RegisterUserComponent,
     RegisterShopComponent,
     CategoriesComponent,
+    OrdersComponent,
+    OrderDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +56,7 @@ import {httpInterceptorProviders} from './-http-interceptors';
     CredentialsService,
     SnackBarService,
     httpInterceptorProviders,
+    OrdersService,
   ],
   bootstrap: [AppComponent]
 })

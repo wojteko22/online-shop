@@ -3,30 +3,27 @@ package com.example.webshop.service
 import com.example.webshop.entity.Category
 import com.example.webshop.entity.Product
 import com.example.webshop.entity.Shop
-import com.example.webshop.entity.User
 import com.example.webshop.entity.dto.CreateProductDto
 import com.example.webshop.repository.CategoryRepository
 import com.example.webshop.repository.ProductRepository
 import com.example.webshop.repository.ShopRepository
-import com.example.webshop.repository.UserRepository
 import org.springframework.stereotype.Service
 
 @Service
 class ProductService(private val productRepository: ProductRepository,
                      private val shopRepository: ShopRepository,
-                     private val categoryRepository: CategoryRepository,
-                     private val userRepository: UserRepository) {
+                     private val categoryRepository: CategoryRepository) {
 
-    fun addNewProduct(createProductDto: CreateProductDto, username: String): Long {
-        validate(createProductDto, username)
+    fun addNewProduct(createProductDto: CreateProductDto, email: String): Long {
+        validate(createProductDto, email)
         val product: Product = getProductFromDto(createProductDto)
         val savedProduct = productRepository.save(product)
         return savedProduct.id
     }
 
-    fun getProducts(username: String): List<Product> {
-        val user: User? = userRepository.findByEmail(username) ?: throw NoSuchElementException("User doesn't exists!")
-        return productRepository.findByShopId(user?.shop?.id!!)
+    fun getProducts(email: String): List<Product> {
+        val shop = shopRepository.findByUserEmail(email) ?: throw NoSuchElementException("No shop owned by user with email $email")
+        return productRepository.findByShopId(shop.id)
     }
 
     private fun getProductFromDto(dto: CreateProductDto): Product {
@@ -37,9 +34,9 @@ class ProductService(private val productRepository: ProductRepository,
                 dto.description, dto.photo, category, shop)
     }
 
-    private fun validate(createProductDto: CreateProductDto, name: String) {
-        val user: User = userRepository.findByEmail(name)!!
-        if (createProductDto.shopId !== user.shop?.id) {
+    private fun validate(createProductDto: CreateProductDto, email: String) {
+        val shop = shopRepository.findByUserEmail(email) ?: error("No shop owned by user with email $email")
+        if (createProductDto.shopId != shop.id) {
             throw IllegalStateException("Shop doesn't belong to the user!")
         }
     }
