@@ -1,7 +1,7 @@
 <mat-accordion>
   <mat-expansion-panel *ngFor="let order of orders$ | async">
     <mat-expansion-panel-header>
-      {{order.id}}   {{order.status}}
+      Numer zamówienia: {{order.id}}, status: {{order.status}}
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
       <app-order-details [orderId]="order.id"></app-order-details>

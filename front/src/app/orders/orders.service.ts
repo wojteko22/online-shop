@@ -3,7 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Order} from './order';
-import {OrderPosition} from './order-position';
+import {OrderPosition} from '../order-details/order-position';
 
 @Injectable()
 export class OrdersService {

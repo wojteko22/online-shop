@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {OrdersService} from '../orders/orders.service';
-import {OrderPosition} from '../orders/order-position';
+import {OrderPosition} from './order-position';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
