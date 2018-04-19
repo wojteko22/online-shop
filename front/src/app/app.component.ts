@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {CredentialsService} from './-services/credentials.service';
-import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +15,7 @@ export class AppComponent {
     {
       path: '/shops',
       label: 'Sklepy',
+      visibility: Visibility.Always,
     },
     {
       path: '/profil',
@@ -50,28 +50,25 @@ export class AppComponent {
   ];
 
   visible(visibility: Visibility) {
-    if (visibility === Visibility.SignedIn) {
-      return this.signedIn();
+    switch (visibility) {
+      case Visibility.SignedIn:
+        return this.signedIn();
+      case Visibility.SignedOut:
+        return !this.signedIn();
+      case Visibility.ShopOwner:
+        return this.role() === 'SHOP_OWNER';
+      default:
+        return true;
     }
-    if (visibility === Visibility.SignedOut) {
-      return !this.signedIn();
-    }
-    if (visibility === Visibility.ShopOwner) {
-      return this.role() === 'SHOP_OWNER';
-    }
-    return true;
   }
 
   signedIn() {
     return this.credentialsService.isSignedIn();
   }
 
-  role() {
-    let user = this.credentialsService.getUser();
-    if (isNullOrUndefined(user)) {
-      return '';
-    }
-    return user.role;
+  private role() {
+    const user = this.credentialsService.getUser();
+    return user && user.role;
   }
 
   logOut() {
@@ -80,7 +77,8 @@ export class AppComponent {
 }
 
 enum Visibility {
+  Always,
   SignedIn,
   SignedOut,
-  ShopOwner
+  ShopOwner,
 }
