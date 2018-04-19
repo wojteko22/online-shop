@@ -21,14 +21,14 @@ class ProductService(private val productRepository: ProductRepository,
                      private val userRepository: UserRepository
 ) {
 
+    fun getProduct(productId: Long): ProductDto {
+        return productRepository.findById(productId)!!.toDto()
+    }
+
     fun getProducts(shopId: Long): List<ProductDto> {
         val shop: Shop = shopRepository.findById(shopId)!!
         val products: List<Product> = productRepository.findByShop(shop)
         return products.map { product -> product.toDto() }
-    }
-
-    fun getProduct(productId: Long): ProductDto {
-        return productRepository.findById(productId)!!.toDto()
     }
 
     fun addNewProduct(createProductDto: CreateProductDto, username: String): Long {
@@ -39,7 +39,7 @@ class ProductService(private val productRepository: ProductRepository,
     }
 
     fun updateProduct(dto: UpdateProductDto, email: String): Long {
-        validate(dto, email)
+        validate(dto)
         val product: Product = productRepository.findById(dto.id)!!
 
         dto.name?.let {
@@ -73,11 +73,6 @@ class ProductService(private val productRepository: ProductRepository,
         return productRepository.delete(dto.id)
     }
 
-    fun getProducts(email: String): List<Product> {
-        val shop = shopRepository.getByUserEmail(email)
-        return productRepository.findByShop(shop)
-    }
-
     private fun getProductFromDto(dto: CreateProductDto): Product {
         val shop: Shop = shopRepository.findById(dto.shopId)!!
         val category: Category = categoryRepository.findById(dto.categoryId)!!
@@ -92,8 +87,7 @@ class ProductService(private val productRepository: ProductRepository,
         }
     }
 
-    private fun validate(dto: UpdateProductDto, email: String) {
-        val user: User = userRepository.findByEmail(email)!!
+    private fun validate(dto: UpdateProductDto) {
         val product: Product? = productRepository.findById(dto.id)
         if (product == null) {
             throw IllegalStateException("Product doesn't exists!")

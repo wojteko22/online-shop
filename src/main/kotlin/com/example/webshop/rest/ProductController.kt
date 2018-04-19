@@ -26,7 +26,4 @@ class ProductController(private val productService: ProductService) {
     @DeleteMapping
     fun deleteProduct(@RequestBody dto: DeleteProductDto, principal: Principal) = productService.deleProduct(dto, principal.name)
 
-    private fun validate(){
-
-    }
 }
