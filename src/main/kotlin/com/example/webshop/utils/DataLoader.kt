@@ -48,11 +48,11 @@ class DataLoader {
     @Bean
     fun initShop(shopRepository: ShopRepository) = CommandLineRunner {
         val shop2 = Shop("Biedronka", "Wrocław", "Polna", "50-387", owner2)
-        val shop3 = Shop("Bartosz", "Wrocław", "Bacarellego", "50-387", owner3)
-        val shop4 = Shop("Ikea", "Wrocław", "Mila", "50-387", owner4)
+        val shop3 = Shop("Bartosz", "Wrocław", "Baciarellego", "50-387", owner3)
+        val shop4 = Shop("Ikea", "Wrocław", "Miła", "50-387", owner4)
         val shop5 = Shop("Mila", "Wrocław", "Kolorowa", "50-387", owner5)
-        val shop6 = Shop("Kasa", "Wrocław", "Wiosenna", "50-387", owner6)
-        val shop7 = Shop("Maza", "Wrocław", "Piekna", "50-387", owner7)
+        val shop6 = Shop("Kasa", "Wrocław", "Norwida", "50-387", owner6)
+        val shop7 = Shop("Maza", "Wrocław", "Wajdy", "50-387", owner7)
         shopRepository.save(shop1)
         shopRepository.save(shop2)
         shopRepository.save(shop3)
