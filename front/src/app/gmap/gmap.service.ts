@@ -1,28 +1,14 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs/Observable";
-import { } from '@types/googlemaps';
+import {HttpClient} from "@angular/common/http";
 
 
 @Injectable()
 export class GmapService {
 
+constructor(private http: HttpClient){}
 
-  public static getGeoLocation(address: string): Observable<any> {
-    console.log('Getting address: ', address);
-    let geocoder = new google.maps.Geocoder();
-    return Observable.create(observer => {
-      geocoder.geocode({
-        'address': address
-      }, (results, status) => {
-        if (status == google.maps.GeocoderStatus.OK) {
-          observer.next(results[0].geometry.location);
-          observer.complete();
-        } else {
-          console.log('Error: ', results, ' & Status: ', status);
-          observer.error();
-        }
-      });
-    });
+  public getGeoLocation(address: string){
+    return this.http.get('https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCKAHTz4KvsPHmiQpK-5ew5eq17VO7bOxM&address=' + address);
   }
 
 }

@@ -26,6 +26,7 @@ import {OrderDetailsComponent} from './order-details/order-details.component';
 import {OrdersService} from './orders/orders.service';
 import {GmapComponent} from './gmap/gmap.component';
 import { AgmCoreModule } from '@agm/core';
+import {GmapService} from "./gmap/gmap.service";
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { AgmCoreModule } from '@agm/core';
     SnackBarService,
     httpInterceptorProviders,
     OrdersService,
+    GmapService,
   ],
   bootstrap: [AppComponent]
 })
