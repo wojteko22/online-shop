@@ -20,7 +20,7 @@ export class OrderService {
     return this.http.get<OrderPosition[]>(this.ordersUrl + '/' + orderId);
   }
 
-  updateStatus(orderId: number, newStatus: string) {
+  update(orderId: number, newStatus: string) {
     const body = {
       status: newStatus
     };

@@ -26,6 +26,14 @@ export class OrdersComponent implements OnInit {
       width: '250px',
       data: order
     });
-    dialogRef.afterClosed().subscribe(newStatus => this.orderService.updateStatus(order.id, newStatus).subscribe());
+    dialogRef.afterClosed().subscribe(newStatus => {
+      this.updateIfStatusChanged(newStatus, order);
+    });
+  }
+
+  private updateIfStatusChanged(newStatus, order: Order) {
+    if (newStatus && newStatus != order.status) {
+      this.orderService.update(order.id, newStatus).subscribe();
+    }
   }
 }
