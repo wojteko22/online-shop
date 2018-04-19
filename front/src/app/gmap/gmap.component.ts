@@ -7,10 +7,10 @@ import {Component, OnInit} from '@angular/core';
 })
 export class GmapComponent implements OnInit {
 
-  constructor() {
-  }
+  centerLat: number = 51.678418;
+  centerLng: number = 7.809007;
 
-  ngOnInit() {
-  }
+  ngOnInit(){
 
+  }
 }

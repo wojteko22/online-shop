@@ -2,13 +2,12 @@ import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import { } from '@types/googlemaps';
 
+
 @Injectable()
 export class GmapService {
 
-  constructor() {
-  }
 
-  getGeoLocation(address: string): Observable<any> {
+  public static getGeoLocation(address: string): Observable<any> {
     console.log('Getting address: ', address);
     let geocoder = new google.maps.Geocoder();
     return Observable.create(observer => {
