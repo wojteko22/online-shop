@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Shop} from "../shops/shop";
-import {Marker} from "./Marker";
-import {GmapService} from "./gmap.service";
-import {ShopsService} from "../shops/shops.service";
+import {Shop} from '../shops/shop';
+import {Marker} from './marker';
+import {GmapService} from './gmap.service';
+import {ShopsService} from '../shops/shops.service';
+import {Location} from './location';
 
 @Component({
   selector: 'app-gmap',
@@ -28,14 +29,13 @@ export class GmapComponent implements OnInit {
   }
 
   mapShopsToMarkers() {
-    for (let shop of this.shops) {
-      this.gmapService.getGeoLocation(shop.city + " " + shop.street).subscribe(res => {
-          //wyświetla błąd ale wszystko jest w porządku, nie usuwać
-          let loc = res.results[0].geometry.location;
-          this.markers.push(new Marker(loc.lat,loc.lng,shop.name));
+    for (const shop of this.shops) {
+      this.gmapService.getGeoLocation(shop.city + ' ' + shop.street).subscribe((res: Location) => {
+          const loc = res.results[0].geometry.location;
+          this.markers.push(new Marker(loc.lat, loc.lng, shop.name));
         }
       );
-      this.markers.push()
+      this.markers.push();
     }
   }
 
