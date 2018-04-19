@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Status</h2>
+<mat-dialog-content>
+  <mat-radio-group [(ngModel)]="status">
+    <mat-radio-button value="przyjęte">przyjęte</mat-radio-button>
+    <mat-radio-button value="przygotowane">przygotowane</mat-radio-button>
+    <mat-radio-button value="przekazane">przekazane</mat-radio-button>
+  </mat-radio-group>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="status">Zapisz</button>
+</mat-dialog-actions>

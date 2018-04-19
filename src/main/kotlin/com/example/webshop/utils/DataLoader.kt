@@ -91,8 +91,8 @@ class DataLoader {
         repository.save(product2)
     }
 
-    private val order1 = Order("złożone", 1, shop1)
-    private val order2 = Order("złożone", 2, shop1)
+    private val order1 = Order("przyjęte", 1, shop1)
+    private val order2 = Order("przyjęte", 2, shop1)
 
     @Bean
     fun initOrders(repository: OrderRepository) = CommandLineRunner {
