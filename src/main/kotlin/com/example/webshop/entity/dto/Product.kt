@@ -1,6 +1,7 @@
 package com.example.webshop.entity.dto
 
 class ProductDto(
+        val id: Long,
         val name: String,
         val price: Int,
         val unit: String,
