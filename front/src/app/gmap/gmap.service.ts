@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs/Observable";
+import { } from '@types/googlemaps';
 
 @Injectable()
 export class GmapService {
