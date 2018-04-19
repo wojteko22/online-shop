@@ -24,6 +24,7 @@ import {httpInterceptorProviders} from './-http-interceptors';
 import {OrdersComponent} from './orders/orders.component';
 import {OrderDetailsComponent} from './order-details/order-details.component';
 import {OrdersService} from './orders/orders.service';
+import {GmapComponent} from './gmap/gmap.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import {OrdersService} from './orders/orders.service';
     CategoriesComponent,
     OrdersComponent,
     OrderDetailsComponent,
+    GmapComponent,
   ],
   imports: [
     BrowserModule,
