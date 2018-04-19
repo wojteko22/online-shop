@@ -27,6 +27,9 @@ import {httpInterceptorProviders} from './-http-interceptors';
 import {OrdersComponent} from './orders/orders.component';
 import {OrderDetailsComponent} from './order-details/order-details.component';
 import {OrdersService} from './orders/orders.service';
+import {GmapComponent} from './gmap/gmap.component';
+import { AgmCoreModule } from '@agm/core';
+import {GmapService} from "./gmap/gmap.service";
 
 
 @NgModule({
@@ -47,6 +50,7 @@ import {OrdersService} from './orders/orders.service';
     AddProductComponent,
     ProductsComponent,
     ProductComponent,
+    GmapComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,12 +61,16 @@ import {OrdersService} from './orders/orders.service';
     ReactiveFormsModule,
     FormsModule,
     TreeModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCKAHTz4KvsPHmiQpK-5ew5eq17VO7bOxM'
+    }),
   ],
   providers: [
     CredentialsService,
     SnackBarService,
     httpInterceptorProviders,
     OrdersService,
+    GmapService,
   ],
   bootstrap: [AppComponent]
 })
