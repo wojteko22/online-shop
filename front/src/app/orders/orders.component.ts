@@ -18,7 +18,7 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.orders$ = this.orderService.getOrders();
+    this.getOrders();
   }
 
   openDialog(order: Order): void {
@@ -34,6 +34,11 @@ export class OrdersComponent implements OnInit {
   private updateIfStatusChanged(newStatus, order: Order) {
     if (newStatus && newStatus != order.status) {
       this.orderService.update(order.id, newStatus).subscribe();
+      this.getOrders();
     }
+  }
+
+  private getOrders() {
+    this.orders$ = this.orderService.getOrders();
   }
 }
