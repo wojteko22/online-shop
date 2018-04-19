@@ -28,8 +28,9 @@ import {OrdersComponent} from './orders/orders.component';
 import {OrderDetailsComponent} from './order-details/order-details.component';
 import {OrdersService} from './orders/orders.service';
 import {GmapComponent} from './gmap/gmap.component';
-import { AgmCoreModule } from '@agm/core';
-import {GmapService} from "./gmap/gmap.service";
+import {AgmCoreModule} from '@agm/core';
+import {GmapService} from './gmap/gmap.service';
+import {OrderStatusComponent} from './order-status/order-status.component';
 
 
 @NgModule({
@@ -51,6 +52,10 @@ import {GmapService} from "./gmap/gmap.service";
     ProductsComponent,
     ProductComponent,
     GmapComponent,
+    OrderStatusComponent,
+  ],
+  entryComponents: [
+    OrderStatusComponent,
   ],
   imports: [
     BrowserModule,

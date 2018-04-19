@@ -2,6 +2,7 @@
   <mat-expansion-panel *ngFor="let order of orders$ | async">
     <mat-expansion-panel-header>
       Numer zamówienia: {{order.id}}, status: {{order.status}}
+      <mat-icon (click)="openDialog()">mode edit</mat-icon>
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
       <app-order-details [orderId]="order.id"></app-order-details>
