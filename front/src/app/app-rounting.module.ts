@@ -1,16 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ShopsComponent } from './shops/shops.component';
-import { LoginComponent } from './login/login.component';
-import { UserComponent } from './user/user.component';
-import { RegisterComponent } from './register/register.component';
-import { SignedInGuard } from './-guards/signed-in/signed-in.guard';
-import { PasswordComponent } from './password/password.component';
-import { CategoriesComponent } from './categories/categories.component';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { SignedOutGuard } from './-guards/signed-out/signed-out-guard.service';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {ShopsComponent} from './shops/shops.component';
+import {LoginComponent} from './login/login.component';
+import {UserComponent} from './user/user.component';
+import {RegisterComponent} from './register/register.component';
+import {SignedInGuard} from './-guards/signed-in/signed-in.guard';
+import {PasswordComponent} from './password/password.component';
+import {CategoriesComponent} from './categories/categories.component';
+import {NotFoundComponent} from './not-found/not-found.component';
+import {SignedOutGuard} from './-guards/signed-out/signed-out-guard.service';
 import {ShopOwnerGuard} from './-guards/shop-owner/shop-owner.guard';
 import {CustomerGuard} from './-guards/customer/customer.guard';
+import {AddProductComponent} from './products/add-product/add-product.component';
+import {ProductsComponent} from './products/products/products/products.component';
+import {ProductComponent} from './products/product/product/product.component';
 import {OrdersComponent} from './orders/orders.component';
 
 const appRoutes: Routes = [
@@ -47,6 +50,19 @@ const appRoutes: Routes = [
     path: 'register',
     component: RegisterComponent,
     canActivate: [SignedOutGuard],
+  },
+  {
+    path: 'products/add',
+    component: AddProductComponent,
+    canActivate: [ShopOwnerGuard],
+  },
+  { path: 'product/:id',
+    component: ProductComponent,
+  },
+  {
+    path: 'products',
+    component: ProductsComponent,
+    canActivate: [ShopOwnerGuard],
   },
   {
     path: '',

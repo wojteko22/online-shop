@@ -1,0 +1,41 @@
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <mat-form-field class="full-width">
+    <input type="text" autocomplete matInput placeholder="Nazwa produktu" formControlName="name" required>
+    <mat-error *ngIf="form.get('name').hasError('required')">Pole wymagane</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input type="text" autocomplete matInput placeholder="Cena produktu" formControlName="price" required>
+    <mat-error *ngIf="form.get('price').hasError('required')">Pole wymagane</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input type="text" autocomplete matInput placeholder="Jednostka" formControlName="unit" required>
+    <mat-error *ngIf="form.get('unit').hasError('required')">Pole wymagane</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input type="text" autocomplete matInput placeholder="Status" formControlName="status" required>
+    <mat-error *ngIf="form.get('status').hasError('required')">Pole wymagane</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input type="text" autocomplete matInput placeholder="Opis produktu" formControlName="description">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input type="text" autocomplete matInput placeholder="URL zdjęcia produktu:" formControlName="photo">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-select placeholder="Kategoria" formControlName="categoryId" required>
+      <mat-option *ngFor="let categoryPath of categoriesPath" [value]="categoryPath.categoryId">
+        {{ categoryPath.path }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('categoryId').hasError('required')">Pole wymagane</mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" [disabled]="!form.valid">Dodaj produkt!</button>
+</form>

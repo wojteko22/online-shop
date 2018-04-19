@@ -1,0 +1,6 @@
+<a href="/products/add">
+  <button mat-button>Dodaj produkt</button>
+</a>
+<mat-list role="list">
+  <a mat-list-item href="/product/{{product.id}}" *ngFor="let product of products">{{product.name}}</a>
+</mat-list>

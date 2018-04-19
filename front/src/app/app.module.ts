@@ -20,6 +20,9 @@ import {RegisterShopComponent} from './register-shop/register-shop.component';
 import {CategoriesComponent} from './categories/categories.component';
 import {TreeModule} from 'angular-tree-component';
 import {SnackBarService} from './snack-bar.service';
+import {AddProductComponent} from './products/add-product/add-product.component';
+import {ProductsComponent} from './products/products/products/products.component';
+import {ProductComponent} from './products/product/product/product.component';
 import {httpInterceptorProviders} from './-http-interceptors';
 import {OrdersComponent} from './orders/orders.component';
 import {OrderDetailsComponent} from './order-details/order-details.component';
@@ -44,6 +47,9 @@ import {GmapService} from "./gmap/gmap.service";
     CategoriesComponent,
     OrdersComponent,
     OrderDetailsComponent,
+    AddProductComponent,
+    ProductsComponent,
+    ProductComponent,
     GmapComponent,
   ],
   imports: [

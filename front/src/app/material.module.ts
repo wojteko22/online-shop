@@ -3,8 +3,9 @@ import {
   MatButtonModule,
   MatCardModule,
   MatExpansionModule,
-  MatGridListModule,
   MatInputModule,
+  MatListModule,
+  MatGridListModule,
   MatRadioModule,
   MatSelectModule,
   MatSnackBarModule,
@@ -21,6 +22,7 @@ import {
     MatExpansionModule,
     MatSelectModule,
     MatGridListModule,
+    MatListModule,
     MatCardModule,
   ]
 })
