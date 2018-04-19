@@ -16,8 +16,7 @@ class OrderService(
 ) {
 
     fun getOrders(email: String): Iterable<Order> {
-        val shop = shopRepository.findByUserEmail(email)
-                ?: throw NoSuchElementException("No shop owned by user with email $email")
+        val shop = shopRepository.getByUserEmail(email)
         return orderRepository.findByShop(shop)
     }
 

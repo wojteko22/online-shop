@@ -10,9 +10,11 @@ import com.example.webshop.repository.ShopRepository
 import org.springframework.stereotype.Service
 
 @Service
-class ProductService(private val productRepository: ProductRepository,
-                     private val shopRepository: ShopRepository,
-                     private val categoryRepository: CategoryRepository) {
+class ProductService(
+        private val productRepository: ProductRepository,
+        private val shopRepository: ShopRepository,
+        private val categoryRepository: CategoryRepository
+) {
 
     fun addNewProduct(createProductDto: CreateProductDto, email: String): Long {
         validate(createProductDto, email)
@@ -22,8 +24,8 @@ class ProductService(private val productRepository: ProductRepository,
     }
 
     fun getProducts(email: String): List<Product> {
-        val shop = shopRepository.findByUserEmail(email) ?: throw NoSuchElementException("No shop owned by user with email $email")
-        return productRepository.findByShopId(shop.id)
+        val shop = shopRepository.getByUserEmail(email)
+        return productRepository.findByShop(shop)
     }
 
     private fun getProductFromDto(dto: CreateProductDto): Product {
@@ -35,7 +37,7 @@ class ProductService(private val productRepository: ProductRepository,
     }
 
     private fun validate(createProductDto: CreateProductDto, email: String) {
-        val shop = shopRepository.findByUserEmail(email) ?: error("No shop owned by user with email $email")
+        val shop = shopRepository.getByUserEmail(email)
         if (createProductDto.shopId != shop.id) {
             throw IllegalStateException("Shop doesn't belong to the user!")
         }
