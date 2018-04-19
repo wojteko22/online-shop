@@ -13,13 +13,16 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RegisterComponent} from './register/register.component';
 import {UserComponent} from './user/user.component';
 import {PasswordComponent} from './password/password.component';
-import { CredentialsService } from './-services/credentials.service';
+import {CredentialsService} from './-services/credentials.service';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {RegisterUserComponent} from './register-user/register-user.component';
 import {RegisterShopComponent} from './register-shop/register-shop.component';
 import {CategoriesComponent} from './categories/categories.component';
 import {TreeModule} from 'angular-tree-component';
 import {SnackBarService} from './snack-bar.service';
+import {AddProductComponent} from './products/add-product/add-product.component';
+import {ProductsComponent} from './products/products/products/products.component';
+import {ProductComponent} from './products/product/product/product.component';
 import {httpInterceptorProviders} from './http-interceptors';
 
 
@@ -36,6 +39,9 @@ import {httpInterceptorProviders} from './http-interceptors';
     RegisterUserComponent,
     RegisterShopComponent,
     CategoriesComponent,
+    AddProductComponent,
+    ProductsComponent,
+    ProductComponent,
   ],
   imports: [
     BrowserModule,
