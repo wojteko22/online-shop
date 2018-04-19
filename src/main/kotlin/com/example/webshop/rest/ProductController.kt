@@ -15,7 +15,7 @@ class ProductController(private val productService: ProductService) {
     fun getProducts(@PathVariable shopId: Long) = productService.getProducts(shopId)
 
     @GetMapping("/{productId}")
-    fun getProduct(@PathVariable productId: Long) = productService.getProduct(productId).toDto()
+    fun getProduct(@PathVariable productId: Long) = productService.getProduct(productId)
 
     @PostMapping
     fun addProduct(@RequestBody dto: CreateProductDto, principal: Principal) = productService.addNewProduct(dto, principal.name!!)

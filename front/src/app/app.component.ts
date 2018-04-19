@@ -47,6 +47,11 @@ export class AppComponent {
       label: 'Kategorie',
       visibility: Visibility.ShopOwner,
     },
+    {
+      path: '/products',
+      label: 'Produkty',
+      visibility: Visibility.ShopOwner,
+    },
   ];
 
   visible(visibility: Visibility) {

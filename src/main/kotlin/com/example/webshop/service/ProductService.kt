@@ -26,8 +26,8 @@ class ProductService(private val productRepository: ProductRepository,
         return products.map { product -> product.toDto() }
     }
 
-    fun getProduct(productId: Long): Product {
-        return productRepository.findById(productId)!!
+    fun getProduct(productId: Long): ProductDto {
+        return productRepository.findById(productId)!!.toDto()
     }
 
     fun addNewProduct(createProductDto: CreateProductDto, username: String): Long {
@@ -60,7 +60,7 @@ class ProductService(private val productRepository: ProductRepository,
             product.photo = it
         }
         dto.categoryId?.let {
-            product.category = categoryRepository.findById(dto.categoryId)
+            product.category = categoryRepository.findById(dto.categoryId)!!
         }
 
         val updatedProduct = productRepository.save(product)
@@ -81,7 +81,7 @@ class ProductService(private val productRepository: ProductRepository,
 
     private fun getProductFromDto(dto: CreateProductDto): Product {
         val shop: Shop = shopRepository.findById(dto.shopId)!!
-        val category: Category = categoryRepository.findById(dto.categoryId)
+        val category: Category = categoryRepository.findById(dto.categoryId)!!
         return Product(dto.name, dto.price, dto.unit, dto.status,
                 dto.description, dto.photo, category, shop)
     }

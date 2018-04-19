@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository
 
 interface ShopRepository : CrudRepository<Shop, Long> {
     fun findById(shopId: Long): Shop?
-    fun findByName(name : String) : Shop?
     fun findByUser(user: User) : Shop?
+    fun findByUserEmail(email: String): Shop?
 }

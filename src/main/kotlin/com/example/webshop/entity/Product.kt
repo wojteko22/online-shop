@@ -21,6 +21,6 @@ data class Product(
         val id: Long = -1) {
 
     fun toDto(): ProductDto {
-        return ProductDto(name,price,unit,status,description,photo,category.id,shop.id)
+        return ProductDto(id,name,price,unit,status,description,photo,category.id,shop.id)
     }
 }
