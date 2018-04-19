@@ -21,6 +21,9 @@ export class OrderService {
   }
 
   updateStatus(orderId: number, newStatus: string) {
-    return this.http.patch(this.ordersUrl + '/' + orderId, newStatus);
+    const body = {
+      status: newStatus
+    };
+    return this.http.patch(this.ordersUrl + '/' + orderId, body);
   }
 }

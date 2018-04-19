@@ -14,10 +14,10 @@ export class OrderDetailsComponent implements OnInit {
   orderId: number;
   orderPositions$: Observable<OrderPosition[]>;
 
-  constructor(private ordersService: OrderService) {
+  constructor(private orderService: OrderService) {
   }
 
   ngOnInit() {
-    this.orderPositions$ = this.ordersService.getOrderDetails(this.orderId);
+    this.orderPositions$ = this.orderService.getOrderDetails(this.orderId);
   }
 }

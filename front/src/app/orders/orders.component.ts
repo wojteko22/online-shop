@@ -14,17 +14,18 @@ export class OrdersComponent implements OnInit {
 
   orders$: Observable<Order[]>;
 
-  constructor(private ordersService: OrderService, private dialog: MatDialog) {
+  constructor(private orderService: OrderService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
-    this.orders$ = this.ordersService.getOrders();
+    this.orders$ = this.orderService.getOrders();
   }
 
   openDialog(order: Order): void {
-    this.dialog.open(OrderStatusComponent, {
+    const dialogRef = this.dialog.open(OrderStatusComponent, {
       width: '250px',
       data: order
     });
+    dialogRef.afterClosed().subscribe(newStatus => this.orderService.updateStatus(order.id, newStatus).subscribe());
   }
 }
