@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA} from '@angular/material';
+import {Order} from '../orders/order';
 
 @Component({
   selector: 'app-order-status',
@@ -8,9 +10,10 @@ import { Component, OnInit } from '@angular/core';
 export class OrderStatusComponent implements OnInit {
   status: string;
 
-  constructor() { }
+  constructor(@Inject(MAT_DIALOG_DATA) private order: Order) {
+    this.status = order.status;
+  }
 
   ngOnInit() {
   }
-
 }

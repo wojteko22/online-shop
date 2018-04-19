@@ -21,10 +21,10 @@ export class OrdersComponent implements OnInit {
     this.orders$ = this.ordersService.getOrders();
   }
 
-  openDialog(): void {
+  openDialog(order: Order): void {
     this.dialog.open(OrderStatusComponent, {
       width: '250px',
-      data: {name: 'aa', animal: 'bb'}
+      data: order
     });
   }
 }
