@@ -21,9 +21,9 @@ import {
     MatRadioModule,
     MatExpansionModule,
     MatSelectModule,
+    MatGridListModule,
     MatListModule,
     MatCardModule,
-    MatGridListModule,
   ]
 })
 export class MaterialModule {

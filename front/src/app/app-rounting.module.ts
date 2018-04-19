@@ -14,6 +14,7 @@ import {CustomerGuard} from './-guards/customer/customer.guard';
 import {AddProductComponent} from './products/add-product/add-product.component';
 import {ProductsComponent} from './products/products/products/products.component';
 import {ProductComponent} from './products/product/product/product.component';
+import {OrdersComponent} from './orders/orders.component';
 
 const appRoutes: Routes = [
   {
@@ -29,6 +30,11 @@ const appRoutes: Routes = [
     path: 'password',
     component: PasswordComponent,
     canActivate: [SignedInGuard]
+  },
+  {
+    path: 'orders',
+    component: OrdersComponent,
+    canActivate: [SignedInGuard, ShopOwnerGuard],
   },
   {
     path: 'categories',

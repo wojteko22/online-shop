@@ -23,7 +23,10 @@ import {SnackBarService} from './snack-bar.service';
 import {AddProductComponent} from './products/add-product/add-product.component';
 import {ProductsComponent} from './products/products/products/products.component';
 import {ProductComponent} from './products/product/product/product.component';
-import {httpInterceptorProviders} from './http-interceptors';
+import {httpInterceptorProviders} from './-http-interceptors';
+import {OrdersComponent} from './orders/orders.component';
+import {OrderDetailsComponent} from './order-details/order-details.component';
+import {OrdersService} from './orders/orders.service';
 
 
 @NgModule({
@@ -39,6 +42,8 @@ import {httpInterceptorProviders} from './http-interceptors';
     RegisterUserComponent,
     RegisterShopComponent,
     CategoriesComponent,
+    OrdersComponent,
+    OrderDetailsComponent,
     AddProductComponent,
     ProductsComponent,
     ProductComponent,
@@ -57,6 +62,7 @@ import {httpInterceptorProviders} from './http-interceptors';
     CredentialsService,
     SnackBarService,
     httpInterceptorProviders,
+    OrdersService,
   ],
   bootstrap: [AppComponent]
 })

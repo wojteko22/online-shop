@@ -2,19 +2,23 @@ package com.example.webshop.service
 
 import com.example.webshop.entity.User
 import com.example.webshop.entity.dto.UpdatePasswordUserDto
+import com.example.webshop.entity.dto.UserDto
+import com.example.webshop.repository.ShopRepository
 import com.example.webshop.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class UserService(private val userRepository: UserRepository) {
+class UserService(private val userRepository: UserRepository, private val shopRepository: ShopRepository) {
 
     @Autowired
     lateinit var passwordEncoder: PasswordEncoder
 
-    fun getUserByEmail(email: String): User? {
-        return userRepository.findByEmail(email)
+    fun getUserByEmail(email: String): UserDto {
+        val shop = shopRepository.findByUserEmail(email)
+        val user = userRepository.findByEmail(email) ?: throw NoSuchElementException("No user with email $email")
+        return user.toDto(shop)
     }
 
     fun getUserById(id: Long): User? {

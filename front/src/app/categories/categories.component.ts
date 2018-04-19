@@ -1,8 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Category} from './Category';
-import {CategoriesService} from "./categories.service";
-import {ITreeOptions, TreeComponent} from "angular-tree-component";
-import {CategoryDto} from "./CategoryDto";
+import {CategoriesService} from './categories.service';
+import {ITreeOptions, TreeComponent} from 'angular-tree-component';
+import {CategoryDto} from './CategoryDto';
+import {Observable} from 'rxjs/Observable';
+import {SnackBarService} from "../snack-bar.service";
 
 @Component({
   selector: 'app-categories',
@@ -12,7 +14,7 @@ import {CategoryDto} from "./CategoryDto";
 })
 export class CategoriesComponent implements OnInit {
 
-  categories: Category[];
+  categories$: Observable<Category[]>;
   @ViewChild(TreeComponent)
   private treeComponent: TreeComponent;
 
@@ -25,8 +27,7 @@ export class CategoriesComponent implements OnInit {
     allowDrop: true
   };
 
-  constructor(private categoryService: CategoriesService) {
-
+  constructor(private categoryService: CategoriesService, private snackBar: SnackBarService) {
   }
 
   ngOnInit() {
@@ -34,47 +35,31 @@ export class CategoriesComponent implements OnInit {
   }
 
   getCategories(): void {
-    setTimeout(() => {
-        this.categoryService.getCategories().subscribe(categories => this.categories = categories);
-      }
-      , 200)
-
+    this.categories$ = this.categoryService.getCategories();
   }
-
   onMoveNode($event) {
     console.log(
-      "Moved",
-      $event.node.name,
-      "to",
-      $event.to.parent.name,
-      "at index",
-      $event.to.index);
-    this.categoryService.editCategory($event.node.id, $event.to.parent.id, $event.node.name)
-      .subscribe(
-        () => {
-          `Category ${$event.node.name} updated`
-        }
-      );
+      'Moved', $event.node.name,
+      'to', $event.to.parent.name,
+      'at index', $event.to.index
+    );
+    this.categoryService.editCategory($event.node.id, $event.to.parent.id, $event.node.name).subscribe();
   }
 
   editName(id: number, parentId: number, newName: string): void {
     console.log(`id: ${id},  parentId: ${parentId}, newName: ${newName}`);
-    this.categoryService.editCategory(id, parentId, newName).subscribe();
+    this.categoryService.editCategory(id, parentId, newName).subscribe(
+      () => this.snackBar.show('Zapisano nową nazwę'),
+      error => this.snackBar.show(error)
+    );
   }
 
   add(parentId?: number) {
-    let categoryDto = new CategoryDto("Nowa kategoria", parseInt(this.categoryService.shopId), parentId);
-    this.categoryService.addCategory(categoryDto).subscribe(() => console.log("Category added"));
-    this.getCategories();
-    this.treeComponent.treeModel.update();
+    let categoryDto = new CategoryDto('Nowa kategoria', parseInt(this.categoryService.shopId), parentId);
+    this.categoryService.addCategory(categoryDto).subscribe(() => this.getCategories());
   }
 
   delete(id: number): void {
-    this.categoryService.deleteCategory(id).subscribe(() => console.log(`category ${id} deleted`));
-    const node = this.treeComponent.treeModel.getNodeBy((it) => it.id == id);
-    node.hide();
-    this.getCategories();
-    this.treeComponent.treeModel.update();
+    this.categoryService.deleteCategory(id).subscribe(() => this.getCategories());
   }
-
 }

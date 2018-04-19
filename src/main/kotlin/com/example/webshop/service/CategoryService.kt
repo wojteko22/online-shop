@@ -3,6 +3,7 @@ package com.example.webshop.service
 import com.example.webshop.entity.Category
 import com.example.webshop.entity.dto.CategoryDto
 import com.example.webshop.entity.dto.CreateCategoryDto
+import com.example.webshop.entity.dto.UpdateCategoryDto
 import com.example.webshop.repository.CategoryRepository
 import com.example.webshop.repository.ShopRepository
 import org.springframework.stereotype.Service
@@ -27,29 +28,32 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
     }
 
     fun deleteById(id: Long) {
-        val category: Category = categoryRepository.findById(id)
+        val category: Category = categoryRepository.findById(id) ?: handleLackOfResource(id)
         if (category.subcategories.isNotEmpty()) {
             error("Cannot delete category with subcategories")
         }
         categoryRepository.delete(category)
     }
 
-    fun update(id: Long, parentCategoryId: String?, categoryNewName: String) {
-        val category: Category = categoryRepository.findById(id)
-        val newParentOrNull = newParentOrNull(parentCategoryId, category)
-        val updated = category.copy(name = categoryNewName, parentCategory = newParentOrNull)
+    fun update(id: Long, dto: UpdateCategoryDto) {
+        val category = categoryRepository.findById(id) ?: handleLackOfResource(id)
+        val newParentOrNull = newParentOrNull(dto.parentId, category)
+        val updated = category.copy(name = dto.newName, parentCategory = newParentOrNull)
         categoryRepository.save(updated)
     }
 
-    private fun newParentOrNull(parentCategoryId: String?, category: Category): Category? =
-            if (parentCategoryId.isNullOrEmpty()) {
+    private fun handleLackOfResource(id: Long): Nothing = throw NoSuchElementException("No category with id $id")
+
+    private fun newParentOrNull(parentCategoryId: Long?, category: Category): Category? =
+            if (parentCategoryId == null) {
                 null
             } else {
-                newParent(parentCategoryId!!, category)
+                newParent(parentCategoryId, category)
             }
 
-    private fun newParent(parentCategoryId: String, category: Category): Category {
-        val newParent = categoryRepository.findById(parentCategoryId.toLong())
+    private fun newParent(parentCategoryId: Long, category: Category): Category {
+        val newParent = categoryRepository.findById(parentCategoryId)
+                ?: throw IllegalArgumentException("Invalid parent category")
         val forbiddenCategories = getForbiddenParentCategories(category)
         if (forbiddenCategories.contains(newParent)) {
             error("Cannot set parent category to subcategory")
@@ -67,7 +71,7 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
     }
 
     private fun toCategoryDto(categories: Iterable<Category>): MutableList<CategoryDto> {
-        val categoriesDto: MutableSet<CategoryDto> = mutableSetOf<CategoryDto>()
+        val categoriesDto = mutableSetOf<CategoryDto>()
         categories.forEach { categoriesDto.add(CategoryDto(it.name, it.parentCategory?.id, it.id, mutableSetOf())) }
 
         for (categoryDto1 in categoriesDto) {
@@ -81,5 +85,4 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
         categoriesDto.forEach { if (it.parentCategory == null) categoryDtoDistinct.add(it) }
         return categoryDtoDistinct
     }
-
 }

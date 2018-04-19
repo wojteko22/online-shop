@@ -13,7 +13,7 @@ import java.security.Principal
 class UserController(private val userService: UserService) {
 
     @GetMapping("/me")
-    fun me(principal: Principal): UserDto = userService.getUserByEmail(principal.name)!!.toDto()
+    fun me(principal: Principal): UserDto = userService.getUserByEmail(principal.name)
 
     @PutMapping("/password")
     fun changePassword(@RequestBody dto: UpdatePasswordUserDto, principal: Principal): ResponseEntity<HttpStatus> =

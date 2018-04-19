@@ -19,5 +19,12 @@ class GlobalControllerExceptionHandler {
     @ExceptionHandler(IllegalArgumentException::class)
     fun handleIllegalArgument(e: Exception) = handle(e)
 
-    fun handle(e: Exception) = ErrorDto(e.message)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoSuchElementException::class)
+    fun handleLackOfResource(e: Exception) = handle(e)
+
+    fun handle(e: Exception): ErrorDto {
+        e.printStackTrace()
+        return ErrorDto(e.message)
+    }
 }
