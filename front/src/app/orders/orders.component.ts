@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Order} from './order';
 import {Observable} from 'rxjs/Observable';
-import {OrdersService} from './orders.service';
+import {OrderService} from '../-services/order.service';
 import {MatDialog} from '@angular/material';
 import {OrderStatusComponent} from '../order-status/order-status.component';
 
@@ -14,7 +14,7 @@ export class OrdersComponent implements OnInit {
 
   orders$: Observable<Order[]>;
 
-  constructor(private ordersService: OrdersService, private dialog: MatDialog) {
+  constructor(private ordersService: OrderService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
