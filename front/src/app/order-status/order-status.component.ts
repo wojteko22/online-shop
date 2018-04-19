@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./order-status.component.css']
 })
 export class OrderStatusComponent implements OnInit {
+  status: string;
 
   constructor() { }
 

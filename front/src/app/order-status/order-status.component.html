@@ -1,3 +1,11 @@
-<p>
-  order-status works!
-</p>
+<h2 mat-dialog-title>Status</h2>
+<mat-dialog-content>
+  <mat-radio-group [(ngModel)]="status">
+    <mat-radio-button value="registered">zajestresowane</mat-radio-button>
+    <mat-radio-button value="prepared">przygotowane</mat-radio-button>
+    <mat-radio-button value="passed">przekazane</mat-radio-button>
+  </mat-radio-group>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true">Zapisz</button>
+</mat-dialog-actions>
