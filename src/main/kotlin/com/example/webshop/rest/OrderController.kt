@@ -1,10 +1,8 @@
 package com.example.webshop.rest
 
+import com.example.webshop.entity.dto.UpdateOrderDto
 import com.example.webshop.service.OrderService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.security.Principal
 
 @RestController
@@ -16,4 +14,9 @@ class OrderController(private val orderService: OrderService) {
 
     @GetMapping("/{id}")
     fun getOrderDetails(@PathVariable id: Long) = orderService.getOrderDetails(id)
+
+    @PatchMapping("/{id}")
+    fun update(@PathVariable id: Long, @RequestBody dto: UpdateOrderDto, principal: Principal) {
+        orderService.update(id, dto, principal.name)
+    }
 }

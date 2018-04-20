@@ -26,10 +26,11 @@ import {ProductComponent} from './products/product/product/product.component';
 import {httpInterceptorProviders} from './-http-interceptors';
 import {OrdersComponent} from './orders/orders.component';
 import {OrderDetailsComponent} from './order-details/order-details.component';
-import {OrdersService} from './orders/orders.service';
+import {OrderService} from './-services/order.service';
 import {GmapComponent} from './gmap/gmap.component';
-import { AgmCoreModule } from '@agm/core';
-import {GmapService} from "./gmap/gmap.service";
+import {AgmCoreModule} from '@agm/core';
+import {GmapService} from './gmap/gmap.service';
+import {OrderStatusComponent} from './order-status/order-status.component';
 import { ShopProductsComponent } from './products/shop-products/shop-products.component';
 import { CategoryItemComponent } from './products/shop-products/category-item/category-item.component';
 import { SelectCategoryService } from './products/shop-products/select-category.service';
@@ -54,6 +55,10 @@ import { SelectCategoryService } from './products/shop-products/select-category.
     ProductsComponent,
     ProductComponent,
     GmapComponent,
+    OrderStatusComponent,
+  ],
+  entryComponents: [
+    OrderStatusComponent,
     ShopProductsComponent,
     CategoryItemComponent,
   ],
@@ -74,7 +79,7 @@ import { SelectCategoryService } from './products/shop-products/select-category.
     CredentialsService,
     SnackBarService,
     httpInterceptorProviders,
-    OrdersService,
+    OrderService,
     GmapService,
     SelectCategoryService,
   ],

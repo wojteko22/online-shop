@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {OrdersService} from '../orders/orders.service';
+import {OrderService} from '../-services/order.service';
 import {OrderPosition} from './order-position';
 import {Observable} from 'rxjs/Observable';
 
@@ -14,10 +14,10 @@ export class OrderDetailsComponent implements OnInit {
   orderId: number;
   orderPositions$: Observable<OrderPosition[]>;
 
-  constructor(private ordersService: OrdersService) {
+  constructor(private orderService: OrderService) {
   }
 
   ngOnInit() {
-    this.orderPositions$ = this.ordersService.getOrderDetails(this.orderId);
+    this.orderPositions$ = this.orderService.getOrderDetails(this.orderId);
   }
 }
