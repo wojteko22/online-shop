@@ -31,6 +31,8 @@ import {GmapComponent} from './gmap/gmap.component';
 import {AgmCoreModule} from '@agm/core';
 import {GmapService} from './gmap/gmap.service';
 import {OrderStatusComponent} from './order-status/order-status.component';
+import {CategoriesService} from './categories/categories.service';
+import {ProductService} from './-services/product.service';
 
 
 @NgModule({
@@ -76,6 +78,8 @@ import {OrderStatusComponent} from './order-status/order-status.component';
     httpInterceptorProviders,
     OrderService,
     GmapService,
+    CategoriesService,
+    ProductService,
   ],
   bootstrap: [AppComponent]
 })
