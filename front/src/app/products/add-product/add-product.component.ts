@@ -23,20 +23,7 @@ export class AddProductComponent implements OnInit {
               private categoriesService: CategoriesService,
               private prodService: ProductService,
               private credentialsService: CredentialsService) {
-
-    categoriesService.getCategories().subscribe((categories) => {
-      this.categories = categories;
-      this.categories.forEach(
-        (cat) => {
-          this.addAllCategoryPath(cat, cat.name);
-        }
-      );
-    });
-
     this.createForm();
-  }
-
-  ngOnInit() {
   }
 
   createForm() {
@@ -51,27 +38,27 @@ export class AddProductComponent implements OnInit {
     });
   }
 
+  ngOnInit() {
+    this.categoriesService.getCategories().subscribe((categories) => {
+      this.categories = categories;
+      this.categories.forEach((cat) => this.addAllCategoryPath(cat, cat.name));
+    });
+  }
 
-  addAllCategoryPath(category: Category, path: string) {
+  private addAllCategoryPath(category: Category, path: string) {
     if (category.subcategories.length === 0) {
       this.categoriesPath.push(new CategoryPath(category.id, path));
     } else {
-      category.subcategories.forEach(
-        (subcategory) => {
-          const p = path + ' - ' + subcategory.name;
-          this.addAllCategoryPath(subcategory, p);
-        });
+      category.subcategories.forEach((subcategory) => {
+        const p = path + ' - ' + subcategory.name;
+        this.addAllCategoryPath(subcategory, p);
+      });
     }
   }
 
   onSubmit() {
-    const product = this.form.value as Product;
-    product.shopId = this.credentialsService.getUser().shopId;
-    console.log(product);
-    this.prodService.addProduct(product).subscribe((response) =>
-      console.log(response));
+    const shopId = this.credentialsService.getUser().shopId;
+    const product = {...this.form.value, shopId: shopId} as Product;
+    this.prodService.addProduct(product).subscribe((response) => console.log("id:", response));
   }
-
 }
-
-
