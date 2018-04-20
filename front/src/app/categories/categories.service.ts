@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {Category} from "./Category";
 import {CredentialsService} from "../-services/credentials.service";
 import {CategoryDto} from "./CategoryDto";
+import {CategorySimpleDto} from '../-models/CategorySimpleDto';
 
 
 @Injectable()
@@ -35,5 +36,9 @@ export class CategoriesService {
       parentId: parentId,
     };
     return this.http.patch(`${this.categoriesUrl}/${id}`, body);
+  }
+
+  getSubcategories(id: number) {
+    return this.http.get<CategorySimpleDto[]>(this.categoriesUrl+"/"+id+"/subcategories");
   }
 }

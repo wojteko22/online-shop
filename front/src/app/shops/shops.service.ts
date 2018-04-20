@@ -14,4 +14,8 @@ export class ShopsService {
   getShops(): Observable<Shop[]> {
     return this.http.get<Shop[]>(this.shopsUrl);
   }
+
+  getShopInfo(shopId: any) {
+    return this.http.get<Shop>(this.shopsUrl+"/"+shopId);
+  }
 }

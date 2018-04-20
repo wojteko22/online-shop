@@ -1,0 +1,42 @@
+.sidebar {
+  position: absolute;
+  width: 15%;
+  left: 0;
+}
+
+.products {
+  width: 85%;
+  position: absolute;
+  right: 0;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.product {
+  height: 80%;
+  width: 80%;
+}
+
+img {
+  max-width: 50%;
+  height: 65%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.portrait {
+  height: 80px;
+  width: 30px;
+}
+
+.landscape {
+  height: 30px;
+  width: 80px;
+}
+
+.square {
+  height: 75px;
+  width: 75px;
+}

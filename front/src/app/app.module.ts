@@ -30,6 +30,9 @@ import {OrdersService} from './orders/orders.service';
 import {GmapComponent} from './gmap/gmap.component';
 import { AgmCoreModule } from '@agm/core';
 import {GmapService} from "./gmap/gmap.service";
+import { ShopProductsComponent } from './products/shop-products/shop-products.component';
+import { CategoryItemComponent } from './products/shop-products/category-item/category-item.component';
+import { SelectCategoryService } from './products/shop-products/select-category.service';
 
 
 @NgModule({
@@ -51,6 +54,8 @@ import {GmapService} from "./gmap/gmap.service";
     ProductsComponent,
     ProductComponent,
     GmapComponent,
+    ShopProductsComponent,
+    CategoryItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +76,7 @@ import {GmapService} from "./gmap/gmap.service";
     httpInterceptorProviders,
     OrdersService,
     GmapService,
+    SelectCategoryService,
   ],
   bootstrap: [AppComponent]
 })
