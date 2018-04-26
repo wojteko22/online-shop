@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {environment} from "../../environments/environment";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
-import {Category} from "./Category";
-import {CredentialsService} from "../-services/credentials.service";
-import {CategoryDto} from "./CategoryDto";
+import {environment} from '../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import {Category} from './Category';
+import {CredentialsService} from '../-services/credentials.service';
+import {CategoryDto} from './CategoryDto';
 import {CategorySimpleDto} from '../-models/CategorySimpleDto';
 
 
@@ -14,7 +14,8 @@ export class CategoriesService {
   private categoriesUrl: string;
 
   constructor(private http: HttpClient, private credentialsService: CredentialsService) {
-    this.shopId = this.credentialsService.getUser().shopId.toString();
+    if (this.credentialsService.getUser().shopId != null)
+      this.shopId = this.credentialsService.getUser().shopId.toString();
     this.categoriesUrl = environment.apiUrl + '/' + this.shopId + '/categories';
   }
 
@@ -39,10 +40,10 @@ export class CategoriesService {
   }
 
   getSubcategories(id: number) {
-    return this.http.get<CategorySimpleDto[]>(this.categoriesUrl+"/"+id+"/subcategories");
+    return this.http.get<CategorySimpleDto[]>(this.categoriesUrl + '/' + id + '/subcategories');
   }
 
   getShopCategories(shopId: number) {
-    return this.http.get<Category[]>(environment.apiUrl+"/"+shopId+"/categories");
+    return this.http.get<Category[]>(environment.apiUrl + '/' + shopId + '/categories');
   }
 }
