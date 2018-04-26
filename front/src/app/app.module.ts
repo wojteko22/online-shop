@@ -31,6 +31,10 @@ import {GmapComponent} from './gmap/gmap.component';
 import {AgmCoreModule} from '@agm/core';
 import {GmapService} from './gmap/gmap.service';
 import {OrderStatusComponent} from './order-status/order-status.component';
+import {ShopProductsComponent} from './products/shop-products/shop-products.component';
+import {CategoryItemComponent} from './products/shop-products/category-item/category-item.component';
+import {SelectCategoryService} from './products/shop-products/select-category.service';
+import { ProductDialogComponent } from './products/shop-products/product-dialog/product-dialog.component';
 
 
 @NgModule({
@@ -53,9 +57,15 @@ import {OrderStatusComponent} from './order-status/order-status.component';
     ProductComponent,
     GmapComponent,
     OrderStatusComponent,
+    ShopProductsComponent,
+    CategoryItemComponent,
+    ProductDialogComponent,
   ],
   entryComponents: [
     OrderStatusComponent,
+    ShopProductsComponent,
+    CategoryItemComponent,
+    ProductDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +86,7 @@ import {OrderStatusComponent} from './order-status/order-status.component';
     httpInterceptorProviders,
     OrderService,
     GmapService,
+    SelectCategoryService,
   ],
   bootstrap: [AppComponent]
 })

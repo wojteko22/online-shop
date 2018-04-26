@@ -10,4 +10,8 @@ class ShopService(private val shopRepository: ShopRepository) {
     fun getShops(): List<ShopDto> {
         return shopRepository.findAll().map { it.toDto() }
     }
+
+    fun getById(shopId: Long): ShopDto? {
+        return shopRepository.findById(shopId)?.toDto()
+    }
 }

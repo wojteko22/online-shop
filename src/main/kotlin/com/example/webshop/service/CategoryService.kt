@@ -2,6 +2,7 @@ package com.example.webshop.service
 
 import com.example.webshop.entity.Category
 import com.example.webshop.entity.dto.CategoryDto
+import com.example.webshop.entity.dto.CategorySimpleDto
 import com.example.webshop.entity.dto.CreateCategoryDto
 import com.example.webshop.entity.dto.UpdateCategoryDto
 import com.example.webshop.repository.CategoryRepository
@@ -84,5 +85,13 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
         val categoryDtoDistinct = mutableListOf<CategoryDto>()
         categoriesDto.forEach { if (it.parentCategory == null) categoryDtoDistinct.add(it) }
         return categoryDtoDistinct
+    }
+
+    fun findSubcategoriesByCategoryId(category_id: Long): MutableSet<CategorySimpleDto> {
+        val parentCategory: Category = categoryRepository.findById(category_id)!!
+        val categories = this.categoryRepository.findByParentCategory(parentCategory)
+        val categoriesDto = mutableSetOf<CategorySimpleDto>()
+        categories.forEach { categoriesDto.add(it.toSimpleDto())}
+        return categoriesDto
     }
 }

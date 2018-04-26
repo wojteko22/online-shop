@@ -31,6 +31,18 @@ class ProductService(private val productRepository: ProductRepository,
         return products.map { product -> product.toDto() }
     }
 
+    fun getByCategoryId(categoryId: Long): List<ProductDto> {
+        val category: Category? = categoryRepository.findById(categoryId)
+        val products: List<Product> = productRepository.findByCategory(category!!)
+        return products.map { product -> product.toDto() }
+    }
+
+    fun getByShopIdAndPattern(shopId: Long, pattern: String): Any {
+        val shop: Shop = shopRepository.findOne(shopId)
+        val products: List<Product> = this.productRepository.findByShopAndPattern(shop, pattern)
+        return products.map{ product -> product.toDto()}
+    }
+
     fun addNewProduct(createProductDto: CreateProductDto, username: String): Long {
         validate(createProductDto, username)
         val product: Product = getProductFromDto(createProductDto)
