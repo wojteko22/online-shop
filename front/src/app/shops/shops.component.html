@@ -1,6 +1,6 @@
 <app-gmap></app-gmap>
 
-<mat-grid-list rowHeight="2:1">
+<mat-grid-list cols="3" rowHeight="2:1">
   <mat-grid-tile *ngFor="let shop of shops">
     <mat-card
       routerLink="/shop/{{shop.id}}/products">

@@ -1,25 +1,33 @@
 <mat-toolbar>
-  <span>{{shop.name}}</span><input label="pattern" #pattern (input)="getProductsByPattern(pattern.value)" matInput="Szukaj"/>
+  <span>{{shop.name}}</span><input label="pattern" #pattern (input)="getProductsByPattern(pattern.value)"
+                                   matInput="Szukaj"/>
 </mat-toolbar>
 
 <div class="sidebar">
   <app-category-item *ngFor="let category of categories" [category]="category"></app-category-item>
 </div>
 <div class="products">
-    <mat-grid-list cols="4">
-      <mat-grid-tile *ngFor="let product of products">
-        <mat-card class="product"
-          routerLink="/product/{{product.id}}">
-          <mat-card-header>
-            <mat-card-title><h3>{{product.name}}</h3></mat-card-title>
-          </mat-card-header>
-            <img mat-card-image src="{{product.photo}}"  />
-          <mat-card-content>
+  <mat-grid-list cols="4">
+    <mat-grid-tile *ngFor="let product of products">
+      <mat-card class="product">
+        <mat-card-header>
+          <mat-card-title>
+            <h3>{{product.name}}</h3>
+          </mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="{{product.photo}}"/>
+        <mat-card-content>
             <span>
-            <h4> Cena: {{product.price}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dodaj do koszyka</h4></span>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-    </mat-grid-list>
+              Cena: {{product.price}} zł</span><br/>
+          <span>
+          <a href="/product/{{product.id}}">
+            <button mat-raised-button color="primary">Więcej szczegółów</button>
+          </a>
+          &nbsp; &nbsp; &nbsp;
+          <button mat-raised-button color="primary" (click)="addToChart(product.id)">Dodaj do koszyka</button>
+          </span>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
-

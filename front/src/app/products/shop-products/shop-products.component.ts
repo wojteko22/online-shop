@@ -7,6 +7,8 @@ import {ShopsService} from '../../shops/shops.service';
 import {CategoriesService} from '../../categories/categories.service';
 import {CategorySimpleDto} from '../../-models/CategorySimpleDto';
 import {SelectCategoryService} from './select-category.service';
+import {MatDialog} from '@angular/material';
+import {ProductDialogComponent} from './product-dialog/product-dialog.component';
 
 @Component({
   selector: 'app-shop-products',
@@ -19,22 +21,20 @@ export class ShopProductsComponent implements OnInit {
   products: Product[];
   shop: Shop = new Shop();
   categories: CategorySimpleDto[];
-
+  pattern: string = '';
   constructor(private activatedRoute: ActivatedRoute,
               private productService: ProductService,
               private shopsService: ShopsService,
               private categoriesService: CategoriesService,
-              private selectCategory: SelectCategoryService) {
+              private selectCategory: SelectCategoryService,
+              private dialog: MatDialog) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       let shopId: Number = Number(paramMap.get('shopId'));
 
       this.shopsService.getShopInfo(shopId).subscribe((shop) => {
         this.shop = shop;
         this.loadAllProducts();
-      });
-
-      this.categoriesService.getCategories().subscribe((categories) => {
-        this.categories = categories.map((c) => new CategorySimpleDto(c.name, c.id, c.parentCategory));
+        this.loadShopCategories(shop.id);
       });
 
       this.selectCategory.categoryId.subscribe((categoryId) => {
@@ -43,26 +43,47 @@ export class ShopProductsComponent implements OnInit {
           }
         );
       });
+
     });
+
   }
 
   getProductsByPattern(pattern: string) {
-    if(pattern.length>0) {
+    if (pattern.length > 0) {
       this.productService.getProductsLike(this.shop.id, pattern).subscribe((products) => {
         this.products = products;
-      })
+        this.pattern=pattern;
+      });
     } else {
       this.loadAllProducts();
     }
   }
 
-  loadAllProducts(){
+  loadAllProducts() {
     this.productService.getShopProducts(this.shop.id).subscribe((products) =>
       this.products = products);
   }
 
+  loadShopCategories(shopId: number) {
+    this.categoriesService.getShopCategories(shopId).subscribe((categories) => {
+      this.categories = categories.map((c) => new CategorySimpleDto(c.name, c.id, c.parentCategory));
+    });
+  }
+
   ngOnInit() {
 
+  }
+
+  addToChart(id: number) {
+    console.log(id);
+    const productAmount=1;
+    let dialog = this.dialog.open(ProductDialogComponent, {
+      width:'250px',
+      data: {amount: productAmount}
+    });
+    dialog.afterClosed().subscribe((result) => {
+      console.log(result);
+    })
   }
 
 }

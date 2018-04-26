@@ -41,4 +41,8 @@ export class CategoriesService {
   getSubcategories(id: number) {
     return this.http.get<CategorySimpleDto[]>(this.categoriesUrl+"/"+id+"/subcategories");
   }
+
+  getShopCategories(shopId: number) {
+    return this.http.get<Category[]>(environment.apiUrl+"/"+shopId+"/categories");
+  }
 }

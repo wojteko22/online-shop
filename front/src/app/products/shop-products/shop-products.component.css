@@ -8,7 +8,7 @@
   width: 85%;
   position: absolute;
   right: 0;
-  height: 100vh;
+  height: 160vh;
   overflow-x: hidden;
   overflow-y: hidden;
 }
@@ -20,23 +20,12 @@
 
 img {
   max-width: 50%;
-  height: 65%;
+  height: 60%;
   margin-left: auto;
   margin-right: auto;
   display: block;
 }
 
-.portrait {
-  height: 80px;
-  width: 30px;
-}
-
-.landscape {
-  height: 30px;
-  width: 80px;
-}
-
-.square {
-  height: 75px;
-  width: 75px;
+.highlightText {
+  background: yellow;
 }
