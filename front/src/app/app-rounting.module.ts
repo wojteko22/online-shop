@@ -56,8 +56,13 @@ const appRoutes: Routes = [
     component: AddProductComponent,
     canActivate: [ShopOwnerGuard],
   },
-  { path: 'product/:id',
+  {
+    path: 'product/:id',
     component: ProductComponent,
+  },
+  {
+    path: 'product/:id/edit',
+    component: AddProductComponent,
   },
   {
     path: 'products',
