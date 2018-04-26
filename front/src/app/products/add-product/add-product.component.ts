@@ -17,9 +17,9 @@ export class AddProductComponent implements OnInit {
   form: FormGroup;
   categoriesPath: CategoryPath[] = [];
 
-  constructor(private fb: FormBuilder,
+  constructor(protected fb: FormBuilder,
               private categoriesService: CategoriesService,
-              private prodService: ProductService,
+              protected productService: ProductService,
               private credentialsService: CredentialsService) {
     this.createForm();
   }
@@ -56,6 +56,6 @@ export class AddProductComponent implements OnInit {
   onSubmit() {
     const shopId = this.credentialsService.getUser().shopId;
     const product = {...this.form.value, shopId: shopId} as Product;
-    this.prodService.addProduct(product).subscribe((response) => console.log('id:', response));
+    this.productService.addProduct(product).subscribe((response) => console.log('id:', response));
   }
 }
