@@ -15,6 +15,7 @@ import {AddProductComponent} from './products/add-product/add-product.component'
 import {ProductsComponent} from './products/products/products/products.component';
 import {ProductComponent} from './products/product/product/product.component';
 import {OrdersComponent} from './orders/orders.component';
+import {ProductEditComponent} from './products/product-edit/product-edit.component';
 
 const appRoutes: Routes = [
   {
@@ -62,7 +63,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'product/:id/edit',
-    component: AddProductComponent,
+    component: ProductEditComponent,
   },
   {
     path: 'products',

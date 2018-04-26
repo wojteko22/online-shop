@@ -33,6 +33,7 @@ import {GmapService} from './gmap/gmap.service';
 import {OrderStatusComponent} from './order-status/order-status.component';
 import {CategoriesService} from './categories/categories.service';
 import {ProductService} from './-services/product.service';
+import {ProductEditComponent} from './products/product-edit/product-edit.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import {ProductService} from './-services/product.service';
     ProductComponent,
     GmapComponent,
     OrderStatusComponent,
+    ProductEditComponent,
   ],
   entryComponents: [
     OrderStatusComponent,
