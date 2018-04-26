@@ -15,13 +15,15 @@ import org.springframework.stereotype.Service
 class SignUpService(private val userRepository: UserRepository,
                     private val userRoleRepository: UserRoleRepository,
                     private val shopRepository: ShopRepository,
-                    private val passwordEncoder: PasswordEncoder) {
+                    private val passwordEncoder: PasswordEncoder,
+                    private val mailService: MailService) {
 
     fun addCustomer(customer: CreateUserDto): Long {
         validate(customer)
         val role: UserRole = userRoleRepository.findByRole("CUSTOMER")
         val user = getUserFromDTOAndRole(customer, role)
         val savedUser = userRepository.save(user)
+        mailService.sendSignUpMessage(savedUser)
         return savedUser.id
     }
 
