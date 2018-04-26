@@ -30,7 +30,6 @@ export class ShopProductsComponent implements OnInit {
               private dialog: MatDialog) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       let shopId: Number = Number(paramMap.get('shopId'));
-
       this.shopsService.getShopInfo(shopId).subscribe((shop) => {
         this.shop = shop;
         this.loadAllProducts();
