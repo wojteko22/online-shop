@@ -31,6 +31,10 @@ import {GmapComponent} from './gmap/gmap.component';
 import {AgmCoreModule} from '@agm/core';
 import {GmapService} from './gmap/gmap.service';
 import {OrderStatusComponent} from './order-status/order-status.component';
+import {ShopProductsComponent} from './products/shop-products/shop-products.component';
+import {CategoryItemComponent} from './products/shop-products/category-item/category-item.component';
+import {SelectCategoryService} from './products/shop-products/select-category.service';
+import {ProductDialogComponent} from './products/shop-products/product-dialog/product-dialog.component';
 import {CategoriesService} from './categories/categories.service';
 import {ProductService} from './-services/product.service';
 import {ProductEditComponent} from './products/product-edit/product-edit.component';
@@ -56,10 +60,16 @@ import {ProductEditComponent} from './products/product-edit/product-edit.compone
     ProductComponent,
     GmapComponent,
     OrderStatusComponent,
+    ShopProductsComponent,
+    CategoryItemComponent,
+    ProductDialogComponent,
     ProductEditComponent,
   ],
   entryComponents: [
     OrderStatusComponent,
+    ShopProductsComponent,
+    CategoryItemComponent,
+    ProductDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,6 +90,7 @@ import {ProductEditComponent} from './products/product-edit/product-edit.compone
     httpInterceptorProviders,
     OrderService,
     GmapService,
+    SelectCategoryService,
     CategoriesService,
     ProductService,
   ],

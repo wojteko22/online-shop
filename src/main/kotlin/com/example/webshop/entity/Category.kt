@@ -1,5 +1,7 @@
 package com.example.webshop.entity
 
+import com.example.webshop.entity.dto.CategoryDto
+import com.example.webshop.entity.dto.CategorySimpleDto
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.*
 
@@ -33,5 +35,7 @@ data class Category(
         return id.hashCode()
     }
 
-
+    fun toSimpleDto(): CategorySimpleDto {
+        return CategorySimpleDto(name, id, parentCategory?.id)
+    }
 }

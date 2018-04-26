@@ -26,4 +26,10 @@ class ProductController(private val productService: ProductService) {
     @DeleteMapping
     fun deleteProduct(@RequestBody dto: DeleteProductDto, principal: Principal) = productService.deleProduct(dto, principal.name)
 
+    @GetMapping("/category/{categoryId}")
+    fun getProductsByCategoryId(@PathVariable categoryId: Long) = productService.getByCategoryId(categoryId)
+
+    @GetMapping("shop/{shopId}/pattern/{pattern}")
+    fun getProductsByPattern(@PathVariable shopId: Long, @PathVariable pattern: String) = productService.getByShopIdAndPattern(shopId, pattern)
+
 }

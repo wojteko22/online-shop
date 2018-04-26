@@ -12,6 +12,9 @@ class CategoryController(private val categoryService: CategoryService) {
     @GetMapping("/{shop_id}/categories")
     fun showCategories(@PathVariable shop_id: Long) = categoryService.findByShopId(shop_id)
 
+    @GetMapping("/{shop_id}/categories/{category_id}/subcategories")
+    fun getSubcategories(@PathVariable category_id: Long) = categoryService.findSubcategoriesByCategoryId(category_id)
+
     @PostMapping("{shop_id}/categories")
     fun addCategory(@RequestBody createCategoryDto: CreateCategoryDto) {
         categoryService.save(createCategoryDto)

@@ -1,0 +1,6 @@
+<mat-list>
+  <mat-list-item (click)="toggle()">{{space + category.name}}</mat-list-item>
+  <div *ngIf="visible">
+    <app-category-item *ngFor="let subcategory of subcategories" [category]="subcategory" [space]="space+'-'"></app-category-item>
+  </div>
+</mat-list>

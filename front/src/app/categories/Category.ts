@@ -1,3 +1,5 @@
+import {CategorySimpleDto} from '../-models/CategorySimpleDto';
+
 export class Category {
   id: number;
   name: string;

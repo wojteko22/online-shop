@@ -11,6 +11,7 @@ import {
   MatSelectModule,
   MatSnackBarModule,
   MatTabsModule,
+  MatToolbarModule,
   MatDialogModule,
 } from '@angular/material';
 
@@ -28,6 +29,7 @@ import {
     MatCardModule,
     MatIconModule,
     MatDialogModule,
+    MatToolbarModule
   ]
 })
 export class MaterialModule {

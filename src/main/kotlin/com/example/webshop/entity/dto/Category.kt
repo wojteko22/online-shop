@@ -22,6 +22,11 @@ class CategoryDto(
     }
 }
 
+class CategorySimpleDto(val name: String,
+                        val categoryId: Long,
+                        val parentCategoryId: Long?
+)
+
 class CreateCategoryDto(val name: String,
                         val shopId: Long,
                         val parentCategoryId: Long?
