@@ -16,12 +16,12 @@ export class ProductService {
     return this.http.post(this.productEndpoint, product);
   }
 
-  getShopProducts(shopId: Number){
-    return this.http.get<Product[]>(this.productEndpoint+"/shop/"+shopId);
+  getShopProducts(shopId: Number) {
+    return this.http.get<Product[]>(this.productEndpoint + '/shop/' + shopId);
   }
 
-  getProduct(productId: Number){
-    return this.http.get<Product>(this.productEndpoint+'/'+productId);
+  getProduct(productId: Number) {
+    return this.http.get<Product>(this.productEndpoint + '/' + productId);
   }
 
 }

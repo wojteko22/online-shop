@@ -9,13 +9,12 @@ import {CredentialsService} from '../../-services/credentials.service';
 
 @Component({
   selector: 'app-app-product',
-  templateUrl: './add-product.component.html',
+  templateUrl: '../add-product.component.html',
   styleUrls: ['./add-product.component.css'],
 })
 export class AddProductComponent implements OnInit {
 
   form: FormGroup;
-  categories: Category[];
   categoriesPath: CategoryPath[] = [];
 
   constructor(private fb: FormBuilder,
@@ -38,10 +37,9 @@ export class AddProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categoriesService.getCategories().subscribe((categories) => {
-      this.categories = categories;
-      this.categories.forEach((cat) => this.addAllCategoryPath(cat, cat.name));
-    });
+    this.categoriesService.getCategories().subscribe((categories) => categories.forEach(
+      (category) => this.addAllCategoryPath(category, category.name)
+    ));
   }
 
   private addAllCategoryPath(category: Category, path: string) {
@@ -58,6 +56,6 @@ export class AddProductComponent implements OnInit {
   onSubmit() {
     const shopId = this.credentialsService.getUser().shopId;
     const product = {...this.form.value, shopId: shopId} as Product;
-    this.prodService.addProduct(product).subscribe((response) => console.log("id:", response));
+    this.prodService.addProduct(product).subscribe((response) => console.log('id:', response));
   }
 }
