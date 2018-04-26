@@ -9,7 +9,7 @@ import {CredentialsService} from '../../-services/credentials.service';
 
 @Component({
   selector: 'app-app-product',
-  templateUrl: '../add-product.component.html',
+  templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.css'],
 })
 export class AddProductComponent implements OnInit {
