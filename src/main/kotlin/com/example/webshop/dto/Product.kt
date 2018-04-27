@@ -1,4 +1,4 @@
-package com.example.webshop.entity.dto
+package com.example.webshop.dto
 
 class ProductDto(
         val id: Long,

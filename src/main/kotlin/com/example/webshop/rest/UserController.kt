@@ -1,7 +1,7 @@
 package com.example.webshop.rest
 
-import com.example.webshop.entity.dto.UpdatePasswordUserDto
-import com.example.webshop.entity.dto.UserDto
+import com.example.webshop.dto.UpdatePasswordUserDto
+import com.example.webshop.dto.UserDto
 import com.example.webshop.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

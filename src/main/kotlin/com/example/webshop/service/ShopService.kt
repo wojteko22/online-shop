@@ -1,6 +1,6 @@
 package com.example.webshop.service
 
-import com.example.webshop.entity.dto.ShopDto
+import com.example.webshop.dto.ShopDto
 import com.example.webshop.repository.ShopRepository
 import org.springframework.stereotype.Service
 

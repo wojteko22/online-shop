@@ -3,8 +3,8 @@ package com.example.webshop.service
 import com.example.webshop.entity.Shop
 import com.example.webshop.entity.User
 import com.example.webshop.entity.UserRole
-import com.example.webshop.entity.dto.CreateShopDto
-import com.example.webshop.entity.dto.CreateUserDto
+import com.example.webshop.dto.CreateShopDto
+import com.example.webshop.dto.CreateUserDto
 import com.example.webshop.repository.UserRepository
 import com.example.webshop.repository.UserRoleRepository
 import com.example.webshop.repository.ShopRepository

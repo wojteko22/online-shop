@@ -1,8 +1,8 @@
 package com.example.webshop.service
 
 import com.example.webshop.entity.Order
-import com.example.webshop.entity.dto.OrderPositionDto
-import com.example.webshop.entity.dto.UpdateOrderDto
+import com.example.webshop.dto.OrderPositionDto
+import com.example.webshop.dto.UpdateOrderDto
 import com.example.webshop.repository.OrderPositionRepository
 import com.example.webshop.repository.OrderRepository
 import com.example.webshop.repository.ShopRepository

@@ -4,10 +4,10 @@ import com.example.webshop.entity.Category
 import com.example.webshop.entity.Product
 import com.example.webshop.entity.Shop
 import com.example.webshop.entity.User
-import com.example.webshop.entity.dto.CreateProductDto
-import com.example.webshop.entity.dto.DeleteProductDto
-import com.example.webshop.entity.dto.ProductDto
-import com.example.webshop.entity.dto.UpdateProductDto
+import com.example.webshop.dto.CreateProductDto
+import com.example.webshop.dto.DeleteProductDto
+import com.example.webshop.dto.ProductDto
+import com.example.webshop.dto.UpdateProductDto
 import com.example.webshop.repository.CategoryRepository
 import com.example.webshop.repository.ProductRepository
 import com.example.webshop.repository.ShopRepository

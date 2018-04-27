@@ -1,6 +1,6 @@
 package com.example.webshop.rest
 
-import com.example.webshop.entity.dto.ShopDto
+import com.example.webshop.dto.ShopDto
 import com.example.webshop.service.ShopService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

@@ -1,6 +1,6 @@
 package com.example.webshop.entity
 
-import com.example.webshop.entity.dto.ProductDto
+import com.example.webshop.dto.ProductDto
 import javax.persistence.*
 
 @Entity

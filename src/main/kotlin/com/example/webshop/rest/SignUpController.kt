@@ -1,7 +1,7 @@
 package com.example.webshop.rest
 
-import com.example.webshop.entity.dto.CreateShopWithOwnerDto
-import com.example.webshop.entity.dto.CreateUserDto
+import com.example.webshop.dto.CreateShopWithOwnerDto
+import com.example.webshop.dto.CreateUserDto
 import com.example.webshop.service.SignUpService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*

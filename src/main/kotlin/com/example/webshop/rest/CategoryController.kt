@@ -1,7 +1,7 @@
 package com.example.webshop.rest
 
-import com.example.webshop.entity.dto.CreateCategoryDto
-import com.example.webshop.entity.dto.UpdateCategoryDto
+import com.example.webshop.dto.CreateCategoryDto
+import com.example.webshop.dto.UpdateCategoryDto
 import com.example.webshop.service.CategoryService
 import org.springframework.web.bind.annotation.*
 

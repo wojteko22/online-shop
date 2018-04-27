@@ -1,3 +1,3 @@
-package com.example.webshop.entity.dto
+package com.example.webshop.dto
 
 class OrderPositionDto(val amount: Int, val product: ProductDto)

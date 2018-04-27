@@ -1,6 +1,6 @@
 package com.example.webshop.entity
 
-import com.example.webshop.entity.dto.ShopDto
+import com.example.webshop.dto.ShopDto
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.*
 

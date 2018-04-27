@@ -1,6 +1,6 @@
 package com.example.webshop.rest
 
-import com.example.webshop.entity.dto.UpdateOrderDto
+import com.example.webshop.dto.UpdateOrderDto
 import com.example.webshop.service.OrderService
 import org.springframework.web.bind.annotation.*
 import java.security.Principal

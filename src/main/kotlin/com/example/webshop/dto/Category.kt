@@ -1,4 +1,4 @@
-package com.example.webshop.entity.dto
+package com.example.webshop.dto
 
 class CategoryDto(
         val name: String,

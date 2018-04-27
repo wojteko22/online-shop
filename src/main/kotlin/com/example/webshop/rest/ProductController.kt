@@ -1,8 +1,8 @@
 package com.example.webshop.rest
 
-import com.example.webshop.entity.dto.CreateProductDto
-import com.example.webshop.entity.dto.DeleteProductDto
-import com.example.webshop.entity.dto.UpdateProductDto
+import com.example.webshop.dto.CreateProductDto
+import com.example.webshop.dto.DeleteProductDto
+import com.example.webshop.dto.UpdateProductDto
 import com.example.webshop.service.ProductService
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
