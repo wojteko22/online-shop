@@ -20,8 +20,9 @@ class ProductController(private val productService: ProductService) {
     @PostMapping
     fun addProduct(@RequestBody dto: CreateProductDto, principal: Principal) = productService.addNewProduct(dto, principal.name!!)
 
-    @PatchMapping
-    fun updateProduct(@RequestBody dto: UpdateProductDto, principal: Principal) = productService.updateProduct(dto, principal.name!!)
+    @PatchMapping("/{productId}")
+    fun updateProduct(@PathVariable productId: Long, @RequestBody dto: UpdateProductDto, principal: Principal) =
+            productService.updateProduct(productId, dto, principal.name)
 
     @DeleteMapping
     fun deleteProduct(@RequestBody dto: DeleteProductDto, principal: Principal) = productService.deleProduct(dto, principal.name)

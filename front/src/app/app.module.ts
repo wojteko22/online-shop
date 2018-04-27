@@ -34,7 +34,10 @@ import {OrderStatusComponent} from './order-status/order-status.component';
 import {ShopProductsComponent} from './products/shop-products/shop-products.component';
 import {CategoryItemComponent} from './products/shop-products/category-item/category-item.component';
 import {SelectCategoryService} from './products/shop-products/select-category.service';
-import { ProductDialogComponent } from './products/shop-products/product-dialog/product-dialog.component';
+import {ProductDialogComponent} from './products/shop-products/product-dialog/product-dialog.component';
+import {CategoriesService} from './categories/categories.service';
+import {ProductService} from './-services/product.service';
+import {ProductEditComponent} from './products/product-edit/product-edit.component';
 
 
 @NgModule({
@@ -60,6 +63,7 @@ import { ProductDialogComponent } from './products/shop-products/product-dialog/
     ShopProductsComponent,
     CategoryItemComponent,
     ProductDialogComponent,
+    ProductEditComponent,
   ],
   entryComponents: [
     OrderStatusComponent,
@@ -87,6 +91,8 @@ import { ProductDialogComponent } from './products/shop-products/product-dialog/
     OrderService,
     GmapService,
     SelectCategoryService,
+    CategoriesService,
+    ProductService,
   ],
   bootstrap: [AppComponent]
 })

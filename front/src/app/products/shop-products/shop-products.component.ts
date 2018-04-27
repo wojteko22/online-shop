@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Product} from '../../orders/product';
 import {ActivatedRoute} from '@angular/router';
 import {ProductService} from '../../-services/product.service';
 import {Shop} from '../../shops/shop';
@@ -9,6 +8,7 @@ import {CategorySimpleDto} from '../../-models/CategorySimpleDto';
 import {SelectCategoryService} from './select-category.service';
 import {MatDialog} from '@angular/material';
 import {ProductDialogComponent} from './product-dialog/product-dialog.component';
+import {Product} from '../../-models/Product';
 
 @Component({
   selector: 'app-shop-products',

@@ -37,5 +37,5 @@
     <mat-error *ngIf="form.get('categoryId').hasError('required')">Pole wymagane</mat-error>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" [disabled]="!form.valid">Dodaj produkt!</button>
+  <button mat-raised-button color="primary" [disabled]="!form.valid">{{submitText}}</button>
 </form>

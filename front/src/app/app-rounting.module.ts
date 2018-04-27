@@ -16,6 +16,7 @@ import {ProductsComponent} from './products/products/products/products.component
 import {ProductComponent} from './products/product/product/product.component';
 import {OrdersComponent} from './orders/orders.component';
 import {ShopProductsComponent} from './products/shop-products/shop-products.component';
+import {ProductEditComponent} from './products/product-edit/product-edit.component';
 
 const appRoutes: Routes = [
   {
@@ -57,8 +58,13 @@ const appRoutes: Routes = [
     component: AddProductComponent,
     canActivate: [ShopOwnerGuard],
   },
-  { path: 'product/:id',
+  {
+    path: 'product/:id',
     component: ProductComponent,
+  },
+  {
+    path: 'product/:id/edit',
+    component: ProductEditComponent,
   },
   {
     path: 'products',

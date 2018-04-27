@@ -40,7 +40,7 @@ class ProductService(private val productRepository: ProductRepository,
     fun getByShopIdAndPattern(shopId: Long, pattern: String): Any {
         val shop: Shop = shopRepository.findOne(shopId)
         val products: List<Product> = this.productRepository.findByShopAndPattern(shop, pattern)
-        return products.map{ product -> product.toDto()}
+        return products.map { product -> product.toDto() }
     }
 
     fun addNewProduct(createProductDto: CreateProductDto, username: String): Long {
@@ -50,9 +50,8 @@ class ProductService(private val productRepository: ProductRepository,
         return savedProduct.id
     }
 
-    fun updateProduct(dto: UpdateProductDto, email: String): Long {
-        validate(dto)
-        val product: Product = productRepository.findById(dto.id)!!
+    fun updateProduct(id: Long, dto: UpdateProductDto, email: String): Long {
+        val product = productRepository.findById(id) ?: throw NoSuchElementException("No product with id $id")
 
         dto.name?.let {
             product.name = it
@@ -96,13 +95,6 @@ class ProductService(private val productRepository: ProductRepository,
         val shop = shopRepository.getByUserEmail(email)
         if (createProductDto.shopId != shop.id) {
             throw IllegalStateException("Shop doesn't belong to the user!")
-        }
-    }
-
-    private fun validate(dto: UpdateProductDto) {
-        val product: Product? = productRepository.findById(dto.id)
-        if (product == null) {
-            throw IllegalStateException("Product doesn't exists!")
         }
     }
 

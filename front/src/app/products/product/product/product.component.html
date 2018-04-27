@@ -1,5 +1,10 @@
 <div *ngIf="product$ | async as product">
-  <mat-card><h2>{{product.name}} - Szczegóły produktu</h2></mat-card>
+  <mat-card>
+    <h2>{{product.name}} - Szczegóły produktu</h2>
+    <a routerLink="/product/{{product.id}}/edit">
+      <mat-icon>mode edit</mat-icon>
+    </a>
+  </mat-card>
   <mat-list>
     <mat-list-item>Cena: {{product.price}}</mat-list-item>
     <mat-list-item>Status: {{product.status}}</mat-list-item>

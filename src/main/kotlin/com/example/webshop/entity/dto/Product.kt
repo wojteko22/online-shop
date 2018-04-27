@@ -24,7 +24,6 @@ class CreateProductDto(
 )
 
 class UpdateProductDto(
-        val id: Long,
         val name: String?,
         val price: Int?,
         val unit: String?,
