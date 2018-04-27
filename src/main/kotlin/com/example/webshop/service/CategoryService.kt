@@ -5,6 +5,7 @@ import com.example.webshop.dto.CategoryDto
 import com.example.webshop.dto.CategorySimpleDto
 import com.example.webshop.dto.CreateCategoryDto
 import com.example.webshop.dto.UpdateCategoryDto
+import com.example.webshop.toSimpleDto
 import com.example.webshop.repository.CategoryRepository
 import com.example.webshop.repository.ShopRepository
 import org.springframework.stereotype.Service

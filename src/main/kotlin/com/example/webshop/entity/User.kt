@@ -1,6 +1,5 @@
 package com.example.webshop.entity
 
-import com.example.webshop.dto.UserDto
 import javax.persistence.*
 
 @Entity
@@ -13,6 +12,4 @@ data class User(
         val role: UserRole,
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = -1
-) {
-    fun toDto(shop: Shop?): UserDto = UserDto(id, name, email, role.role, shop?.id)
-}
+)

@@ -1,6 +1,5 @@
 package com.example.webshop.entity
 
-import com.example.webshop.dto.CategorySimpleDto
 import javax.persistence.*
 
 @Entity
@@ -33,7 +32,4 @@ data class Category(
         return id.hashCode()
     }
 
-    fun toSimpleDto(): CategorySimpleDto {
-        return CategorySimpleDto(name, id, parentCategory?.id)
-    }
 }

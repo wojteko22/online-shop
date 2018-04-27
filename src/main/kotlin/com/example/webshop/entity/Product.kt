@@ -1,6 +1,5 @@
 package com.example.webshop.entity
 
-import com.example.webshop.dto.ProductDto
 import javax.persistence.*
 
 @Entity
@@ -18,9 +17,5 @@ data class Product(
         @ManyToOne
         val shop: Shop,
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long = -1) {
-
-    fun toDto(): ProductDto {
-        return ProductDto(id,name,price,unit,status,description,photo,category.id,shop.id)
-    }
-}
+        val id: Long = -1
+)

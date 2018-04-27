@@ -3,6 +3,7 @@ package com.example.webshop.service
 import com.example.webshop.entity.User
 import com.example.webshop.dto.UpdatePasswordUserDto
 import com.example.webshop.dto.UserDto
+import com.example.webshop.toDto
 import com.example.webshop.repository.ShopRepository
 import com.example.webshop.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
