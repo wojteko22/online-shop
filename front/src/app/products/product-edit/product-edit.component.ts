@@ -15,7 +15,8 @@ import {Product} from '../../-models/Product';
 })
 export class ProductEditComponent extends AddProductComponent {
 
-  submitText = 'Nadpisz produkt';
+  submitText = 'Nadpisz dane produktu';
+  private id: number;
 
   constructor(fb: FormBuilder,
               categoriesService: CategoriesService,
@@ -25,12 +26,12 @@ export class ProductEditComponent extends AddProductComponent {
     super(fb, categoriesService, productService, credentialsService);
 
     this.activatedRoute.paramMap.subscribe((paramMap) => {
-      const id: Number = Number(paramMap.get('id'));
-      this.productService.getProduct(id).subscribe((product) => this.form.patchValue(product));
+      this.id = Number(paramMap.get('id'));
+      this.productService.getProduct(this.id).subscribe((product) => this.form.patchValue(product));
     });
   }
 
   protected useService(product: Product) {
-    this.productService.editProduct(product).subscribe();
+    this.productService.editProduct(this.id, product).subscribe();
   }
 }
