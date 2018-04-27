@@ -16,6 +16,10 @@ export class ProductService {
     return this.http.post(this.productEndpoint, product);
   }
 
+  editProduct(product: Product) {
+    return this.http.put(this.productEndpoint, product);
+  }
+
   getShopProducts(shopId: Number) {
     return this.http.get<Product[]>(this.productEndpoint + '/shop/' + shopId);
   }

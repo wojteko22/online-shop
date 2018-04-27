@@ -57,6 +57,10 @@ export class AddProductComponent implements OnInit {
   onSubmit() {
     const shopId = this.credentialsService.getUser().shopId;
     const product = {...this.form.value, shopId: shopId} as Product;
+    this.useService(product);
+  }
+
+  protected useService(product: Product) {
     this.productService.addProduct(product).subscribe((response) => console.log('id:', response));
   }
 }

@@ -5,6 +5,8 @@ import {CredentialsService} from '../../-services/credentials.service';
 import {FormBuilder} from '@angular/forms';
 import {ProductService} from '../../-services/product.service';
 import {ActivatedRoute} from '@angular/router';
+import {Product} from '../../-models/Product';
+
 
 @Component({
   selector: 'app-product-edit',
@@ -26,5 +28,9 @@ export class ProductEditComponent extends AddProductComponent {
       const id: Number = Number(paramMap.get('id'));
       this.productService.getProduct(id).subscribe((product) => this.form.patchValue(product));
     });
+  }
+
+  protected useService(product: Product) {
+    this.productService.editProduct(product).subscribe();
   }
 }
