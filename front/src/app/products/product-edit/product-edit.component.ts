@@ -13,6 +13,8 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ProductEditComponent extends AddProductComponent {
 
+  submitText = 'Nadpisz produkt';
+
   constructor(fb: FormBuilder,
               categoriesService: CategoriesService,
               productService: ProductService,

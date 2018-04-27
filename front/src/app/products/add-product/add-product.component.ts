@@ -16,6 +16,7 @@ export class AddProductComponent implements OnInit {
 
   form: FormGroup;
   categoriesPath: CategoryPath[] = [];
+  submitText = 'Dodaj produkt!';
 
   constructor(protected fb: FormBuilder,
               private categoriesService: CategoriesService,
