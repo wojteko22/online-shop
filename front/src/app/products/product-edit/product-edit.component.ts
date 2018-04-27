@@ -4,7 +4,7 @@ import {CategoriesService} from '../../categories/categories.service';
 import {CredentialsService} from '../../-services/credentials.service';
 import {FormBuilder} from '@angular/forms';
 import {ProductService} from '../../-services/product.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Product} from '../../-models/Product';
 
 
@@ -22,7 +22,8 @@ export class ProductEditComponent extends AddProductComponent {
               categoriesService: CategoriesService,
               productService: ProductService,
               credentialsService: CredentialsService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private router: Router) {
     super(fb, categoriesService, productService, credentialsService);
 
     this.activatedRoute.paramMap.subscribe((paramMap) => {
@@ -32,6 +33,8 @@ export class ProductEditComponent extends AddProductComponent {
   }
 
   protected useService(product: Product) {
-    this.productService.editProduct(this.id, product).subscribe();
+    this.productService.editProduct(this.id, product).subscribe(() =>
+      this.router.navigate(['/product', this.id])
+    );
   }
 }
