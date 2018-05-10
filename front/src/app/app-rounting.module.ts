@@ -17,6 +17,7 @@ import {ProductComponent} from './products/product/product/product.component';
 import {OrdersComponent} from './orders/orders.component';
 import {ShopProductsComponent} from './products/shop-products/shop-products.component';
 import {ProductEditComponent} from './products/product-edit/product-edit.component';
+import {CartComponent} from "./cart/cart.component";
 
 const appRoutes: Routes = [
   {
@@ -26,6 +27,11 @@ const appRoutes: Routes = [
   {
     path: 'profil',
     component: UserComponent,
+    canActivate: [SignedInGuard],
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
     canActivate: [SignedInGuard],
   },
   {

@@ -18,6 +18,11 @@ export class AppComponent {
       visibility: Visibility.Always,
     },
     {
+      path: '/cart',
+      label: 'Koszyk',
+      visibility: Visibility.SignedIn,
+    },
+    {
       path: '/profil',
       label: 'Profil',
       visibility: Visibility.SignedIn,

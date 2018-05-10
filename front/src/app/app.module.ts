@@ -38,6 +38,8 @@ import {ProductDialogComponent} from './products/shop-products/product-dialog/pr
 import {CategoriesService} from './categories/categories.service';
 import {ProductService} from './-services/product.service';
 import {ProductEditComponent} from './products/product-edit/product-edit.component';
+import { CartComponent } from './cart/cart.component';
+import {CartService} from "./cart/cart.service";
 
 
 @NgModule({
@@ -64,6 +66,7 @@ import {ProductEditComponent} from './products/product-edit/product-edit.compone
     CategoryItemComponent,
     ProductDialogComponent,
     ProductEditComponent,
+    CartComponent,
   ],
   entryComponents: [
     OrderStatusComponent,
@@ -93,6 +96,7 @@ import {ProductEditComponent} from './products/product-edit/product-edit.compone
     SelectCategoryService,
     CategoriesService,
     ProductService,
+    CartService,
   ],
   bootstrap: [AppComponent]
 })
