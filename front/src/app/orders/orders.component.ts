@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Order} from './order';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {OrderService} from '../-services/order.service';
 import {MatDialog} from '@angular/material';
 import {OrderStatusComponent} from '../order-status/order-status.component';

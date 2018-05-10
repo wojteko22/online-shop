@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import {catchError} from 'rxjs/operators';
-import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 import {CredentialsService} from '../-services/credentials.service';
-import {of} from 'rxjs/observable/of';
+import {Observable} from 'rxjs/internal/Observable';
+import {catchError} from 'rxjs/operators';
+import {of} from 'rxjs/internal/observable/of';
+import {throwError} from 'rxjs/internal/observable/throwError';
 
 
 @Injectable()
@@ -30,7 +30,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       return this.handleTokenExpiration();
     }
     const userFriendlyMessage = ErrorInterceptor.userFriendlyMessage(errorBody);
-    return new ErrorObservable(userFriendlyMessage);
+    return throwError(userFriendlyMessage);
   }
 
   private static userFriendlyMessage(errorBody) {

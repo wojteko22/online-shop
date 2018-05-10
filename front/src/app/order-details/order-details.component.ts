@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {OrderService} from '../-services/order.service';
 import {OrderPosition} from './order-position';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-order-details',
