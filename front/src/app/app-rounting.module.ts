@@ -18,6 +18,7 @@ import {OrdersComponent} from './orders/orders.component';
 import {ShopProductsComponent} from './products/shop-products/shop-products.component';
 import {ProductEditComponent} from './products/product-edit/product-edit.component';
 import {AdminGuard} from './-guards/admin-guard/admin-guard.service';
+import {AdminPanelComponent} from './admin-panel/admin-panel.component';
 
 const appRoutes: Routes = [
   {
@@ -79,7 +80,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'panel',
-    component: ShopProductsComponent,
+    component: AdminPanelComponent,
     canActivate: [AdminGuard],
   },
   {
