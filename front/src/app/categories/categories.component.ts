@@ -3,7 +3,7 @@ import {Category} from './Category';
 import {CategoriesService} from './categories.service';
 import {ITreeOptions, TreeComponent} from 'angular-tree-component';
 import {CategoryDto} from './CategoryDto';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {SnackBarService} from "../snack-bar.service";
 
 @Component({
