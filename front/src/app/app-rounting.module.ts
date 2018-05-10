@@ -23,6 +23,7 @@ const appRoutes: Routes = [
   {
     path: 'shops',
     component: ShopsComponent,
+    canActivate: [CustomerGuard],
   },
   {
     path: 'profil',
@@ -83,7 +84,7 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/shops',
+    redirectTo: '/profil',
     pathMatch: 'full',
   },
   {

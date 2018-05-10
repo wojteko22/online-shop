@@ -15,7 +15,7 @@ export class AppComponent {
     {
       path: '/shops',
       label: 'Sklepy',
-      visibility: Visibility.Always,
+      visibility: Visibility.Customer,
     },
     {
       path: '/profil',
@@ -69,6 +69,8 @@ export class AppComponent {
         return this.credentialsService.isShopOwner();
       case Visibility.Admin:
         return this.credentialsService.isAdmin();
+      case Visibility.Customer:
+        return this.credentialsService.isCustomer();
       default:
         return true;
     }
@@ -84,9 +86,9 @@ export class AppComponent {
 }
 
 enum Visibility {
-  Always,
   SignedIn,
   SignedOut,
   ShopOwner,
   Admin,
+  Customer,
 }
