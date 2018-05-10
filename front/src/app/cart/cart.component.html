@@ -1,8 +1,15 @@
-<p>
-  cart works!
-</p>
-<ul>
-  <li *ngFor="let position of cartPositions">
-    {{position.product.name}}
-  </li>
-</ul>
+<h3 mat-subheader *ngIf="cartPositions.size==0">Brak produktów w koszyku</h3>
+<div *ngIf="cartPositions.size!=0">
+  <mat-list *ngFor="let shop of shops">
+    <h3 mat-subheader>{{shop.name}} - adres: {{shop.street}} </h3>
+    <mat-list-item *ngFor="let position of getGivenShopPositions(shop)">
+      <h4 mat-line>{{position.product.name}}</h4>
+      <span mat-line>Ilość: {{position.amount}}  Cena: {{position.amount * position.product.price}}</span>
+    </mat-list-item>
+    <h4 mat-line>Do zapłaty: {{getPriceForShop(shop)}}</h4>
+    <mat-divider></mat-divider>
+  </mat-list>
+  <h3 mat-subheader>Łącznie do zapłaty: {{getOverallPrice()}} </h3>
+
+  <button mat-raised-button color="primary" (click)="postOrder()">Złóż zamówienie</button>
+</div>

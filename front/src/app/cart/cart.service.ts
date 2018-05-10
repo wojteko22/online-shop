@@ -16,6 +16,9 @@ export class CartService {
     this.cartPositions.add(new CartPosition(shop,product,amount))
   }
 
+  postOrder() {
+
+  }
 }
 
 export class CartPosition{

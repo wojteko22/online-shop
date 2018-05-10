@@ -19,4 +19,34 @@ export class CartComponent implements OnInit {
     this.cartPositions.forEach(it => this.shops.add(it.shop))
   }
 
+  getGivenShopPositions(shop: Shop): Set<CartPosition>{
+    let result = new Set<CartPosition>();
+    this.cartPositions.forEach(it => {
+      if (it.shop==shop){
+        result.add(it);
+      }
+    });
+    return result;
+  }
+
+  getOverallPrice(): number{
+    let result = 0;
+    this.cartPositions.forEach(it => result += it.product.price * it.amount);
+    return result;
+  }
+
+  getPriceForShop(shop: Shop): number{
+    let result = 0;
+    this.cartPositions.forEach(it => {
+      if (it.shop==shop) {
+        result += it.product.price * it.amount;
+      }
+    });
+    return result;
+  }
+
+  postOrder(){
+    this.cartService.postOrder();
+  }
+
 }
