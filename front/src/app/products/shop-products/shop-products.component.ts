@@ -21,7 +21,7 @@ export class ShopProductsComponent implements OnInit {
   products: Product[];
   shop: Shop = new Shop();
   categories: CategorySimpleDto[];
-  pattern: string = '';
+
   constructor(private activatedRoute: ActivatedRoute,
               private productService: ProductService,
               private shopsService: ShopsService,
@@ -29,7 +29,7 @@ export class ShopProductsComponent implements OnInit {
               private selectCategory: SelectCategoryService,
               private dialog: MatDialog) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
-      let shopId: Number = Number(paramMap.get('shopId'));
+      const shopId: Number = Number(paramMap.get('shopId'));
       this.shopsService.getShopInfo(shopId).subscribe((shop) => {
         this.shop = shop;
         this.loadAllProducts();
@@ -51,7 +51,6 @@ export class ShopProductsComponent implements OnInit {
     if (pattern.length > 0) {
       this.productService.getProductsLike(this.shop.id, pattern).subscribe((products) => {
         this.products = products;
-        this.pattern=pattern;
       });
     } else {
       this.loadAllProducts();
@@ -75,14 +74,14 @@ export class ShopProductsComponent implements OnInit {
 
   addToChart(id: number) {
     console.log(id);
-    const productAmount=1;
-    let dialog = this.dialog.open(ProductDialogComponent, {
-      width:'250px',
+    const productAmount = 1;
+    const dialog = this.dialog.open(ProductDialogComponent, {
+      width: '250px',
       data: {amount: productAmount}
     });
     dialog.afterClosed().subscribe((result) => {
       console.log(result);
-    })
+    });
   }
 
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 
 @Injectable()
@@ -7,9 +7,10 @@ export class SelectCategoryService {
   private id = new BehaviorSubject<number>(1);
   categoryId = this.id.asObservable();
 
-  constructor() { }
+  constructor() {
+  }
 
-  selectCategory(id: number){
+  selectCategory(id: number) {
     this.id.next(id);
   }
 }

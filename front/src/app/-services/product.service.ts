@@ -29,10 +29,10 @@ export class ProductService {
   }
 
   getCategoryProducts(categoryId: number) {
-    return this.http.get<Product[]>(this.productEndpoint+'/category/'+categoryId);
+    return this.http.get<Product[]>(this.productEndpoint + '/category/' + categoryId);
   }
 
   getProductsLike(shopId: number, pattern: string) {
-    return this.http.get<Product[]>(this.productEndpoint+'/shop/'+shopId+'/pattern/'+pattern);
+    return this.http.get<Product[]>(this.productEndpoint + '/shop/' + shopId + '/pattern/' + pattern);
   }
 }
