@@ -26,7 +26,9 @@ export class CartService {
       }
     });
     let createOrderDto = new CreateOrderDto(shop.id, orderPositionsDto);
-    this.http.post(this.ordersUrl, createOrderDto);
+
+    this.http.post(this.ordersUrl, createOrderDto).subscribe(res => console.log(JSON.stringify(res)));
+
     this.removeGivenShopPositions(shop);
   }
 

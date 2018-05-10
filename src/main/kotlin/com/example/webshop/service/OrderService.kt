@@ -39,11 +39,12 @@ class OrderService(
     fun addOrder(dto: CreateOrderDto, name: String) {
         val shop = shopRepository.findById(dto.shopId)
         val user = userRepository.findByEmail(name)
-        val order = Order("przyjęte",shop = shop!!,user = user!!)
+        val order = Order("przyjęte", orderRepository.count() + 1, shop = shop!!, user = user!!)
         orderRepository.save(order)
-        for (orderPositionDto in dto.orderPositionsDto){
+
+        for (orderPositionDto in dto.orderPositionsDto) {
             val product = productRepository.findById(orderPositionDto.productId)
-            val orderPosition = OrderPosition(order,product!!,orderPositionDto.amount)
+            val orderPosition = OrderPosition(order, product!!, orderPositionDto.amount)
             orderPositionRepository.save(orderPosition)
         }
     }
