@@ -1,3 +1,8 @@
 <p>
   cart works!
 </p>
+<ul>
+  <li *ngFor="let position of cartPositions">
+    {{position.product.name}}
+  </li>
+</ul>
