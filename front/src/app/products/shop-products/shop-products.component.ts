@@ -9,6 +9,7 @@ import {SelectCategoryService} from './select-category.service';
 import {MatDialog} from '@angular/material';
 import {ProductDialogComponent} from './product-dialog/product-dialog.component';
 import {Product} from '../../-models/Product';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-shop-products',
@@ -18,7 +19,7 @@ import {Product} from '../../-models/Product';
 })
 export class ShopProductsComponent implements OnInit {
 
-  products: Product[];
+  products$: Observable<Product[]>;
   shop: Shop = new Shop();
   categories: CategorySimpleDto[];
 
@@ -37,29 +38,22 @@ export class ShopProductsComponent implements OnInit {
       });
 
       this.selectCategory.categoryId.subscribe((categoryId) => {
-        this.productService.getCategoryProducts(categoryId).subscribe((products) => {
-            this.products = products;
-          }
-        );
+        this.products$ = this.productService.getCategoryProducts(categoryId);
       });
-
     });
 
   }
 
   getProductsByPattern(pattern: string) {
     if (pattern.length > 0) {
-      this.productService.getProductsLike(this.shop.id, pattern).subscribe((products) => {
-        this.products = products;
-      });
+      this.products$ = this.productService.getProductsLike(this.shop.id, pattern);
     } else {
       this.loadAllProducts();
     }
   }
 
   loadAllProducts() {
-    this.productService.getShopProducts(this.shop.id).subscribe((products) =>
-      this.products = products);
+    this.products$ = this.productService.getShopProducts(this.shop.id);
   }
 
   loadShopCategories(shopId: number) {
