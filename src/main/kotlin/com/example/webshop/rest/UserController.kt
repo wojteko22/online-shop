@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 import java.security.Principal
 
 @RestController
-@RequestMapping(("/user"))
+@RequestMapping(("/users"))
 class UserController(private val userService: UserService) {
 
     @GetMapping("/me")

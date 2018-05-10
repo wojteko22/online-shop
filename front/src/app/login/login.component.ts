@@ -2,13 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LoginService} from './login.service';
 import {Credentials} from './credentials';
-import {HttpErrorResponse} from '@angular/common/http';
-import {MatSnackBar} from '@angular/material';
 import {Router} from '@angular/router';
 import {CredentialsService} from '../-services/credentials.service';
 import {TokenData} from '../-models/token';
 import {User} from '../-models/User';
 import {SnackBarService} from '../snack-bar.service';
+import {UserService} from '../-services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +21,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
+    private userService: UserService,
     private snackBar: SnackBarService,
     private router: Router,
     private credentialsService: CredentialsService,
@@ -44,9 +44,9 @@ export class LoginComponent implements OnInit {
     this.loginService.login(credentials).subscribe(
       (tokenData: TokenData) => {
         this.saveToken(tokenData);
-        this.loginService.getUserInfo().subscribe((user) => {
-          this.saveUserDetails(user);
-        }, error => this.snackBar.show(error))
+        this.userService.getUserInfo().subscribe(
+          (user) => this.saveUserDetails(user),
+          error => this.snackBar.show(error));
       },
       error => this.snackBar.show(error)
     );
