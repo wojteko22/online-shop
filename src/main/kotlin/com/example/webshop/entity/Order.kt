@@ -9,5 +9,7 @@ data class Order(
         @Id @GeneratedValue
         val id: Long = -1,
         @ManyToOne
-        val shop: Shop
+        val shop: Shop,
+        @ManyToOne
+        val user: User
 )

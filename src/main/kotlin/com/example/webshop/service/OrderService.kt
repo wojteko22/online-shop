@@ -1,11 +1,11 @@
 package com.example.webshop.service
 
+import com.example.webshop.dto.CreateOrderDto
 import com.example.webshop.entity.Order
 import com.example.webshop.dto.OrderPositionDto
 import com.example.webshop.dto.UpdateOrderDto
-import com.example.webshop.repository.OrderPositionRepository
-import com.example.webshop.repository.OrderRepository
-import com.example.webshop.repository.ShopRepository
+import com.example.webshop.entity.OrderPosition
+import com.example.webshop.repository.*
 import com.example.webshop.toDto
 import org.springframework.stereotype.Service
 
@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service
 class OrderService(
         private val orderRepository: OrderRepository,
         private val orderPositionRepository: OrderPositionRepository,
-        private val shopRepository: ShopRepository
+        private val shopRepository: ShopRepository,
+        private val userRepository: UserRepository,
+        private val productRepository: ProductRepository
 
 ) {
 
@@ -32,5 +34,18 @@ class OrderService(
         }
         val updatedOrder = order.copy(status = dto.status)
         orderRepository.save(updatedOrder)
+    }
+
+    fun addOrder(dto: CreateOrderDto, name: String) {
+        val shop = shopRepository.findById(dto.shopId)
+        val user = userRepository.findByEmail(name)
+        val order = Order("przyjęte", orderRepository.count() + 1, shop = shop!!, user = user!!)
+        orderRepository.save(order)
+
+        for (orderPositionDto in dto.orderPositionsDto) {
+            val product = productRepository.findById(orderPositionDto.productId)
+            val orderPosition = OrderPosition(order, product!!, orderPositionDto.amount)
+            orderPositionRepository.save(orderPosition)
+        }
     }
 }
