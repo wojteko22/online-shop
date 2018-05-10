@@ -4,4 +4,6 @@ class OrderPositionDto(val amount: Int, val product: ProductDto)
 
 class UpdateOrderDto(val status: String)
 
-class CreateOrderDto(val shopId: Long,val orderPositionsDto: Set<OrderPositionDto> )
+class CreateOrderPositionDto(val amount: Int, val productId: Long)
+
+class CreateOrderDto(val shopId: Long,val orderPositionsDto: Set<CreateOrderPositionDto> )

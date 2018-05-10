@@ -42,7 +42,7 @@ class OrderService(
         val order = Order("przyjęte",shop = shop!!,user = user!!)
         orderRepository.save(order)
         for (orderPositionDto in dto.orderPositionsDto){
-            val product = productRepository.findById(orderPositionDto.product.id)
+            val product = productRepository.findById(orderPositionDto.productId)
             val orderPosition = OrderPosition(order,product!!,orderPositionDto.amount)
             orderPositionRepository.save(orderPosition)
         }

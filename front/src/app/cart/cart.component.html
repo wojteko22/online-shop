@@ -7,9 +7,10 @@
       <span mat-line>Ilość: {{position.amount}}  Cena: {{position.amount * position.product.price}}</span>
     </mat-list-item>
     <h4 mat-line>Do zapłaty: {{getPriceForShop(shop)}}</h4>
+    <button mat-raised-button color="primary" (click)="onSubmit(shop)">Złóż pojedyńcze zamówienie</button>
     <mat-divider></mat-divider>
   </mat-list>
   <h3 mat-subheader>Łącznie do zapłaty: {{getOverallPrice()}} </h3>
+  <button mat-raised-button color="primary" (click)="onSubmit()">Złóż całe zamówienie</button>
 
-  <button mat-raised-button color="primary" (click)="postOrder()">Złóż zamówienie</button>
 </div>

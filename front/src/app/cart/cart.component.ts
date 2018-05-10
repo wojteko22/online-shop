@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CartPosition, CartService} from "./cart.service";
 import {Shop} from "../shops/shop";
+import {init} from "protractor/built/launcher";
 
 @Component({
   selector: 'app-cart',
@@ -15,6 +16,10 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService) { }
 
   ngOnInit() {
+    this.init()
+  }
+
+  init(){
     this.cartPositions = this.cartService.cartPositions;
     this.cartPositions.forEach(it => this.shops.add(it.shop))
   }
@@ -45,8 +50,13 @@ export class CartComponent implements OnInit {
     return result;
   }
 
-  postOrder(){
-    this.cartService.postOrder();
+  onSubmit(shop: Shop = null){
+    if (shop==null){
+      this.shops.forEach(it=> this.cartService.postOrder(it))
+    }else {
+      this.cartService.postOrder(shop);
+    }
+    this.init();
   }
 
 }

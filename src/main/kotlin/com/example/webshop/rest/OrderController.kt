@@ -21,7 +21,7 @@ class OrderController(private val orderService: OrderService) {
         orderService.update(id, dto, principal.name)
     }
 
-    @PostMapping("")
+    @PostMapping
     fun addOrders(@RequestBody dto: CreateOrderDto, principal: Principal){
         orderService.addOrder(dto,principal.name)
     }
