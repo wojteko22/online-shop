@@ -11,7 +11,7 @@ export class CustomerGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.credentialsService.getUser().role === 'CUSTOMER';
+    return this.credentialsService.isCustomer();
   }
 
 }

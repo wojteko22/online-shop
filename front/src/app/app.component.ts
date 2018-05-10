@@ -66,10 +66,9 @@ export class AppComponent {
       case Visibility.SignedOut:
         return !this.signedIn();
       case Visibility.ShopOwner:
-        // todo: To raczej hermetyzować w credentialsService
-        return this.role() === 'SHOP_OWNER';
+        return this.credentialsService.isShopOwner();
       case Visibility.Admin:
-        return this.role() === 'ADMIN';
+        return this.credentialsService.isAdmin();
       default:
         return true;
     }
@@ -77,11 +76,6 @@ export class AppComponent {
 
   signedIn() {
     return this.credentialsService.isSignedIn();
-  }
-
-  private role() {
-    const user = this.credentialsService.getUser();
-    return user && user.role;
   }
 
   logOut() {
