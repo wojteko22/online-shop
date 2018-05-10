@@ -52,6 +52,11 @@ export class AppComponent {
       label: 'Produkty',
       visibility: Visibility.ShopOwner,
     },
+    {
+      path: '/panel',
+      label: 'Panel administracyjny',
+      visibility: Visibility.Admin,
+    },
   ];
 
   visible(visibility: Visibility) {
@@ -61,7 +66,10 @@ export class AppComponent {
       case Visibility.SignedOut:
         return !this.signedIn();
       case Visibility.ShopOwner:
+        // todo: To raczej hermetyzować w credentialsService
         return this.role() === 'SHOP_OWNER';
+      case Visibility.Admin:
+        return this.role() === 'ADMIN';
       default:
         return true;
     }
@@ -86,4 +94,5 @@ enum Visibility {
   SignedIn,
   SignedOut,
   ShopOwner,
+  Admin,
 }

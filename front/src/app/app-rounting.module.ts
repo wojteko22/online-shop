@@ -17,6 +17,7 @@ import {ProductComponent} from './products/product/product/product.component';
 import {OrdersComponent} from './orders/orders.component';
 import {ShopProductsComponent} from './products/shop-products/shop-products.component';
 import {ProductEditComponent} from './products/product-edit/product-edit.component';
+import {AdminGuard} from './-guards/admin-guard/admin-guard.service';
 
 const appRoutes: Routes = [
   {
@@ -76,6 +77,11 @@ const appRoutes: Routes = [
     component: ShopProductsComponent,
   },
   {
+    path: 'panel',
+    component: ShopProductsComponent,
+    canActivate: [AdminGuard],
+  },
+  {
     path: '',
     redirectTo: '/shops',
     pathMatch: 'full',
@@ -92,7 +98,7 @@ const appRoutes: Routes = [
       appRoutes
     )
   ],
-  providers: [SignedInGuard, SignedOutGuard, ShopOwnerGuard, CustomerGuard],
+  providers: [SignedInGuard, SignedOutGuard, ShopOwnerGuard, CustomerGuard, AdminGuard],
   exports: [
     RouterModule
   ],
