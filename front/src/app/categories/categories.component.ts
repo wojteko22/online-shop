@@ -54,7 +54,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   add(parentId?: number) {
-    let categoryDto = new CategoryDto('Nowa kategoria', parseInt(this.categoryService.shopId), parentId);
+    const categoryDto = new CategoryDto('Nowa kategoria', parseInt(this.categoryService.shopId), parentId);
     this.categoryService.addCategory(categoryDto).subscribe(() => this.getCategories());
   }
 
