@@ -16,6 +16,10 @@ class UserService(private val userRepository: UserRepository, private val shopRe
     @Autowired
     lateinit var passwordEncoder: PasswordEncoder
 
+    fun getUsers(): Iterable<User> {
+        return userRepository.findAll()
+    }
+
     fun getUserByEmail(email: String): UserDto {
         val shop = shopRepository.findByUserEmail(email)
         val user = userRepository.findByEmail(email) ?: throw NoSuchElementException("No user with email $email")

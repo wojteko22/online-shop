@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
-import {Observable} from 'rxjs/index';
 import {HttpClient} from '@angular/common/http';
 import {UpdateUserPassword} from '../password/updateUserPassword';
+import {User} from '../-models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,12 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  getUserInfo(): Observable<any> {
-    return this.http.get(this.url + '/me');
+  getUsers() {
+    return this.http.get<User[]>(this.url);
+  }
+
+  getUserInfo() {
+    return this.http.get<User>(this.url + '/me');
   }
 
   changeUserPassword(updateUserPassword: UpdateUserPassword) {

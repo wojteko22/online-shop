@@ -12,6 +12,9 @@ import java.security.Principal
 @RequestMapping(("/users"))
 class UserController(private val userService: UserService) {
 
+    @GetMapping()
+    fun all(principal: Principal) = userService.getUsers()
+
     @GetMapping("/me")
     fun me(principal: Principal): UserDto = userService.getUserByEmail(principal.name)
 
