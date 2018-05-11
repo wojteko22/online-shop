@@ -11,11 +11,13 @@ import {CategorySimpleDto} from '../-models/CategorySimpleDto';
 @Injectable()
 export class CategoriesService {
   shopId: string;
-  private categoriesUrl: string;
+  private readonly categoriesUrl: string;
 
   constructor(private http: HttpClient, private credentialsService: CredentialsService) {
-    if (this.credentialsService.getUser().shopId != null)
-      this.shopId = this.credentialsService.getUser().shopId.toString();
+    const shopId = this.credentialsService.getShopId();
+    if (shopId != null) {
+      this.shopId = shopId.toString();
+    }
     this.categoriesUrl = environment.apiUrl + '/' + this.shopId + '/categories';
   }
 

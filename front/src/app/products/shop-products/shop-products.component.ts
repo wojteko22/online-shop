@@ -9,7 +9,8 @@ import {SelectCategoryService} from './select-category.service';
 import {MatDialog} from '@angular/material';
 import {ProductDialogComponent} from './product-dialog/product-dialog.component';
 import {Product} from '../../-models/Product';
-import {CartService} from "../../cart/cart.service";
+import {CartService} from '../../cart/cart.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-shop-products',
@@ -19,10 +20,9 @@ import {CartService} from "../../cart/cart.service";
 })
 export class ShopProductsComponent implements OnInit {
 
-  products: Product[];
+  products$: Observable<Product[]>;
   shop: Shop = new Shop();
   categories: CategorySimpleDto[];
-  pattern: string = '';
 
   constructor(private activatedRoute: ActivatedRoute,
               private productService: ProductService,
@@ -32,7 +32,7 @@ export class ShopProductsComponent implements OnInit {
               private dialog: MatDialog,
               private cartService: CartService) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
-      let shopId: Number = Number(paramMap.get('shopId'));
+      const shopId: Number = Number(paramMap.get('shopId'));
       this.shopsService.getShopInfo(shopId).subscribe((shop) => {
         this.shop = shop;
         this.loadAllProducts();
@@ -40,30 +40,22 @@ export class ShopProductsComponent implements OnInit {
       });
 
       this.selectCategory.categoryId.subscribe((categoryId) => {
-        this.productService.getCategoryProducts(categoryId).subscribe((products) => {
-            this.products = products;
-          }
-        );
+        this.products$ = this.productService.getCategoryProducts(categoryId);
       });
-
     });
 
   }
 
   getProductsByPattern(pattern: string) {
     if (pattern.length > 0) {
-      this.productService.getProductsLike(this.shop.id, pattern).subscribe((products) => {
-        this.products = products;
-        this.pattern = pattern;
-      });
+      this.products$ = this.productService.getProductsLike(this.shop.id, pattern);
     } else {
       this.loadAllProducts();
     }
   }
 
   loadAllProducts() {
-    this.productService.getShopProducts(this.shop.id).subscribe((products) =>
-      this.products = products);
+    this.products$ = this.productService.getShopProducts(this.shop.id);
   }
 
   loadShopCategories(shopId: number) {
@@ -76,16 +68,15 @@ export class ShopProductsComponent implements OnInit {
 
   }
 
-  addToChart(id: number) {
-    console.log(id);
+  addToChart(product: Product) {
     const productAmount = 1;
-    let dialog = this.dialog.open(ProductDialogComponent, {
+    const dialog = this.dialog.open(ProductDialogComponent, {
       width: '250px',
       data: {amount: productAmount}
     });
     dialog.afterClosed().subscribe((result) => {
-      this.cartService.addToCart(this.shop, this.products.find(it => it.id == id), result)
-    })
+      this.cartService.addToCart(this.shop, product, result);
+    });
   }
 
 }

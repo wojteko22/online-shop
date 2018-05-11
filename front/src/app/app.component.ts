@@ -15,7 +15,7 @@ export class AppComponent {
     {
       path: '/shops',
       label: 'Sklepy',
-      visibility: Visibility.Always,
+      visibility: Visibility.Customer,
     },
     {
       path: '/cart',
@@ -57,6 +57,11 @@ export class AppComponent {
       label: 'Produkty',
       visibility: Visibility.ShopOwner,
     },
+    {
+      path: '/panel',
+      label: 'Panel administracyjny',
+      visibility: Visibility.Admin,
+    },
   ];
 
   visible(visibility: Visibility) {
@@ -66,7 +71,11 @@ export class AppComponent {
       case Visibility.SignedOut:
         return !this.signedIn();
       case Visibility.ShopOwner:
-        return this.role() === 'SHOP_OWNER';
+        return this.credentialsService.isShopOwner();
+      case Visibility.Admin:
+        return this.credentialsService.isAdmin();
+      case Visibility.Customer:
+        return this.credentialsService.isCustomer();
       default:
         return true;
     }
@@ -76,19 +85,15 @@ export class AppComponent {
     return this.credentialsService.isSignedIn();
   }
 
-  private role() {
-    const user = this.credentialsService.getUser();
-    return user && user.role;
-  }
-
   logOut() {
     this.credentialsService.logOut();
   }
 }
 
 enum Visibility {
-  Always,
   SignedIn,
   SignedOut,
   ShopOwner,
+  Admin,
+  Customer,
 }

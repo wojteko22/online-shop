@@ -39,4 +39,26 @@ export class CredentialsService {
     const user = localStorage.getItem(this.userStorageKey);
     return JSON.parse(user);
   }
+
+  getShopId() {
+    const user = this.getUser();
+    return user && user.shopId;
+  }
+
+  isShopOwner() {
+    return this.role() === 'SHOP_OWNER';
+  }
+
+  isAdmin() {
+    return this.role() === 'ADMIN';
+  }
+
+  isCustomer() {
+    return this.role() === 'CUSTOMER';
+  }
+
+  private role() {
+    const user = this.getUser();
+    return user && user.role;
+  }
 }

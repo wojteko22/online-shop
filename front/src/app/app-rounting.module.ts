@@ -18,11 +18,14 @@ import {OrdersComponent} from './orders/orders.component';
 import {ShopProductsComponent} from './products/shop-products/shop-products.component';
 import {ProductEditComponent} from './products/product-edit/product-edit.component';
 import {CartComponent} from "./cart/cart.component";
+import {AdminGuard} from './-guards/admin-guard/admin-guard.service';
+import {AdminPanelComponent} from './admin-panel/admin-panel.component';
 
 const appRoutes: Routes = [
   {
     path: 'shops',
     component: ShopsComponent,
+    canActivate: [CustomerGuard],
   },
   {
     path: 'profil',
@@ -82,8 +85,13 @@ const appRoutes: Routes = [
     component: ShopProductsComponent,
   },
   {
+    path: 'panel',
+    component: AdminPanelComponent,
+    canActivate: [AdminGuard],
+  },
+  {
     path: '',
-    redirectTo: '/shops',
+    redirectTo: '/profil',
     pathMatch: 'full',
   },
   {
@@ -98,7 +106,7 @@ const appRoutes: Routes = [
       appRoutes
     )
   ],
-  providers: [SignedInGuard, SignedOutGuard, ShopOwnerGuard, CustomerGuard],
+  providers: [SignedInGuard, SignedOutGuard, ShopOwnerGuard, CustomerGuard, AdminGuard],
   exports: [
     RouterModule
   ],

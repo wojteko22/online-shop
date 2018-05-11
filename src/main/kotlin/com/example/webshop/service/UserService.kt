@@ -16,14 +16,14 @@ class UserService(private val userRepository: UserRepository, private val shopRe
     @Autowired
     lateinit var passwordEncoder: PasswordEncoder
 
+    fun getUsers(): Iterable<User> {
+        return userRepository.findAll()
+    }
+
     fun getUserByEmail(email: String): UserDto {
         val shop = shopRepository.findByUserEmail(email)
         val user = userRepository.findByEmail(email) ?: throw NoSuchElementException("No user with email $email")
         return user.toDto(shop)
-    }
-
-    fun getUserById(id: Long): User? {
-        return userRepository.findById(id)
     }
 
     fun changeUserPassword(dto: UpdatePasswordUserDto) {
@@ -34,5 +34,20 @@ class UserService(private val userRepository: UserRepository, private val shopRe
         }
         user.password = passwordEncoder.encode(dto.password)
         userRepository.save(user)
+    }
+
+    fun deleteUser(id: Long) {
+        val user = getUserById(id)
+        val shop = shopRepository.findByUser(user)
+        // todo: Chyba można prościej
+        if (shop != null) {
+            shopRepository.delete(shop)
+        } else {
+            userRepository.delete(id)
+        }
+    }
+
+    fun getUserById(id: Long): User {
+        return userRepository.findById(id) ?: throw NoSuchElementException("No user with id $id")
     }
 }

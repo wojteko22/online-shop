@@ -11,6 +11,6 @@ export class ShopOwnerGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.credentialsService.getUser().role === 'SHOP_OWNER';
+    return this.credentialsService.isShopOwner();
   }
 }

@@ -9,15 +9,27 @@ import org.springframework.web.bind.annotation.*
 import java.security.Principal
 
 @RestController
-@RequestMapping(("/user"))
+@RequestMapping(("/users"))
 class UserController(private val userService: UserService) {
+
+    @GetMapping
+    // todo: Zabezpieczyć
+    fun all(principal: Principal) = userService.getUsers()
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable id: Long) {
+        // todo: Koniecznie zabezpieczyć!
+        userService.deleteUser(id)
+    }
+
 
     @GetMapping("/me")
     fun me(principal: Principal): UserDto = userService.getUserByEmail(principal.name)
 
+    // todo: Chyba powinien byc jednak id przed passwordem
     @PutMapping("/password")
     fun changePassword(@RequestBody dto: UpdatePasswordUserDto, principal: Principal): ResponseEntity<HttpStatus> =
-            if (userService.getUserById(dto.id)?.email == principal.name) {
+            if (userService.getUserById(dto.id).email == principal.name) {
                 userService.changeUserPassword(dto)
                 ResponseEntity.status(HttpStatus.NO_CONTENT).build()
             } else {

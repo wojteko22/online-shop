@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Credentials } from './credentials';
+import {Credentials} from './credentials';
 
 @Injectable()
 export class LoginService {
@@ -23,10 +22,4 @@ export class LoginService {
       },
     });
   }
-
-  getUserInfo(): Observable<any> {
-    const url = environment.apiUrl + '/user/me';
-    return this.http.get(url);
-  }
-
 }

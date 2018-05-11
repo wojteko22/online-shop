@@ -38,8 +38,9 @@ import {ProductDialogComponent} from './products/shop-products/product-dialog/pr
 import {CategoriesService} from './categories/categories.service';
 import {ProductService} from './-services/product.service';
 import {ProductEditComponent} from './products/product-edit/product-edit.component';
-import { CartComponent } from './cart/cart.component';
-import {CartService} from "./cart/cart.service";
+import {CartComponent} from './cart/cart.component';
+import {CartService} from './cart/cart.service';
+import {AdminPanelComponent} from './admin-panel/admin-panel.component';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import {CartService} from "./cart/cart.service";
     ProductDialogComponent,
     ProductEditComponent,
     CartComponent,
+    AdminPanelComponent,
   ],
   entryComponents: [
     OrderStatusComponent,
