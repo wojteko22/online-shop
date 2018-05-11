@@ -1,5 +1,6 @@
 package com.example.webshop.rest
 
+import com.example.webshop.dto.CreateOrderDto
 import com.example.webshop.dto.UpdateOrderDto
 import com.example.webshop.service.OrderService
 import org.springframework.web.bind.annotation.*
@@ -18,5 +19,10 @@ class OrderController(private val orderService: OrderService) {
     @PatchMapping("/{id}")
     fun update(@PathVariable id: Long, @RequestBody dto: UpdateOrderDto, principal: Principal) {
         orderService.update(id, dto, principal.name)
+    }
+
+    @PostMapping
+    fun addOrders(@RequestBody dto: CreateOrderDto, principal: Principal){
+        orderService.addOrder(dto,principal.name)
     }
 }

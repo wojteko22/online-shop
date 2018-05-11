@@ -9,6 +9,7 @@ import {SelectCategoryService} from './select-category.service';
 import {MatDialog} from '@angular/material';
 import {ProductDialogComponent} from './product-dialog/product-dialog.component';
 import {Product} from '../../-models/Product';
+import {CartService} from '../../cart/cart.service';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -28,7 +29,8 @@ export class ShopProductsComponent implements OnInit {
               private shopsService: ShopsService,
               private categoriesService: CategoriesService,
               private selectCategory: SelectCategoryService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private cartService: CartService) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       const shopId: Number = Number(paramMap.get('shopId'));
       this.shopsService.getShopInfo(shopId).subscribe((shop) => {
@@ -74,7 +76,7 @@ export class ShopProductsComponent implements OnInit {
       data: {amount: productAmount}
     });
     dialog.afterClosed().subscribe((result) => {
-      console.log(result);
+      this.cartService.addToCart(this.shop, this.products.find(it => it.id == id), result);
     });
   }
 
