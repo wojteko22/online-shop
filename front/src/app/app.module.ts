@@ -35,7 +35,6 @@ import {ShopProductsComponent} from './products/shop-products/shop-products.comp
 import {CategoryItemComponent} from './products/shop-products/category-item/category-item.component';
 import {SelectCategoryService} from './products/shop-products/select-category.service';
 import {ProductDialogComponent} from './products/shop-products/product-dialog/product-dialog.component';
-import {CategoriesService} from './categories/categories.service';
 import {ProductService} from './-services/product.service';
 import {ProductEditComponent} from './products/product-edit/product-edit.component';
 import {CartComponent} from './cart/cart.component';
@@ -96,7 +95,6 @@ import {AdminPanelComponent} from './admin-panel/admin-panel.component';
     OrderService,
     GmapService,
     SelectCategoryService,
-    CategoriesService,
     ProductService,
     CartService,
   ],

@@ -10,6 +10,7 @@ import {SnackBarService} from "../snack-bar.service";
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.css'],
+  providers: [CategoriesService]
 })
 export class CategoriesComponent implements OnInit {
 
