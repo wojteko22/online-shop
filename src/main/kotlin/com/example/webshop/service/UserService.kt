@@ -26,10 +26,6 @@ class UserService(private val userRepository: UserRepository, private val shopRe
         return user.toDto(shop)
     }
 
-    fun getUserById(id: Long): User? {
-        return userRepository.findById(id)
-    }
-
     fun changeUserPassword(dto: UpdatePasswordUserDto) {
         val userId = dto.id
         val user = userRepository.findById(userId) ?: throw IllegalArgumentException("No user with id $userId")
@@ -38,5 +34,20 @@ class UserService(private val userRepository: UserRepository, private val shopRe
         }
         user.password = passwordEncoder.encode(dto.password)
         userRepository.save(user)
+    }
+
+    fun deleteUser(id: Long) {
+        val user = getUserById(id)
+        val shop = shopRepository.findByUser(user)
+        // todo: Chyba można prościej
+        if (shop != null) {
+            shopRepository.delete(shop)
+        } else {
+            userRepository.delete(id)
+        }
+    }
+
+    fun getUserById(id: Long): User {
+        return userRepository.findById(id) ?: throw NoSuchElementException("No user with id $id")
     }
 }

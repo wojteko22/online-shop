@@ -1,12 +1,14 @@
 package com.example.webshop.entity
 
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import javax.persistence.*
 
 @Entity
 @Table(name = "categories")
 data class Category(
         val name: String,
-        @ManyToOne @JoinColumn(name = "shop_id")
+        @ManyToOne @JoinColumn(name = "shop_id") @OnDelete(action = OnDeleteAction.CASCADE)
         val shop: Shop,
         @ManyToOne @JoinColumn(name = "parent_category_id")
         val parentCategory: Category? = null,

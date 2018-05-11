@@ -1,1 +1,4 @@
-<p *ngFor="let user of users$ | async">{{user.email}}</p>
+<div *ngFor="let user of users$ | async">
+  {{user.email}}
+  <mat-icon (click)="delete(user.id)">delete</mat-icon>
+</div>

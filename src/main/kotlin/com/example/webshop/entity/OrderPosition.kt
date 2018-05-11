@@ -1,13 +1,15 @@
 package com.example.webshop.entity
 
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import javax.persistence.*
 
 @Entity
 @Table(name = "order_positions")
 class OrderPosition(
-        @ManyToOne
+        @ManyToOne @OnDelete(action = OnDeleteAction.CASCADE)
         val order: Order,
-        @ManyToOne
+        @ManyToOne @OnDelete(action = OnDeleteAction.CASCADE)
         val product: Product,
         val amount: Int,
         @Id @GeneratedValue

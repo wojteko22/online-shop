@@ -24,4 +24,8 @@ export class UserService {
   changeUserPassword(updateUserPassword: UpdateUserPassword) {
     return this.http.put(this.url + '/password', updateUserPassword);
   }
+
+  deleteUser(id: number) {
+    return this.http.delete(this.url + '/' + id);
+  }
 }
