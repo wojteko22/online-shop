@@ -68,15 +68,14 @@ export class ShopProductsComponent implements OnInit {
 
   }
 
-  addToChart(id: number) {
-    console.log(id);
+  addToChart(product: Product) {
     const productAmount = 1;
     const dialog = this.dialog.open(ProductDialogComponent, {
       width: '250px',
       data: {amount: productAmount}
     });
     dialog.afterClosed().subscribe((result) => {
-      this.cartService.addToCart(this.shop, this.products.find(it => it.id == id), result);
+      this.cartService.addToCart(this.shop, product, result);
     });
   }
 
