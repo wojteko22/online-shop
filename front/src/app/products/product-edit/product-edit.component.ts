@@ -11,7 +11,8 @@ import {Product} from '../../-models/Product';
 @Component({
   selector: 'app-product-edit',
   templateUrl: '../add-product/add-product.component.html',
-  styleUrls: ['../add-product/add-product.component.css']
+  styleUrls: ['../add-product/add-product.component.css'],
+  providers: [CategoriesService],
 })
 export class ProductEditComponent extends AddProductComponent {
 
