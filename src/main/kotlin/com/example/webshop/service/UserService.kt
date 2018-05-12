@@ -26,8 +26,7 @@ class UserService(private val userRepository: UserRepository, private val shopRe
         return user.toDto(shop)
     }
 
-    fun changeUserPassword(dto: UpdatePasswordUserDto) {
-        val userId = dto.id
+    fun changeUserPassword(userId: Long, dto: UpdatePasswordUserDto) {
         val user = userRepository.findById(userId) ?: throw IllegalArgumentException("No user with id $userId")
         if (!passwordEncoder.matches(dto.oldPassword, user.password)) {
             throw IllegalArgumentException("Invalid password")

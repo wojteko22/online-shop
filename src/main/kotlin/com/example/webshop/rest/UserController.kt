@@ -26,11 +26,14 @@ class UserController(private val userService: UserService) {
     @GetMapping("/me")
     fun me(principal: Principal): UserDto = userService.getUserByEmail(principal.name)
 
-    // todo: Chyba powinien byc jednak id przed passwordem
-    @PutMapping("/password")
-    fun changePassword(@RequestBody dto: UpdatePasswordUserDto, principal: Principal): ResponseEntity<HttpStatus> =
-            if (userService.getUserById(dto.id).email == principal.name) {
-                userService.changeUserPassword(dto)
+    @PutMapping("/{id}/password")
+    fun changePassword(
+            @PathVariable id: Long,
+            @RequestBody dto: UpdatePasswordUserDto,
+            principal: Principal
+    ): ResponseEntity<HttpStatus> =
+            if (userService.getUserById(id).email == principal.name) {
+                userService.changeUserPassword(id, dto)
                 ResponseEntity.status(HttpStatus.NO_CONTENT).build()
             } else {
                 ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build()
