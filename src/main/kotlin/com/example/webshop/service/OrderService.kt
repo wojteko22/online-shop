@@ -6,7 +6,6 @@ import com.example.webshop.dto.OrderPositionDto
 import com.example.webshop.dto.UpdateOrderDto
 import com.example.webshop.entity.OrderPosition
 import com.example.webshop.repository.*
-import com.example.webshop.toDto
 import org.springframework.stereotype.Service
 
 @Service

@@ -1,4 +1,4 @@
-package com.example.webshop
+package com.example.webshop.service
 
 import com.example.webshop.dto.*
 import com.example.webshop.entity.*
