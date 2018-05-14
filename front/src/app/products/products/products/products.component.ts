@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProductService} from '../../../-services/product.service';
 import {CredentialsService} from '../../../-services/credentials.service';
 import {Product} from '../../../-models/Product';
@@ -14,9 +14,10 @@ export class ProductsComponent implements OnInit {
 
   constructor(private prodService: ProductService,
               private credentialsService: CredentialsService) {
-    prodService.getShopProducts(this.credentialsService.getUser().shopId).subscribe((products) => {
+    const shopId = this.credentialsService.getShopId();
+    prodService.getShopProducts(shopId).subscribe((products) => {
       this.products = products;
-    })
+    });
   }
 
   ngOnInit() {

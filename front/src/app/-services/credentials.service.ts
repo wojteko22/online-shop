@@ -35,6 +35,10 @@ export class CredentialsService {
     localStorage.setItem(this.userStorageKey, JSON.stringify(user));
   }
 
+  getUserId() {
+    return this.getUser().id;
+  }
+
   getUser(): User {
     const user = localStorage.getItem(this.userStorageKey);
     return JSON.parse(user);
