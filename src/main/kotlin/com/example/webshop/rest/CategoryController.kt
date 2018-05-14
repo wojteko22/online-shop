@@ -6,30 +6,28 @@ import com.example.webshop.service.CategoryService
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping
+@RequestMapping("/shops/{shop_id}/categories")
 class CategoryController(private val categoryService: CategoryService) {
 
-    @GetMapping("/{shop_id}/categories")
+    @GetMapping
     fun showCategories(@PathVariable shop_id: Long) = categoryService.findByShopId(shop_id)
 
-    @GetMapping("/{shop_id}/categories/{category_id}/subcategories")
-    fun getSubcategories(@PathVariable category_id: Long) = categoryService.findSubcategoriesByCategoryId(category_id)
+    @GetMapping("/{category_id}/subcategories")
+    fun getSubcategories(@PathVariable category_id: Long) =
+            categoryService.findSubcategoriesByCategoryId(category_id)
 
-    @PostMapping("{shop_id}/categories")
+    @PostMapping
     fun addCategory(@RequestBody createCategoryDto: CreateCategoryDto) {
         categoryService.save(createCategoryDto)
     }
 
-    @DeleteMapping("{shop_id}/categories/{id}")
+    @DeleteMapping("/{id}")
     fun deleteCategory(@PathVariable shop_id: Long, @PathVariable id: Long) {
         categoryService.deleteById(id)
     }
 
-    @PatchMapping(value = ["{shop_id}/categories/{id}"])
-    fun updateCategory(@PathVariable shop_id: Long,
-                       @PathVariable id: Long,
-                       @RequestBody dto: UpdateCategoryDto
-    ) {
+    @PatchMapping("/{id}")
+    fun updateCategory(@PathVariable shop_id: Long, @PathVariable id: Long, @RequestBody dto: UpdateCategoryDto) {
         categoryService.update(id, dto)
     }
 }

@@ -18,7 +18,7 @@ export class CategoriesService {
     if (shopId != null) {
       this.shopId = shopId.toString();
     }
-    this.categoriesUrl = environment.apiUrl + '/' + this.shopId + '/categories';
+    this.categoriesUrl = environment.apiUrl + '/shops/' + this.shopId + '/categories';
   }
 
   getCategories(): Observable<Category[]> {
@@ -46,6 +46,6 @@ export class CategoriesService {
   }
 
   getShopCategories(shopId: number) {
-    return this.http.get<Category[]>(environment.apiUrl + '/' + shopId + '/categories');
+    return this.http.get<Category[]>(environment.apiUrl + '/shops/' + shopId + '/categories');
   }
 }
