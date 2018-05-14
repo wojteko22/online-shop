@@ -17,8 +17,13 @@ export class UserService {
     return this.http.get<User[]>(this.url);
   }
 
-  getUserInfo() {
+  getCurrentUserInfo() {
     return this.http.get<User>(this.url + '/me');
+  }
+
+  getUser(id: number) {
+    const url = `${this.url}/${id}`;
+    return this.http.get<User>(url);
   }
 
   changeUserPassword(id: number, updateUserPassword: UpdateUserPassword) {

@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore
 import org.springframework.stereotype.Component
 
 @Component
-class AuthReader(private val tokenStore: TokenStore) {
+class Guard(private val tokenStore: TokenStore) {
 
     fun ensureAdmin(auth: OAuth2Authentication) {
         if (auth.authorities.first().authority != Role.ADMIN.name) {

@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(credentials).subscribe(
       (tokenData: TokenData) => {
         this.saveToken(tokenData);
-        this.userService.getUserInfo().subscribe(
+        this.userService.getCurrentUserInfo().subscribe(
           (user) => this.saveUserDetails(user),
           error => this.snackBar.show(error));
       },

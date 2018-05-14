@@ -1,16 +1,15 @@
 package com.example.webshop.service
 
-import com.example.webshop.entity.User
 import com.example.webshop.dto.UpdatePasswordUserDto
 import com.example.webshop.dto.UserDto
-import com.example.webshop.repository.ShopRepository
+import com.example.webshop.entity.User
 import com.example.webshop.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class UserService(private val userRepository: UserRepository, private val shopRepository: ShopRepository) {
+class UserService(private val userRepository: UserRepository) {
 
     @Autowired
     lateinit var passwordEncoder: PasswordEncoder
@@ -20,13 +19,14 @@ class UserService(private val userRepository: UserRepository, private val shopRe
     }
 
     fun getUserByEmail(email: String): UserDto {
-        val shop = shopRepository.findByUserEmail(email)
         val user = userRepository.findByEmail(email) ?: throw NoSuchElementException("No user with email $email")
-        return user.toDto(shop)
+        return user.toDto()
     }
 
+    fun getUser(id: Long) = getUserById(id).toDto()
+
     fun changeUserPassword(userId: Long, dto: UpdatePasswordUserDto) {
-        val user = userRepository.findById(userId) ?: throw IllegalArgumentException("No user with id $userId")
+        val user = getUserById(userId)
         if (!passwordEncoder.matches(dto.oldPassword, user.password)) {
             throw IllegalArgumentException("Invalid password")
         }
