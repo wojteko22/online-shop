@@ -18,17 +18,12 @@ import org.springframework.security.oauth2.provider.token.*
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore
 
-
-typealias Seconds = Int
-
 @Configuration
 @EnableAuthorizationServer
 class AuthorizationServer : AuthorizationServerConfigurerAdapter() {
 
-    private val expiration: Seconds = 3600
-
     @Autowired
-    lateinit var authenticationManager: AuthenticationManager
+    private lateinit var authenticationManager: AuthenticationManager
 
     override fun configure(clients: ClientDetailsServiceConfigurer) {
         clients.inMemory()
@@ -36,7 +31,7 @@ class AuthorizationServer : AuthorizationServerConfigurerAdapter() {
                 .secret("BardzoSilneHaslo2018")
                 .authorizedGrantTypes("refresh_token", "password")
                 .scopes("read", "write", "trust")
-                .accessTokenValiditySeconds(expiration)
+                .accessTokenValiditySeconds(3600)
     }
 
     @Bean
@@ -46,27 +41,24 @@ class AuthorizationServer : AuthorizationServerConfigurerAdapter() {
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
-    fun authProvider(): DaoAuthenticationProvider {
-        val authProvider = DaoAuthenticationProvider()
-        authProvider.setUserDetailsService(userDetailsService())
-        authProvider.setPasswordEncoder(passwordEncoder())
-        return authProvider
+    fun authProvider() = DaoAuthenticationProvider().apply {
+        setUserDetailsService(userDetailsService())
+        setPasswordEncoder(passwordEncoder())
     }
 
     @Bean
     @Primary
-    fun tokenServices(): AuthorizationServerTokenServices {
-        val tokenServices = DefaultTokenServices()
-        tokenServices.setTokenStore(tokenStore())
-        tokenServices.setSupportRefreshToken(true)
-        return tokenServices
+    fun tokenServices(): AuthorizationServerTokenServices = DefaultTokenServices().apply {
+        setTokenStore(tokenStore())
+        setSupportRefreshToken(true)
     }
 
     override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
-        val tokenEnhancerChain = TokenEnhancerChain()
-        tokenEnhancerChain.setTokenEnhancers(
-                listOf(tokenEnhancer(), accessTokenConverter())
-        )
+        val tokenEnhancerChain = TokenEnhancerChain().apply {
+            setTokenEnhancers(
+                    listOf(tokenEnhancer(), accessTokenConverter())
+            )
+        }
         endpoints
                 .tokenStore(tokenStore())
                 .tokenEnhancer(tokenEnhancerChain)
@@ -75,19 +67,13 @@ class AuthorizationServer : AuthorizationServerConfigurerAdapter() {
     }
 
     @Bean
-    fun tokenStore(): TokenStore {
-        return JwtTokenStore(accessTokenConverter())
+    fun tokenStore(): TokenStore = JwtTokenStore(accessTokenConverter())
+
+    @Bean
+    fun accessTokenConverter() = JwtAccessTokenConverter().apply {
+        setSigningKey("123")
     }
 
     @Bean
-    fun accessTokenConverter(): JwtAccessTokenConverter {
-        val converter = JwtAccessTokenConverter()
-        converter.setSigningKey("123")
-        return converter
-    }
-
-    @Bean
-    fun tokenEnhancer(): TokenEnhancer {
-        return CustomTokenEnhancer()
-    }
+    fun tokenEnhancer(): TokenEnhancer = CustomTokenEnhancer()
 }
