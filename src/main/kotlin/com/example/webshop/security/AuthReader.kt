@@ -8,9 +8,14 @@ import org.springframework.stereotype.Component
 @Component
 class AuthReader(private val tokenStore: TokenStore) {
 
-    fun id(auth: OAuth2Authentication) = extraInfo(auth).userId
+    fun check(id: Long, auth: OAuth2Authentication) {
+        val currentUserId = extraInfo(auth).userId
+        if (id != currentUserId) {
+            throw IllegalAccessException("User $currentUserId does not have access to resources of user $id")
+        }
+    }
 
-    fun extraInfo(auth: OAuth2Authentication): AdditionalTokenInfo {
+    private fun extraInfo(auth: OAuth2Authentication): AdditionalTokenInfo {
         val details = auth.details as OAuth2AuthenticationDetails
         val accessToken = tokenStore.readAccessToken(details.tokenValue)
         return AdditionalTokenInfo(accessToken.additionalInformation)

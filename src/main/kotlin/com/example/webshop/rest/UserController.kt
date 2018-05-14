@@ -4,8 +4,6 @@ import com.example.webshop.dto.UpdatePasswordUserDto
 import com.example.webshop.dto.UserDto
 import com.example.webshop.security.AuthReader
 import com.example.webshop.service.UserService
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.security.oauth2.provider.OAuth2Authentication
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
@@ -24,7 +22,6 @@ class UserController(private val userService: UserService, private val authReade
         userService.deleteUser(id)
     }
 
-
     @GetMapping("/me")
     fun me(principal: Principal): UserDto = userService.getUserByEmail(principal.name)
 
@@ -33,11 +30,8 @@ class UserController(private val userService: UserService, private val authReade
             @PathVariable id: Long,
             @RequestBody dto: UpdatePasswordUserDto,
             authentication: OAuth2Authentication
-    ): ResponseEntity<HttpStatus> =
-            if (id == authReader.id(authentication)) {
-                userService.changeUserPassword(id, dto)
-                ResponseEntity.status(HttpStatus.NO_CONTENT).build()
-            } else {
-                ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build()
-            }
+    ) {
+        authReader.check(id, authentication)
+        userService.changeUserPassword(id, dto)
+    }
 }
