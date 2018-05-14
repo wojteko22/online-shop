@@ -36,16 +36,10 @@ class UserService(private val userRepository: UserRepository, private val shopRe
 
     fun deleteUser(id: Long) {
         val user = getUserById(id)
-        val shop = shopRepository.findByUser(user)
-        // todo: Chyba można prościej
-        if (shop != null) {
-            shopRepository.delete(shop)
-        } else {
-            userRepository.delete(id)
-        }
+        userRepository.delete(user)
     }
 
-    fun getUserById(id: Long): User {
+    private fun getUserById(id: Long): User {
         return userRepository.findById(id) ?: throw NoSuchElementException("No user with id $id")
     }
 }
