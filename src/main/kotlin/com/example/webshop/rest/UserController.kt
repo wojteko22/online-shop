@@ -2,6 +2,7 @@ package com.example.webshop.rest
 
 import com.example.webshop.dto.UpdatePasswordUserDto
 import com.example.webshop.dto.UserDto
+import com.example.webshop.entity.User
 import com.example.webshop.security.AuthReader
 import com.example.webshop.service.UserService
 import org.springframework.security.oauth2.provider.OAuth2Authentication
@@ -13,12 +14,14 @@ import java.security.Principal
 class UserController(private val userService: UserService, private val authReader: AuthReader) {
 
     @GetMapping
-    // todo: Zabezpieczyć
-    fun all(principal: Principal) = userService.getUsers()
+    fun all(authentication: OAuth2Authentication): Iterable<User> {
+        authReader.ensureAdmin(authentication)
+        return userService.getUsers()
+    }
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: Long) {
-        // todo: Koniecznie zabezpieczyć!
+    fun delete(@PathVariable id: Long, authentication: OAuth2Authentication) {
+        authReader.ensureAdmin(authentication)
         userService.deleteUser(id)
     }
 
