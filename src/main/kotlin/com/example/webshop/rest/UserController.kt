@@ -40,7 +40,7 @@ class UserController(private val userService: UserService, private val guard: Gu
             @RequestBody dto: UpdatePasswordUserDto,
             authentication: OAuth2Authentication
     ) {
-        guard.check(id, authentication)
+        guard.checkUserId(id, authentication)
         userService.changeUserPassword(id, dto)
     }
 }

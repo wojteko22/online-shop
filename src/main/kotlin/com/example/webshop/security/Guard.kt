@@ -9,12 +9,6 @@ import org.springframework.stereotype.Component
 @Component
 class Guard(private val tokenStore: TokenStore) {
 
-    fun ensureAdmin(auth: OAuth2Authentication, message: String = "Current user is not admin") {
-        if (auth.authorities.first().authority != Role.ADMIN.name) {
-            throw IllegalAccessException(message)
-        }
-    }
-
     fun checkShopId(shopId: Long, auth: OAuth2Authentication) {
         val currentUserShopId = (extraInfo(auth).shopId as Int?)?.toLong()
         if (shopId != currentUserShopId) {
@@ -22,10 +16,10 @@ class Guard(private val tokenStore: TokenStore) {
         }
     }
 
-    fun check(id: Long, auth: OAuth2Authentication) {
+    fun checkUserId(id: Long, auth: OAuth2Authentication) {
         val currentUserId = extraInfo(auth).userId
         if (id != currentUserId) {
-            throw IllegalAccessException("User $currentUserId does not have access to resources of user $id")
+            ensureAdmin(auth, "User $currentUserId does not have access to resources of user $id")
         }
     }
 
@@ -33,5 +27,11 @@ class Guard(private val tokenStore: TokenStore) {
         val details = auth.details as OAuth2AuthenticationDetails
         val accessToken = tokenStore.readAccessToken(details.tokenValue)
         return AdditionalTokenInfo(accessToken.additionalInformation)
+    }
+
+    fun ensureAdmin(auth: OAuth2Authentication, message: String = "Current user is not admin") {
+        if (auth.authorities.first().authority != Role.ADMIN.name) {
+            throw IllegalAccessException(message)
+        }
     }
 }
