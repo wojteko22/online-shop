@@ -10,10 +10,10 @@ import {SelectCategoryService} from '../select-category.service';
 })
 export class CategoryItemComponent implements OnInit {
 
-  @Input() space: string = "";
+  @Input() space = '';
   @Input() category: CategorySimpleDto;
-  visible: boolean = false;
-  loaded: boolean = false;
+  visible = false;
+  loaded = false;
   subcategories: CategorySimpleDto[];
 
   constructor(private categoriesService: CategoriesService,
@@ -34,7 +34,7 @@ export class CategoryItemComponent implements OnInit {
   loadSubcategories() {
     this.categoriesService.getSubcategories(this.category.categoryId).subscribe((categories) => {
       this.subcategories = categories;
-      this.loaded=true;
+      this.loaded = true;
     });
   }
 

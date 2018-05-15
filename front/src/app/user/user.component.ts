@@ -29,8 +29,9 @@ export class UserComponent implements OnInit {
       this.email = user.email;
       this.name = user.name;
       this.role = user.role;
-      if (!isNullOrUndefined(user.shopId))
+      if (!isNullOrUndefined(user.shopId)) {
         this.shop = user.shopId.toString();
+      }
     }
   }
 }

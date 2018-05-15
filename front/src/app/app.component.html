@@ -4,6 +4,9 @@
   <h1>
     System realizacji zamówień
   </h1>
+  <span *ngIf="adminPretending">
+    Administrator zalogowano jako: {{ pretendedUserEmail }}
+  </span>
 </div>
 
 <nav mat-tab-nav-bar>

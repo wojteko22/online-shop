@@ -3,13 +3,14 @@ import {Cookie} from 'ng2-cookies';
 import {TokenData} from '../-models/token';
 import {User} from '../-models/User';
 import {Router} from '@angular/router';
+import {AdminService} from './admin.service';
 
 @Injectable()
 export class CredentialsService {
   tokenCookieName = 'access_token';
   userStorageKey = 'user';
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private adminService: AdminService) {
   }
 
   saveToken(tokenData: TokenData) {
@@ -18,6 +19,7 @@ export class CredentialsService {
   }
 
   logOut() {
+    this.adminService.clear();
     localStorage.clear();
     Cookie.delete(this.tokenCookieName);
     this.router.navigate(['/login']);
@@ -35,7 +37,14 @@ export class CredentialsService {
     localStorage.setItem(this.userStorageKey, JSON.stringify(user));
   }
 
+  getUserId() {
+    return this.getUser().id;
+  }
+
   getUser(): User {
+    if (this.adminService.pretending) {
+      return this.adminService.user;
+    }
     const user = localStorage.getItem(this.userStorageKey);
     return JSON.parse(user);
   }
@@ -50,7 +59,7 @@ export class CredentialsService {
   }
 
   isAdmin() {
-    return this.role() === 'ADMIN';
+    return this.adminService.pretending || this.role() === 'ADMIN';
   }
 
   isCustomer() {

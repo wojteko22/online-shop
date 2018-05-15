@@ -11,5 +11,7 @@ data class User(
         @ManyToOne
         val role: UserRole,
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long = -1
+        val id: Long = -1,
+        @OneToOne(mappedBy = "user")
+        val shop: Shop? = null
 )

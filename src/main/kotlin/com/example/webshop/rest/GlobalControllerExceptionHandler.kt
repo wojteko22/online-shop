@@ -23,6 +23,10 @@ class GlobalControllerExceptionHandler {
     @ExceptionHandler(NoSuchElementException::class)
     fun handleLackOfResource(e: Exception) = handle(e)
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(IllegalAccessException::class)
+    fun handleIllegalUser(e: Exception) = handle(e)
+
     fun handle(e: Exception): ErrorDto {
         e.printStackTrace()
         return ErrorDto(e.message)

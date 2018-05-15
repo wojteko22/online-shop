@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {CredentialsService} from './-services/credentials.service';
+import {AdminService} from './-services/admin.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import {CredentialsService} from './-services/credentials.service';
 })
 export class AppComponent {
 
-  constructor(private credentialsService: CredentialsService) {
+  constructor(private credentialsService: CredentialsService, private adminService: AdminService) {
   }
 
   navLinks = [
@@ -63,6 +64,14 @@ export class AppComponent {
       visibility: Visibility.Admin,
     },
   ];
+
+  get adminPretending() {
+    return this.adminService.pretending;
+  }
+
+  get pretendedUserEmail() {
+    return this.adminService.userEmail;
+  }
 
   visible(visibility: Visibility) {
     switch (visibility) {

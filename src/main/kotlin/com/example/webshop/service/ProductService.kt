@@ -9,7 +9,6 @@ import com.example.webshop.repository.CategoryRepository
 import com.example.webshop.repository.ProductRepository
 import com.example.webshop.repository.ShopRepository
 import com.example.webshop.repository.UserRepository
-import com.example.webshop.toDto
 import org.springframework.stereotype.Service
 
 @Service

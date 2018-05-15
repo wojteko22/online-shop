@@ -35,10 +35,9 @@ export class PasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    const user = this.credentials.getUser();
-    const id = user.id;
-    const updateUserPassDto = {...this.form.value, id: id} as UpdateUserPassword;
-    this.userService.changeUserPassword(updateUserPassDto).subscribe(
+    const id = this.credentials.getUserId();
+    const updateUserPassDto = this.form.value as UpdateUserPassword;
+    this.userService.changeUserPassword(id, updateUserPassDto).subscribe(
       () => this.snackBar.show('Hasło zmienione pomyślnie'),
       error => this.snackBar.show(error)
     );

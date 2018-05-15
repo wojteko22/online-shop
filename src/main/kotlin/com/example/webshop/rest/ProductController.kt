@@ -4,6 +4,7 @@ import com.example.webshop.dto.CreateProductDto
 import com.example.webshop.dto.DeleteProductDto
 import com.example.webshop.dto.UpdateProductDto
 import com.example.webshop.service.ProductService
+import org.springframework.security.oauth2.provider.OAuth2Authentication
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
 
@@ -21,8 +22,8 @@ class ProductController(private val productService: ProductService) {
     fun addProduct(@RequestBody dto: CreateProductDto, principal: Principal) = productService.addNewProduct(dto, principal.name!!)
 
     @PatchMapping("/{productId}")
-    fun updateProduct(@PathVariable productId: Long, @RequestBody dto: UpdateProductDto, principal: Principal) =
-            productService.updateProduct(productId, dto, principal.name)
+    fun updateProduct(@PathVariable productId: Long, @RequestBody dto: UpdateProductDto, user: OAuth2Authentication) =
+            productService.updateProduct(productId, dto, user.name)
 
     @DeleteMapping
     fun deleteProduct(@RequestBody dto: DeleteProductDto, principal: Principal) = productService.deleProduct(dto, principal.name)

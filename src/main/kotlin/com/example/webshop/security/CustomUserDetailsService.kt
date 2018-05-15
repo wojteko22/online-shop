@@ -4,13 +4,11 @@ import com.example.webshop.entity.User
 import com.example.webshop.entity.UserRole
 import com.example.webshop.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.core.userdetails.UsernameNotFoundException
-import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.GrantedAuthority
 import org.springframework.stereotype.Service
-import java.util.HashSet
 
 @Service
 class CustomUserDetailsService : UserDetailsService {
@@ -27,8 +25,7 @@ class CustomUserDetailsService : UserDetailsService {
     }
 
     private fun convertAuthorities(userRole: UserRole): Set<GrantedAuthority> {
-        val authorities = HashSet<GrantedAuthority>()
-        authorities.add(SimpleGrantedAuthority(userRole.role))
-        return authorities
+        val authority = SimpleGrantedAuthority(userRole.role)
+        return setOf(authority)
     }
 }
