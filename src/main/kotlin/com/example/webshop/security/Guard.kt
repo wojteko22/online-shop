@@ -9,9 +9,16 @@ import org.springframework.stereotype.Component
 @Component
 class Guard(private val tokenStore: TokenStore) {
 
-    fun ensureAdmin(auth: OAuth2Authentication) {
+    fun ensureAdmin(auth: OAuth2Authentication, message: String = "Current user is not admin") {
         if (auth.authorities.first().authority != Role.ADMIN.name) {
-            throw IllegalAccessException("Current user is not admin")
+            throw IllegalAccessException(message)
+        }
+    }
+
+    fun checkShopId(shopId: Long, auth: OAuth2Authentication) {
+        val currentUserShopId = (extraInfo(auth).shopId as Int?)?.toLong()
+        if (shopId != currentUserShopId) {
+            ensureAdmin(auth, "User with shop $currentUserShopId does not have access to shop $shopId")
         }
     }
 

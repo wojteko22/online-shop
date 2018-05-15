@@ -17,7 +17,7 @@ class CustomTokenEnhancer : TokenEnhancer {
     override fun enhance(accessToken: OAuth2AccessToken, authentication: OAuth2Authentication): OAuth2AccessToken {
         val email = authentication.name
         val user = userRepository.findByEmail(email)!!
-        val additionalInfo = AdditionalTokenInfo(user.id)
+        val additionalInfo = AdditionalTokenInfo(user.id, user.shop?.id)
         (accessToken as DefaultOAuth2AccessToken).additionalInformation = additionalInfo.map
         return accessToken
     }
