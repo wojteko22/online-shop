@@ -42,8 +42,10 @@ class DataLoader {
         userRepository.save(owner7)
         val admin1 = User("admin@test.pl", BCryptPasswordEncoder().encode("test"), "Ada Adminka", admin, 8)
         userRepository.save(admin1)
-        val user = User("user@test.pl", BCryptPasswordEncoder().encode("test"), "Ada Adminka", customer, 9)
+        val user = User("user@test.pl", BCryptPasswordEncoder().encode("test"), "Andrzej Tan", customer, 9)
+        val user2 = User("user2@test.pl", BCryptPasswordEncoder().encode("test"), "Ewa Tan", customer, 10)
         userRepository.save(user)
+        userRepository.save(user2)
     }
 
     private val shop1 = Shop("Żabcia", "Wrocław", "Grunwaldzka", "50-387", owner1, id = 1)
