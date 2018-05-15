@@ -11,6 +11,7 @@ import {CredentialsService} from '../../-services/credentials.service';
   selector: 'app-app-product',
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.css'],
+  providers: [CategoriesService],
 })
 export class AddProductComponent implements OnInit {
 
