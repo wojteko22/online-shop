@@ -21,7 +21,7 @@ export class AppComponent {
     {
       path: '/cart',
       label: 'Koszyk',
-      visibility: Visibility.SignedIn,
+      visibility: Visibility.Customer,
     },
     {
       path: '/profil',
