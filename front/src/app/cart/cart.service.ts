@@ -3,6 +3,9 @@ import {Product} from '../-models/Product';
 import {Shop} from '../shops/shop';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
+import {CartPosition} from './cart-position';
+import {CreateOrderDto} from './create-order-dto';
+import {OrderPositionDto} from './order-position-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -20,20 +23,20 @@ export class CartService {
   }
 
   postOrder(shop: Shop) {
-    const orderPositionsDto: OrderPositionDto[] = [];
+    const orderPositionDtos: OrderPositionDto[] = [];
     this.cartPositions.forEach(it => {
       if (it.shop == shop) {
-        orderPositionsDto.push(new OrderPositionDto(it.product.id, it.amount));
+        orderPositionDtos.push(new OrderPositionDto(it.product.id, it.amount));
       }
     });
-    const createOrderDto = new CreateOrderDto(shop.id, orderPositionsDto);
+    const createOrderDto = new CreateOrderDto(shop.id, orderPositionDtos);
 
     this.http.post(this.ordersUrl, createOrderDto).subscribe(res => console.log(JSON.stringify(res)));
 
     this.removeGivenShopPositions(shop);
   }
 
-  removeGivenShopPositions(shop: Shop) {
+  private removeGivenShopPositions(shop: Shop) {
     const newCartPositions = new Set<CartPosition>();
     this.cartPositions.forEach(it => {
       if (it.shop != shop) {
@@ -43,40 +46,3 @@ export class CartService {
     this.cartPositions = newCartPositions;
   }
 }
-
-export class CartPosition {
-  shop: Shop;
-  product: Product;
-  amount: number;
-
-
-  constructor(shop: Shop, product: Product, amount: number) {
-    this.shop = shop;
-    this.product = product;
-    this.amount = amount;
-  }
-}
-
-export class OrderPositionDto {
-  productId: number;
-  amount: number;
-
-
-  constructor(productId: number, amount: number) {
-    this.productId = productId;
-    this.amount = amount;
-  }
-}
-
-export class CreateOrderDto {
-  shopId: number;
-  orderPositionsDto: Array<OrderPositionDto>;
-
-
-  constructor(shopId: number, orderPositionsDto: Array<OrderPositionDto>) {
-    this.shopId = shopId;
-    this.orderPositionsDto = orderPositionsDto;
-  }
-}
-
-

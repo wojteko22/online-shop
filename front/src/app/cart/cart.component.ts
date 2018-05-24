@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {CartPosition, CartService} from "./cart.service";
-import {Shop} from "../shops/shop";
-import {init} from "protractor/built/launcher";
+import {Component, OnInit} from '@angular/core';
+import {CartService} from './cart.service';
+import {Shop} from '../shops/shop';
+import {CartPosition} from './cart-position';
 
 @Component({
   selector: 'app-cart',
@@ -13,50 +13,50 @@ export class CartComponent implements OnInit {
   cartPositions: Set<CartPosition>;
   shops = new Set<Shop>();
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService) {
+  }
 
   ngOnInit() {
-    this.init()
+    this.init();
   }
 
-  init(){
+  init() {
     this.cartPositions = this.cartService.cartPositions;
-    this.cartPositions.forEach(it => this.shops.add(it.shop))
+    this.cartPositions.forEach(it => this.shops.add(it.shop));
   }
 
-  getGivenShopPositions(shop: Shop): Set<CartPosition>{
-    let result = new Set<CartPosition>();
+  getGivenShopPositions(shop: Shop): Set<CartPosition> {
+    const result = new Set<CartPosition>();
     this.cartPositions.forEach(it => {
-      if (it.shop==shop){
+      if (it.shop == shop) {
         result.add(it);
       }
     });
     return result;
   }
 
-  getOverallPrice(): number{
+  getOverallPrice(): number {
     let result = 0;
     this.cartPositions.forEach(it => result += it.product.price * it.amount);
     return result;
   }
 
-  getPriceForShop(shop: Shop): number{
+  getPriceForShop(shop: Shop): number {
     let result = 0;
     this.cartPositions.forEach(it => {
-      if (it.shop==shop) {
+      if (it.shop == shop) {
         result += it.product.price * it.amount;
       }
     });
     return result;
   }
 
-  onSubmit(shop: Shop = null){
-    if (shop==null){
-      this.shops.forEach(it=> this.cartService.postOrder(it))
-    }else {
+  onSubmit(shop: Shop = null) {
+    if (shop == null) {
+      this.shops.forEach(it => this.cartService.postOrder(it));
+    } else {
       this.cartService.postOrder(shop);
     }
     this.init();
   }
-
 }
