@@ -10,7 +10,7 @@ import {CartPosition} from './cart-position';
 })
 export class CartComponent implements OnInit {
 
-  cartPositions: Set<CartPosition>;
+  cartPositions: CartPosition[];
   shops: Set<Shop>;
 
   constructor(private cartService: CartService) {
@@ -21,23 +21,22 @@ export class CartComponent implements OnInit {
   }
 
   private init() {
-    this.cartPositions = this.cartService.cartPositions;
+    this.cartPositions = this.cartService.getCurrentUserPositions();
     this.shops = new Set(
-      Array.from(this.cartPositions).map(position => position.shop)
+      this.cartPositions.map(position => position.shop)
     );
   }
 
   getGivenShopPositions(shop: Shop): CartPosition[] {
-    return Array.from(this.cartPositions).filter(it => it.shop === shop);
+    return this.cartPositions.filter(it => it.shop === shop);
   }
 
   getOverallPrice(): number {
-    return Array.from(this.cartPositions)
-      .reduce((prev, curr) => prev + curr.product.price * curr.amount, 0);
+    return this.cartPositions.reduce((prev, curr) => prev + curr.product.price * curr.amount, 0);
   }
 
   getPriceForShop(shop: Shop): number {
-    return Array.from(this.cartPositions)
+    return this.cartPositions
       .filter(position => position.shop === shop)
       .reduce((prev, curr) => prev + curr.product.price * curr.amount, 0);
   }

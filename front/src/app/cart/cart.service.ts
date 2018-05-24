@@ -13,17 +13,26 @@ import {CredentialsService} from '../-services/credentials.service';
 })
 export class CartService {
 
-  cartPositions = new Set<CartPosition>();
+  private cartPositions = new Set<CartPosition>();
 
   constructor(private http: HttpClient, private ordersService: OrderService, private credentialsService: CredentialsService) {
   }
 
+  getCurrentUserPositions() {
+    return Array.from(this.cartPositions).filter(position => position.userId === this.userId);
+  }
+
   addToCart(shop: Shop, product: Product, amount: number) {
-    this.cartPositions.add(new CartPosition(shop, product, amount));
+    const cartPosition = new CartPosition(shop, this.userId, product, amount);
+    this.cartPositions.add(cartPosition);
+  }
+
+  private get userId() {
+    return this.credentialsService.getUserId();
   }
 
   postOrder(shop: Shop) {
-    const orderPositionDtos = Array.from(this.cartPositions)
+    const orderPositionDtos = this.getCurrentUserPositions()
       .filter(position => position.shop === shop)
       .map(position => new OrderPositionDto(position.product.id, position.amount));
     const userId = this.credentialsService.getUserId();
