@@ -22,7 +22,7 @@ class OrderController(private val orderService: OrderService) {
     }
 
     @PostMapping
-    fun addOrders(@RequestBody dto: CreateOrderDto, principal: Principal){
-        orderService.addOrder(dto,principal.name)
+    fun addOrder(@RequestBody dto: CreateOrderDto) {
+        orderService.addOrder(dto)
     }
 }

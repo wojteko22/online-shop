@@ -2,81 +2,48 @@ import {Injectable} from '@angular/core';
 import {Product} from '../-models/Product';
 import {Shop} from '../shops/shop';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../environments/environment';
+import {CartPosition} from './cart-position';
+import {CreateOrderDto} from '../-models/create-order-dto';
+import {OrderPositionDto} from './order-position-dto';
+import {OrderService} from '../-services/order.service';
+import {CredentialsService} from '../-services/credentials.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  cartPositions = new Set<CartPosition>();
-  ordersUrl = environment.apiUrl + '/orders';
+  private cartPositions = new Set<CartPosition>();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private ordersService: OrderService, private credentialsService: CredentialsService) {
+  }
+
+  getCurrentUserPositions() {
+    return Array.from(this.cartPositions).filter(position => position.userId === this.userId);
   }
 
   addToCart(shop: Shop, product: Product, amount: number) {
-    this.cartPositions.add(new CartPosition(shop, product, amount));
+    const cartPosition = new CartPosition(shop, this.userId, product, amount);
+    this.cartPositions.add(cartPosition);
+  }
+
+  private get userId() {
+    return this.credentialsService.getUserId();
   }
 
   postOrder(shop: Shop) {
-    const orderPositionsDto: OrderPositionDto[] = [];
-    this.cartPositions.forEach(it => {
-      if (it.shop == shop) {
-        orderPositionsDto.push(new OrderPositionDto(it.product.id, it.amount));
-      }
-    });
-    const createOrderDto = new CreateOrderDto(shop.id, orderPositionsDto);
-
-    this.http.post(this.ordersUrl, createOrderDto).subscribe(res => console.log(JSON.stringify(res)));
-
-    this.removeGivenShopPositions(shop);
+    const orderPositionDtos = this.getCurrentUserPositions()
+      .filter(position => position.shop.id === shop.id)
+      .map(position => new OrderPositionDto(position.product.id, position.amount));
+    const userId = this.credentialsService.getUserId();
+    const createOrderDto = new CreateOrderDto(shop.id, userId, orderPositionDtos);
+    this.ordersService.addOrder(createOrderDto).subscribe();
+    this.removeGivenShopPositions(shop); // TODO: Tak być nie powinno, bo request może się nie udać
   }
 
-  removeGivenShopPositions(shop: Shop) {
-    const newCartPositions = new Set<CartPosition>();
-    this.cartPositions.forEach(it => {
-      if (it.shop != shop) {
-        newCartPositions.add(it);
-      }
-    });
-    this.cartPositions = newCartPositions;
+  private removeGivenShopPositions(shop: Shop) {
+    const newCartPositions = Array.from(this.cartPositions)
+      .filter(position => position.shop.id !== shop.id || position.userId !== this.userId);
+    this.cartPositions = new Set(newCartPositions);
   }
 }
-
-export class CartPosition {
-  shop: Shop;
-  product: Product;
-  amount: number;
-
-
-  constructor(shop: Shop, product: Product, amount: number) {
-    this.shop = shop;
-    this.product = product;
-    this.amount = amount;
-  }
-}
-
-export class OrderPositionDto {
-  productId: number;
-  amount: number;
-
-
-  constructor(productId: number, amount: number) {
-    this.productId = productId;
-    this.amount = amount;
-  }
-}
-
-export class CreateOrderDto {
-  shopId: number;
-  orderPositionsDto: Array<OrderPositionDto>;
-
-
-  constructor(shopId: number, orderPositionsDto: Array<OrderPositionDto>) {
-    this.shopId = shopId;
-    this.orderPositionsDto = orderPositionsDto;
-  }
-}
-
-

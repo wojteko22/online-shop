@@ -35,9 +35,9 @@ class OrderService(
         orderRepository.save(updatedOrder)
     }
 
-    fun addOrder(dto: CreateOrderDto, name: String) {
+    fun addOrder(dto: CreateOrderDto) {
         val shop = shopRepository.findById(dto.shopId)
-        val user = userRepository.findByEmail(name)
+        val user = userRepository.findById(dto.userId)
         val order = Order("przyjęte", orderRepository.count() + 1, shop = shop!!, user = user!!)
         orderRepository.save(order)
 

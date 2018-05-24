@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {CartPosition, CartService} from "./cart.service";
-import {Shop} from "../shops/shop";
-import {init} from "protractor/built/launcher";
+import {Component, OnInit} from '@angular/core';
+import {CartService} from './cart.service';
+import {Shop} from '../shops/shop';
+import {CartPosition} from './cart-position';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-cart',
@@ -10,53 +11,41 @@ import {init} from "protractor/built/launcher";
 })
 export class CartComponent implements OnInit {
 
-  cartPositions: Set<CartPosition>;
-  shops = new Set<Shop>();
+  cartPositions: CartPosition[];
+  shops: Shop[];
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService) {
+  }
 
   ngOnInit() {
-    this.init()
+    this.init();
   }
 
-  init(){
-    this.cartPositions = this.cartService.cartPositions;
-    this.cartPositions.forEach(it => this.shops.add(it.shop))
+  private init() {
+    this.cartPositions = this.cartService.getCurrentUserPositions();
+    this.shops = _.uniqWith(this.cartPositions.map(position => position.shop), _.isEqual);
   }
 
-  getGivenShopPositions(shop: Shop): Set<CartPosition>{
-    let result = new Set<CartPosition>();
-    this.cartPositions.forEach(it => {
-      if (it.shop==shop){
-        result.add(it);
-      }
-    });
-    return result;
+  getGivenShopPositions(shop: Shop): CartPosition[] {
+    return this.cartPositions.filter(it => it.shop.id === shop.id);
   }
 
-  getOverallPrice(): number{
-    let result = 0;
-    this.cartPositions.forEach(it => result += it.product.price * it.amount);
-    return result;
+  getOverallPrice(): number {
+    return this.cartPositions.reduce((prev, curr) => prev + curr.product.price * curr.amount, 0);
   }
 
-  getPriceForShop(shop: Shop): number{
-    let result = 0;
-    this.cartPositions.forEach(it => {
-      if (it.shop==shop) {
-        result += it.product.price * it.amount;
-      }
-    });
-    return result;
+  getPriceForShop(shop: Shop): number {
+    return this.cartPositions
+      .filter(position => position.shop.id === shop.id)
+      .reduce((prev, curr) => prev + curr.product.price * curr.amount, 0);
   }
 
-  onSubmit(shop: Shop = null){
-    if (shop==null){
-      this.shops.forEach(it=> this.cartService.postOrder(it))
-    }else {
+  onSubmit(shop: Shop = null) {
+    if (shop == null) {
+      this.shops.forEach(it => this.cartService.postOrder(it));
+    } else {
       this.cartService.postOrder(shop);
     }
     this.init();
   }
-
 }
