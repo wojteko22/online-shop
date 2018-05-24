@@ -1,5 +1,5 @@
-<h3 mat-subheader *ngIf="cartPositions.size==0">Brak produktów w koszyku</h3>
-<div *ngIf="cartPositions.size!=0">
+<h3 mat-subheader *ngIf="cartPositions.length === 0">Brak produktów w koszyku</h3>
+<div *ngIf="cartPositions.length !== 0">
   <mat-list *ngFor="let shop of shops">
     <h3 mat-subheader>{{shop.name}} - adres: {{shop.street}} </h3>
     <mat-list-item *ngFor="let position of getGivenShopPositions(shop)">

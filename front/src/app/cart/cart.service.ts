@@ -33,7 +33,7 @@ export class CartService {
 
   postOrder(shop: Shop) {
     const orderPositionDtos = this.getCurrentUserPositions()
-      .filter(position => position.shop === shop)
+      .filter(position => position.shop.id === shop.id)
       .map(position => new OrderPositionDto(position.product.id, position.amount));
     const userId = this.credentialsService.getUserId();
     const createOrderDto = new CreateOrderDto(shop.id, userId, orderPositionDtos);
@@ -43,7 +43,7 @@ export class CartService {
 
   private removeGivenShopPositions(shop: Shop) {
     const newCartPositions = Array.from(this.cartPositions)
-      .filter(position => position.shop !== shop);
+      .filter(position => position.shop.id !== shop.id || position.userId !== this.userId);
     this.cartPositions = new Set(newCartPositions);
   }
 }

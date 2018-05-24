@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CartService} from './cart.service';
 import {Shop} from '../shops/shop';
 import {CartPosition} from './cart-position';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-cart',
@@ -11,7 +12,7 @@ import {CartPosition} from './cart-position';
 export class CartComponent implements OnInit {
 
   cartPositions: CartPosition[];
-  shops: Set<Shop>;
+  shops: Shop[];
 
   constructor(private cartService: CartService) {
   }
@@ -22,13 +23,11 @@ export class CartComponent implements OnInit {
 
   private init() {
     this.cartPositions = this.cartService.getCurrentUserPositions();
-    this.shops = new Set(
-      this.cartPositions.map(position => position.shop)
-    );
+    this.shops = _.uniqWith(this.cartPositions.map(position => position.shop), _.isEqual);
   }
 
   getGivenShopPositions(shop: Shop): CartPosition[] {
-    return this.cartPositions.filter(it => it.shop === shop);
+    return this.cartPositions.filter(it => it.shop.id === shop.id);
   }
 
   getOverallPrice(): number {
@@ -37,7 +36,7 @@ export class CartComponent implements OnInit {
 
   getPriceForShop(shop: Shop): number {
     return this.cartPositions
-      .filter(position => position.shop === shop)
+      .filter(position => position.shop.id === shop.id)
       .reduce((prev, curr) => prev + curr.product.price * curr.amount, 0);
   }
 
