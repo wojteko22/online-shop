@@ -8,8 +8,11 @@ export class ProductService {
 
   productEndpoint = environment.apiUrl + '/products';
 
-  constructor(private http: HttpClient) {
+  static url(shopId: number) {
+    return `${environment.apiUrl}/shops/${shopId}/products`;
+  }
 
+  constructor(private http: HttpClient) {
   }
 
   addProduct(product: Product) {
@@ -20,8 +23,9 @@ export class ProductService {
     return this.http.patch(this.productEndpoint + '/' + id, product);
   }
 
-  getShopProducts(shopId: Number) {
-    return this.http.get<Product[]>(this.productEndpoint + '/shop/' + shopId);
+  getShopProducts(shopId: number) {
+    const url = ProductService.url(shopId);
+    return this.http.get<Product[]>(url);
   }
 
   getProduct(productId: Number) {

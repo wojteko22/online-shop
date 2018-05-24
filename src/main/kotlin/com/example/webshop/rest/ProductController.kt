@@ -9,29 +9,29 @@ import org.springframework.web.bind.annotation.*
 import java.security.Principal
 
 @RestController
-@RequestMapping("/products")
+// todo: Dodać @RequestMapping()
 class ProductController(private val productService: ProductService) {
 
-    @GetMapping("/shop/{shopId}")
+    @GetMapping("/shops/{shopId}/products")
     fun getProducts(@PathVariable shopId: Long) = productService.getProducts(shopId)
 
-    @GetMapping("/{productId}")
+    @GetMapping("/products/{productId}")
     fun getProduct(@PathVariable productId: Long) = productService.getProduct(productId)
 
-    @PostMapping
+    @PostMapping("/products")
     fun addProduct(@RequestBody dto: CreateProductDto, principal: Principal) = productService.addNewProduct(dto, principal.name!!)
 
-    @PatchMapping("/{productId}")
+    @PatchMapping("/products/{productId}")
     fun updateProduct(@PathVariable productId: Long, @RequestBody dto: UpdateProductDto, user: OAuth2Authentication) =
             productService.updateProduct(productId, dto, user.name)
 
-    @DeleteMapping
+    @DeleteMapping("/products")
     fun deleteProduct(@RequestBody dto: DeleteProductDto, principal: Principal) = productService.deleProduct(dto, principal.name)
 
-    @GetMapping("/category/{categoryId}")
+    @GetMapping("/products/category/{categoryId}")
     fun getProductsByCategoryId(@PathVariable categoryId: Long) = productService.getByCategoryId(categoryId)
 
-    @GetMapping("shop/{shopId}/pattern/{pattern}")
+    @GetMapping("/products/shop/{shopId}/pattern/{pattern}")
     fun getProductsByPattern(@PathVariable shopId: Long, @PathVariable pattern: String) = productService.getByShopIdAndPattern(shopId, pattern)
 
 }
