@@ -11,7 +11,7 @@ import {CartPosition} from './cart-position';
 export class CartComponent implements OnInit {
 
   cartPositions: Set<CartPosition>;
-  shops = new Set<Shop>();
+  shops: Set<Shop>;
 
   constructor(private cartService: CartService) {
   }
@@ -22,7 +22,9 @@ export class CartComponent implements OnInit {
 
   private init() {
     this.cartPositions = this.cartService.cartPositions;
-    this.cartPositions.forEach(it => this.shops.add(it.shop));
+    this.shops = new Set(
+      Array.from(this.cartPositions).map(position => position.shop)
+    );
   }
 
   getGivenShopPositions(shop: Shop): CartPosition[] {
