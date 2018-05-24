@@ -1,9 +1,9 @@
 package com.example.webshop.service
 
 import com.example.webshop.dto.CreateOrderDto
-import com.example.webshop.entity.Order
 import com.example.webshop.dto.OrderPositionDto
 import com.example.webshop.dto.UpdateOrderDto
+import com.example.webshop.entity.Order
 import com.example.webshop.entity.OrderPosition
 import com.example.webshop.repository.*
 import org.springframework.stereotype.Service
@@ -15,36 +15,54 @@ class OrderService(
         private val shopRepository: ShopRepository,
         private val userRepository: UserRepository,
         private val productRepository: ProductRepository
-
 ) {
 
-    fun getOrders(email: String): Iterable<Order> {
-        val shop = shopRepository.getByUserEmail(email)
+    fun getOrders(shopId: Long): Iterable<Order> {
+        val shop = shopRepository.findById(shopId) ?: throw NoSuchElementException("No shop with id $shopId")
         return orderRepository.findByShop(shop)
     }
 
-    fun getOrderDetails(orderId: Long): Iterable<OrderPositionDto> = orderPositionRepository.findByOrderId(orderId)
-            .map { it.toDto() }
+    fun getOrderDetails(orderId: Long, shopId: Long): Iterable<OrderPositionDto> {
+        checkedOrder(orderId, shopId)
+        return orderPositionRepository.findByOrderId(orderId).map { it.toDto() }
+    }
 
-    fun update(id: Long, dto: UpdateOrderDto, email: String) {
-        val order = orderRepository.findById(id) ?: throw NoSuchElementException("No order with id $id")
-        if (order.shop != shopRepository.findByUserEmail(email)) {
-            throw NoSuchElementException("No order with id $id for user with email $email")
-        }
+    fun update(orderId: Long, dto: UpdateOrderDto, shopId: Long) {
+        val order = checkedOrder(orderId, shopId)
         val updatedOrder = order.copy(status = dto.status)
         orderRepository.save(updatedOrder)
     }
 
-    fun addOrder(dto: CreateOrderDto) {
-        val shop = shopRepository.findById(dto.shopId)
-        val user = userRepository.findById(dto.userId)
-        val order = Order("przyjęte", orderRepository.count() + 1, shop = shop!!, user = user!!)
+    private fun checkedOrder(orderId: Long, shopId: Long): Order {
+        val order = order(orderId)
+        if (order.shop.id != shopId) {
+            orderLackError(orderId)
+        }
+        return order
+    }
+
+    private fun order(id: Long) = orderRepository.findById(id) ?: orderLackError(id)
+
+    private fun orderLackError(id: Long): Nothing = throw NoSuchElementException("No order with id $id")
+
+    fun addOrder(dto: CreateOrderDto, shopId: Long) {
+        val shop = shopRepository.findById(shopId) ?: throw NoSuchElementException("No shop with id $shopId")
+        val userId = dto.userId
+        val user = userRepository.findById(userId) ?: throw NoSuchElementException("No user with id $userId")
+        val order = Order("przyjęte", orderRepository.count() + 1, shop, user)
         orderRepository.save(order)
 
         for (orderPositionDto in dto.orderPositionsDto) {
-            val product = productRepository.findById(orderPositionDto.productId)
-            val orderPosition = OrderPosition(order, product!!, orderPositionDto.amount)
+            val productId = orderPositionDto.productId
+            val product = productRepository.findById(productId) ?: errorLackOfProduct(productId)
+            if (product.shop.id != shopId) {
+                errorLackOfProduct(productId)
+            }
+            val orderPosition = OrderPosition(order, product, orderPositionDto.amount)
             orderPositionRepository.save(orderPosition)
         }
     }
+
+    private fun errorLackOfProduct(productId: Long): Nothing =
+            throw IllegalAccessException("No product with id $productId")
 }

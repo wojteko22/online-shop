@@ -36,8 +36,8 @@ export class CartService {
       .filter(position => position.shop.id === shop.id)
       .map(position => new OrderPositionDto(position.product.id, position.amount));
     const userId = this.credentialsService.getUserId();
-    const createOrderDto = new CreateOrderDto(shop.id, userId, orderPositionDtos);
-    this.ordersService.addOrder(createOrderDto).subscribe();
+    const createOrderDto = new CreateOrderDto(userId, orderPositionDtos);
+    this.ordersService.addOrder(shop.id, createOrderDto).subscribe();
     this.removeGivenShopPositions(shop); // TODO: Tak być nie powinno, bo request może się nie udać
   }
 
