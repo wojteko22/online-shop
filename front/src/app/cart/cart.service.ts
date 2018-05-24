@@ -25,21 +25,19 @@ export class CartService {
   postOrder(shop: Shop) {
     const orderPositionDtos: OrderPositionDto[] = [];
     this.cartPositions.forEach(it => {
-      if (it.shop == shop) {
+      if (it.shop === shop) {
         orderPositionDtos.push(new OrderPositionDto(it.product.id, it.amount));
       }
     });
     const createOrderDto = new CreateOrderDto(shop.id, orderPositionDtos);
-
-    this.http.post(this.ordersUrl, createOrderDto).subscribe(res => console.log(JSON.stringify(res)));
-
+    this.http.post(this.ordersUrl, createOrderDto).subscribe();
     this.removeGivenShopPositions(shop);
   }
 
   private removeGivenShopPositions(shop: Shop) {
     const newCartPositions = new Set<CartPosition>();
     this.cartPositions.forEach(it => {
-      if (it.shop != shop) {
+      if (it.shop !== shop) {
         newCartPositions.add(it);
       }
     });
