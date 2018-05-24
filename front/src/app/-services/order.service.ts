@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Order} from '../orders/order';
 import {OrderPosition} from '../order-details/order-position';
+import {CreateOrderDto} from '../-models/create-order-dto';
 
 @Injectable()
 export class OrderService {
@@ -25,5 +26,9 @@ export class OrderService {
       status: newStatus
     };
     return this.http.patch(this.ordersUrl + '/' + orderId, body);
+  }
+
+  addOrder(createOrderDto: CreateOrderDto) {
+    return this.http.post(this.ordersUrl, createOrderDto);
   }
 }

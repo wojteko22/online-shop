@@ -2,10 +2,11 @@ import {Injectable} from '@angular/core';
 import {Product} from '../-models/Product';
 import {Shop} from '../shops/shop';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../environments/environment';
 import {CartPosition} from './cart-position';
-import {CreateOrderDto} from './create-order-dto';
+import {CreateOrderDto} from '../-models/create-order-dto';
 import {OrderPositionDto} from './order-position-dto';
+import {OrderService} from '../-services/order.service';
+import {CredentialsService} from '../-services/credentials.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,8 @@ import {OrderPositionDto} from './order-position-dto';
 export class CartService {
 
   cartPositions = new Set<CartPosition>();
-  ordersUrl = environment.apiUrl + '/orders';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private ordersService: OrderService, private credentialsService: CredentialsService) {
   }
 
   addToCart(shop: Shop, product: Product, amount: number) {
@@ -23,24 +23,18 @@ export class CartService {
   }
 
   postOrder(shop: Shop) {
-    const orderPositionDtos: OrderPositionDto[] = [];
-    this.cartPositions.forEach(it => {
-      if (it.shop === shop) {
-        orderPositionDtos.push(new OrderPositionDto(it.product.id, it.amount));
-      }
-    });
-    const createOrderDto = new CreateOrderDto(shop.id, orderPositionDtos);
-    this.http.post(this.ordersUrl, createOrderDto).subscribe();
-    this.removeGivenShopPositions(shop);
+    const orderPositionDtos = Array.from(this.cartPositions)
+      .filter(position => position.shop === shop)
+      .map(position => new OrderPositionDto(position.product.id, position.amount));
+    const userId = this.credentialsService.getUserId();
+    const createOrderDto = new CreateOrderDto(shop.id, userId, orderPositionDtos);
+    this.ordersService.addOrder(createOrderDto).subscribe();
+    this.removeGivenShopPositions(shop); // TODO: Tak być nie powinno, bo request może się nie udać
   }
 
   private removeGivenShopPositions(shop: Shop) {
-    const newCartPositions = new Set<CartPosition>();
-    this.cartPositions.forEach(it => {
-      if (it.shop !== shop) {
-        newCartPositions.add(it);
-      }
-    });
-    this.cartPositions = newCartPositions;
+    const newCartPositions = Array.from(this.cartPositions)
+      .filter(position => position.shop !== shop);
+    this.cartPositions = new Set(newCartPositions);
   }
 }
