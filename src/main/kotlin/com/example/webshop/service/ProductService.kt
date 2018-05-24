@@ -18,8 +18,12 @@ class ProductService(private val productRepository: ProductRepository,
                      private val userRepository: UserRepository
 ) {
 
-    fun getProduct(productId: Long): ProductDto {
-        return productRepository.findById(productId)!!.toDto()
+    fun getProduct(productId: Long, shopId: Long): ProductDto {
+        val product = productRepository.findById(productId) ?: productLackError(productId)
+        if (product.shop.id != shopId) {
+            productLackError(productId)
+        }
+        return product.toDto()
     }
 
     fun getProducts(shopId: Long): List<ProductDto> {
@@ -48,7 +52,7 @@ class ProductService(private val productRepository: ProductRepository,
     }
 
     fun updateProduct(id: Long, dto: UpdateProductDto, email: String): Long {
-        val product = productRepository.findById(id) ?: throw NoSuchElementException("No product with id $id")
+        val product = productRepository.findById(id) ?: productLackError(id)
 
         dto.name?.let {
             product.name = it
@@ -75,6 +79,8 @@ class ProductService(private val productRepository: ProductRepository,
         val updatedProduct = productRepository.save(product)
         return updatedProduct.id
     }
+
+    private fun productLackError(productId: Long): Nothing = throw NoSuchElementException("No product with id $productId")
 
     fun deleProduct(dto: DeleteProductDto, email: String) {
         validate(dto, email)
