@@ -1,13 +1,11 @@
 package com.example.webshop.rest
 
 import com.example.webshop.dto.CreateProductDto
-import com.example.webshop.dto.DeleteProductDto
 import com.example.webshop.dto.UpdateProductDto
 import com.example.webshop.security.Guard
 import com.example.webshop.service.ProductService
 import org.springframework.security.oauth2.provider.OAuth2Authentication
 import org.springframework.web.bind.annotation.*
-import java.security.Principal
 
 @RestController
 // todo: Dodać @RequestMapping()
@@ -36,8 +34,16 @@ class ProductController(private val productService: ProductService, private val 
         return productService.updateProduct(productId, dto, shopId)
     }
 
-    @DeleteMapping("/products")
-    fun deleteProduct(@RequestBody dto: DeleteProductDto, principal: Principal) = productService.deleProduct(dto, principal.name)
+    @DeleteMapping("/shops/{shopId}/products/{productId}")
+    fun deleteProduct(
+            @PathVariable shopId: Long,
+            @PathVariable productId: Long,
+            auth: OAuth2Authentication
+    ) {
+        guard.checkShopId(shopId, auth)
+        productService.deleProduct(productId, shopId)
+    }
+
 
     @GetMapping("/products/category/{categoryId}")
     fun getProductsByCategoryId(@PathVariable categoryId: Long) = productService.getByCategoryId(categoryId)

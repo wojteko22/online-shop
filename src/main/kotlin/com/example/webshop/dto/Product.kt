@@ -32,7 +32,3 @@ class UpdateProductDto(
         val categoryId: Long?,
         val shopId: Long?
 )
-
-class DeleteProductDto(
-        val id: Long
-)

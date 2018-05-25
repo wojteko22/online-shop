@@ -1,21 +1,21 @@
 package com.example.webshop.service
 
 import com.example.webshop.dto.CreateProductDto
-import com.example.webshop.dto.DeleteProductDto
 import com.example.webshop.dto.ProductDto
 import com.example.webshop.dto.UpdateProductDto
-import com.example.webshop.entity.*
+import com.example.webshop.entity.Category
+import com.example.webshop.entity.Product
+import com.example.webshop.entity.Shop
 import com.example.webshop.repository.CategoryRepository
 import com.example.webshop.repository.ProductRepository
 import com.example.webshop.repository.ShopRepository
-import com.example.webshop.repository.UserRepository
 import org.springframework.stereotype.Service
 
 @Service
-class ProductService(private val productRepository: ProductRepository,
-                     private val shopRepository: ShopRepository,
-                     private val categoryRepository: CategoryRepository,
-                     private val userRepository: UserRepository
+class ProductService(
+        private val productRepository: ProductRepository,
+        private val shopRepository: ShopRepository,
+        private val categoryRepository: CategoryRepository
 ) {
 
     fun getProduct(productId: Long, shopId: Long): ProductDto {
@@ -97,19 +97,13 @@ class ProductService(private val productRepository: ProductRepository,
         return updatedProduct.id
     }
 
-    private fun productLackError(productId: Long): Nothing = throw NoSuchElementException("No product with id $productId")
-
-    fun deleProduct(dto: DeleteProductDto, email: String) {
-        validate(dto, email)
-        return productRepository.delete(dto.id)
-    }
-
-    private fun validate(dto: DeleteProductDto, email: String) {
-        val user: User = userRepository.findByEmail(email)!!
-        val shop: Shop = shopRepository.findByUser(user)!!
-        val product: Product? = productRepository.findById(dto.id)
-        if (product == null || product.shop.id != shop.id) {
-            throw IllegalStateException("Product doesn't exists!")
+    fun deleProduct(productId: Long, shopId: Long) {
+        val product = productRepository.findById(productId)
+        if (product == null || product.shop.id != shopId) {
+            productLackError(productId)
         }
+        productRepository.delete(productId)
     }
+
+    private fun productLackError(productId: Long): Nothing = throw NoSuchElementException("No product with id $productId")
 }
