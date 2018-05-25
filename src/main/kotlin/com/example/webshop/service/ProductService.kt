@@ -3,7 +3,6 @@ package com.example.webshop.service
 import com.example.webshop.dto.CreateProductDto
 import com.example.webshop.dto.ProductDto
 import com.example.webshop.dto.UpdateProductDto
-import com.example.webshop.entity.Category
 import com.example.webshop.entity.Product
 import com.example.webshop.entity.Shop
 import com.example.webshop.repository.CategoryRepository
@@ -32,10 +31,13 @@ class ProductService(
         return products.map { product -> product.toDto() }
     }
 
-    fun getByCategoryId(categoryId: Long): List<ProductDto> {
-        val category: Category? = categoryRepository.findById(categoryId)
-        val products: List<Product> = productRepository.findByCategory(category!!)
-        return products.map { product -> product.toDto() }
+    fun getByCategoryId(categoryId: Long, shopId: Long): List<ProductDto> {
+        val category = categoryRepository.findById(categoryId)
+        if (category == null || category.shop.id != shopId) {
+            categoryLackError(categoryId)
+        }
+        val products = productRepository.findByCategory(category)
+        return products.map { it.toDto() }
     }
 
     fun getByShopIdAndPattern(shopId: Long, pattern: String): Any {

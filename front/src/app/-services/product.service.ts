@@ -38,8 +38,9 @@ export class ProductService {
     return this.http.get<Product>(this.ownerUrl + '/' + productId);
   }
 
-  getCategoryProducts(categoryId: number) {
-    return this.http.get<Product[]>(this.productEndpoint + '/category/' + categoryId);
+  getCategoryProducts(categoryId: number, shopId: number) {
+    const url = ProductService.url(shopId);
+    return this.http.get<Product[]>(url + '/category/' + categoryId);
   }
 
   getProductsLike(shopId: number, pattern: string) {

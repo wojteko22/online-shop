@@ -45,8 +45,9 @@ class ProductController(private val productService: ProductService, private val 
     }
 
 
-    @GetMapping("/products/category/{categoryId}")
-    fun getProductsByCategoryId(@PathVariable categoryId: Long) = productService.getByCategoryId(categoryId)
+    @GetMapping("/shops/{shopId}/products/category/{categoryId}")
+    fun getProductsByCategoryId(@PathVariable shopId: Long, @PathVariable categoryId: Long) =
+            productService.getByCategoryId(categoryId, shopId)
 
     @GetMapping("/products/shop/{shopId}/pattern/{pattern}")
     fun getProductsByPattern(@PathVariable shopId: Long, @PathVariable pattern: String) = productService.getByShopIdAndPattern(shopId, pattern)

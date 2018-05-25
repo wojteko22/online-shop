@@ -32,7 +32,7 @@ export class ShopProductsComponent implements OnInit {
               private dialog: MatDialog,
               private cartService: CartService) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
-      const shopId: Number = Number(paramMap.get('shopId'));
+      const shopId = Number(paramMap.get('shopId'));
       this.shopsService.getShopInfo(shopId).subscribe((shop) => {
         this.shop = shop;
         this.loadAllProducts();
@@ -40,7 +40,7 @@ export class ShopProductsComponent implements OnInit {
       });
 
       this.selectCategory.categoryId.subscribe((categoryId) => {
-        this.products$ = this.productService.getCategoryProducts(categoryId);
+        this.products$ = this.productService.getCategoryProducts(categoryId, shopId);
       });
     });
 
