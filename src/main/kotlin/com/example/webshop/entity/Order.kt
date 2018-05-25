@@ -8,10 +8,10 @@ import javax.persistence.*
 @Table(name = "orders")
 data class Order(
         val status: String,
-        @Id @GeneratedValue
-        val id: Long = -1,
         @ManyToOne @OnDelete(action = OnDeleteAction.CASCADE)
         val shop: Shop,
         @ManyToOne
-        val user: User
+        val user: User,
+        @Id @GeneratedValue
+        val id: Long = -1
 )

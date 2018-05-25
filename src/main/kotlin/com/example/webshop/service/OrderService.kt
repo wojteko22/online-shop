@@ -49,8 +49,8 @@ class OrderService(
         val shop = shopRepository.findById(shopId) ?: throw NoSuchElementException("No shop with id $shopId")
         val userId = dto.userId
         val user = userRepository.findById(userId) ?: throw NoSuchElementException("No user with id $userId")
-        val order = Order("przyjęte", orderRepository.count() + 1, shop, user)
-        orderRepository.save(order)
+        val order = Order("przyjęte", shop, user)
+        val savedOrder = orderRepository.save(order)
 
         for (orderPositionDto in dto.orderPositionsDto) {
             val productId = orderPositionDto.productId
@@ -58,7 +58,7 @@ class OrderService(
             if (product.shop.id != shopId) {
                 errorLackOfProduct(productId)
             }
-            val orderPosition = OrderPosition(order, product, orderPositionDto.amount)
+            val orderPosition = OrderPosition(savedOrder, product, orderPositionDto.amount)
             orderPositionRepository.save(orderPosition)
         }
     }
