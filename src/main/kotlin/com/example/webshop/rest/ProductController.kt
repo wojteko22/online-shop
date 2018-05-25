@@ -25,10 +25,16 @@ class ProductController(private val productService: ProductService, private val 
         return productService.addNewProduct(dto, shopId)
     }
 
-
-    @PatchMapping("/products/{productId}")
-    fun updateProduct(@PathVariable productId: Long, @RequestBody dto: UpdateProductDto, user: OAuth2Authentication) =
-            productService.updateProduct(productId, dto, user.name)
+    @PatchMapping("/shops/{shopId}/products/{productId}")
+    fun updateProduct(
+            @PathVariable shopId: Long,
+            @PathVariable productId: Long,
+            @RequestBody dto: UpdateProductDto,
+            auth: OAuth2Authentication
+    ): Long {
+        guard.checkShopId(shopId, auth)
+        return productService.updateProduct(productId, dto, shopId)
+    }
 
     @DeleteMapping("/products")
     fun deleteProduct(@RequestBody dto: DeleteProductDto, principal: Principal) = productService.deleProduct(dto, principal.name)

@@ -22,10 +22,9 @@ export class ProductEditComponent extends AddProductComponent {
   constructor(fb: FormBuilder,
               categoriesService: CategoriesService,
               productService: ProductService,
-              credentialsService: CredentialsService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
-    super(fb, categoriesService, productService, credentialsService);
+    super(fb, categoriesService, productService);
 
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.id = Number(paramMap.get('id'));

@@ -26,7 +26,7 @@ export class ProductService {
   }
 
   editProduct(id: number, product: Product) {
-    return this.http.patch(this.productEndpoint + '/' + id, product);
+    return this.http.patch(this.ownerUrl + '/' + id, product);
   }
 
   getShopProducts(shopId: number) {

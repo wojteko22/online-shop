@@ -63,9 +63,18 @@ class ProductService(private val productRepository: ProductRepository,
     private fun categoryLackError(categoryId: Long): Nothing =
             throw IllegalArgumentException("No category with id $categoryId")
 
-    fun updateProduct(id: Long, dto: UpdateProductDto, email: String): Long {
-        val product = productRepository.findById(id) ?: productLackError(id)
-
+    fun updateProduct(productId: Long, dto: UpdateProductDto, shopId: Long): Long {
+        val product = productRepository.findById(productId) ?: productLackError(productId)
+        if (product.shop.id != shopId) {
+            productLackError(productId)
+        }
+        dto.categoryId?.let {
+            val category = categoryRepository.findById(it) ?: categoryLackError(it)
+            if (category.shop.id != shopId) {
+                categoryLackError(it)
+            }
+            product.category = category
+        }
         dto.name?.let {
             product.name = it
         }
@@ -84,10 +93,6 @@ class ProductService(private val productRepository: ProductRepository,
         dto.photo?.let {
             product.photo = it
         }
-        dto.categoryId?.let {
-            product.category = categoryRepository.findById(dto.categoryId)!!
-        }
-
         val updatedProduct = productRepository.save(product)
         return updatedProduct.id
     }
