@@ -22,7 +22,7 @@ export class ProductService {
   }
 
   addProduct(product: Product) {
-    return this.http.post(this.productEndpoint, product);
+    return this.http.post(this.ownerUrl, product);
   }
 
   editProduct(id: number, product: Product) {

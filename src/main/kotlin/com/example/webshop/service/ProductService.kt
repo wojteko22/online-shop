@@ -44,12 +44,24 @@ class ProductService(private val productRepository: ProductRepository,
         return products.map { product -> product.toDto() }
     }
 
-    fun addNewProduct(createProductDto: CreateProductDto, username: String): Long {
-        validate(createProductDto, username)
-        val product: Product = getProductFromDto(createProductDto)
+    fun addNewProduct(createProductDto: CreateProductDto, shopId: Long): Long {
+        val product: Product = getProductFromDto(createProductDto, shopId)
         val savedProduct = productRepository.save(product)
         return savedProduct.id
     }
+
+    private fun getProductFromDto(dto: CreateProductDto, shopId: Long): Product {
+        val shop = shopRepository.findById(shopId) ?: throw NoSuchElementException("No shop with id $shopId")
+        val categoryId = dto.categoryId
+        val category = categoryRepository.findById(categoryId) ?: categoryLackError(categoryId)
+        if (category.shop.id != shopId) {
+            categoryLackError(categoryId)
+        }
+        return Product(dto.name, dto.price, dto.unit, dto.status, dto.description, dto.photo, category, shop)
+    }
+
+    private fun categoryLackError(categoryId: Long): Nothing =
+            throw IllegalArgumentException("No category with id $categoryId")
 
     fun updateProduct(id: Long, dto: UpdateProductDto, email: String): Long {
         val product = productRepository.findById(id) ?: productLackError(id)
@@ -85,20 +97,6 @@ class ProductService(private val productRepository: ProductRepository,
     fun deleProduct(dto: DeleteProductDto, email: String) {
         validate(dto, email)
         return productRepository.delete(dto.id)
-    }
-
-    private fun getProductFromDto(dto: CreateProductDto): Product {
-        val shop: Shop = shopRepository.findById(dto.shopId)!!
-        val category: Category = categoryRepository.findById(dto.categoryId)!!
-        return Product(dto.name, dto.price, dto.unit, dto.status,
-                dto.description, dto.photo, category, shop)
-    }
-
-    private fun validate(createProductDto: CreateProductDto, email: String) {
-        val shop = shopRepository.getByUserEmail(email)
-        if (createProductDto.shopId != shop.id) {
-            throw IllegalStateException("Shop doesn't belong to the user!")
-        }
     }
 
     private fun validate(dto: DeleteProductDto, email: String) {
