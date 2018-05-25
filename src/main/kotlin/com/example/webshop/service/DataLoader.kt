@@ -125,8 +125,8 @@ class DataLoader {
         //haystack sphinx
     }
 
-    private val order1 = Order("przyjęte", 1, shop1, owner2)
-    private val order2 = Order("przyjęte", 2, shop1, owner2)
+    private val order1 = Order("przyjęte",  shop1, owner2, 1)
+    private val order2 = Order("przyjęte",  shop1, owner2, 2)
 
     @Bean
     fun initOrders(repository: OrderRepository) = CommandLineRunner {
