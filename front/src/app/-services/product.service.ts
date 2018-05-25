@@ -44,6 +44,7 @@ export class ProductService {
   }
 
   getProductsLike(shopId: number, pattern: string) {
-    return this.http.get<Product[]>(this.productEndpoint + '/shop/' + shopId + '/pattern/' + pattern);
+    const url = ProductService.url(shopId);
+    return this.http.get<Product[]>(url + '/pattern/' + pattern);
   }
 }

@@ -40,9 +40,9 @@ class ProductService(
         return products.map { it.toDto() }
     }
 
-    fun getByShopIdAndPattern(shopId: Long, pattern: String): Any {
-        val shop: Shop = shopRepository.findOne(shopId)
-        val products: List<Product> = this.productRepository.findByShopAndPattern(shop, pattern)
+    fun getByShopIdAndPattern(shopId: Long, pattern: String): List<ProductDto> {
+        val shop = shopRepository.findById(shopId) ?: shopLackError(shopId)
+        val products = productRepository.findByShopAndPattern(shop, pattern)
         return products.map { product -> product.toDto() }
     }
 
@@ -53,7 +53,7 @@ class ProductService(
     }
 
     private fun getProductFromDto(dto: CreateProductDto, shopId: Long): Product {
-        val shop = shopRepository.findById(shopId) ?: throw NoSuchElementException("No shop with id $shopId")
+        val shop = shopRepository.findById(shopId) ?: shopLackError(shopId)
         val categoryId = dto.categoryId
         val category = categoryRepository.findById(categoryId) ?: categoryLackError(categoryId)
         if (category.shop.id != shopId) {
@@ -61,6 +61,8 @@ class ProductService(
         }
         return Product(dto.name, dto.price, dto.unit, dto.status, dto.description, dto.photo, category, shop)
     }
+
+    private fun shopLackError(shopId: Long): Nothing = throw NoSuchElementException("No shop with id $shopId")
 
     private fun categoryLackError(categoryId: Long): Nothing =
             throw IllegalArgumentException("No category with id $categoryId")
