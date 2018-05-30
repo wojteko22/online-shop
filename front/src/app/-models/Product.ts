@@ -7,5 +7,4 @@ export class Product {
   description: string;
   photo: string;
   categoryId: number;
-  shopId: number;
 }

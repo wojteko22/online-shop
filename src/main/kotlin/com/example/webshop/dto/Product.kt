@@ -19,8 +19,7 @@ class CreateProductDto(
         val status: String?,
         val description: String?,
         val photo: String?  ,
-        val categoryId: Long,
-        val shopId: Long
+        val categoryId: Long
 )
 
 class UpdateProductDto(
@@ -32,8 +31,4 @@ class UpdateProductDto(
         val photo: String?  ,
         val categoryId: Long?,
         val shopId: Long?
-)
-
-class DeleteProductDto(
-        val id: Long
 )

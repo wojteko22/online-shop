@@ -5,7 +5,6 @@ import {Category} from '../../categories/Category';
 import {CategoryPath} from './category-path';
 import {Product} from '../../-models/Product';
 import {ProductService} from '../../-services/product.service';
-import {CredentialsService} from '../../-services/credentials.service';
 
 @Component({
   selector: 'app-app-product',
@@ -21,8 +20,7 @@ export class AddProductComponent implements OnInit {
 
   constructor(protected fb: FormBuilder,
               private categoriesService: CategoriesService,
-              protected productService: ProductService,
-              private credentialsService: CredentialsService) {
+              protected productService: ProductService) {
     this.createForm();
   }
 
@@ -56,8 +54,7 @@ export class AddProductComponent implements OnInit {
   }
 
   onSubmit() {
-    const shopId = this.credentialsService.getShopId();
-    const product = {...this.form.value, shopId: shopId} as Product;
+    const product = this.form.value as Product;
     this.useService(product);
   }
 
