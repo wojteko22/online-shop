@@ -11,6 +11,7 @@ export class GmapService {
   }
 
   public getGeoLocation(address: string) {
+    console.log('https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCKAHTz4KvsPHmiQpK-5ew5eq17VO7bOxM&address=' + address);
     return this.http.get(
       'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCKAHTz4KvsPHmiQpK-5ew5eq17VO7bOxM&address=' + address
     );
