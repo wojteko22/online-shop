@@ -49,7 +49,7 @@ class DataLoader {
     }
 
     private val shop1 = Shop("Żabcia", "Wrocław", "Grunwaldzka", "50-387", owner1, id = 1)
-    private val shop2 = Shop("Biedronka", "Wrocław", "Polna", "50-387", owner2, id = 2)
+    private val shop2 = Shop("Biedronka", "Wrocław", "Skłodowskiej-Curieng serve -", "50-387", owner2, id = 2)
 
 
     @Bean
