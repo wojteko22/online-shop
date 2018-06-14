@@ -20,6 +20,7 @@ import {ProductEditComponent} from './products/product-edit/product-edit.compone
 import {CartComponent} from "./cart/cart.component";
 import {AdminGuard} from './-guards/admin-guard/admin-guard.service';
 import {AdminPanelComponent} from './admin-panel/admin-panel.component';
+import {ActivateUserComponent} from "./user/activate-user/activate-user.component";
 
 const appRoutes: Routes = [
   {
@@ -88,6 +89,10 @@ const appRoutes: Routes = [
     path: 'panel',
     component: AdminPanelComponent,
     canActivate: [AdminGuard],
+  },
+  {
+    path: 'user/activate/:token',
+    component: ActivateUserComponent,
   },
   {
     path: '',

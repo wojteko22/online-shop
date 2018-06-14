@@ -43,4 +43,7 @@ class UserController(private val userService: UserService, private val guard: Gu
         guard.checkUserId(id, authentication)
         userService.changeUserPassword(id, dto)
     }
+
+    @GetMapping("/{email}/isActivated")
+    fun isActivated(@PathVariable email: String) : Boolean = userService.isUserActivated(email)
 }

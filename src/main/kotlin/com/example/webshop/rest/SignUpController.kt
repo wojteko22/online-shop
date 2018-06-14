@@ -22,4 +22,9 @@ class SignUpController(private val signUp: SignUpService) {
     @ResponseStatus(HttpStatus.CREATED)
     fun signUpVendor(@PathVariable shopId: Long, @RequestBody vendor: CreateUserDto) =
             signUp.addVendorToShop(shopId, vendor)
+
+    @GetMapping("/user/activate/{token}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    fun activateAccount(@PathVariable token: String) = signUp.activateUserAccount(token)
+
 }
