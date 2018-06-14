@@ -1,6 +1,7 @@
 package com.example.webshop.service.mail
 
 import com.example.webshop.entity.User
+import com.example.webshop.entity.UserStatus
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
@@ -9,12 +10,12 @@ import org.springframework.stereotype.Service
 class MailService(private val mailSender: JavaMailSender,
                   private val messageFactory: MessageFactory) {
 
-    fun sendSignUpMessage(user: User) {
+    fun sendSignUpMessage(user: User, userStatus: UserStatus) {
         val smm = SimpleMailMessage()
         smm.setTo(user.email)
         smm.subject = "Web-Shop rejestracja"
         smm.from = "web-shop@kamo.ovh"
-        smm.text = messageFactory.getSignUpMessage(getSignUpMessageType(user))
+        smm.text = messageFactory.getSignUpMessage(getSignUpMessageType(user), userStatus)
         mailSender.send(smm)
     }
 
