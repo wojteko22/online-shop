@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {CredentialsService} from '../../-services/credentials.service';
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from "@angular/router";
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 
 @Injectable()
 export class SignedOutGuard implements CanActivate {

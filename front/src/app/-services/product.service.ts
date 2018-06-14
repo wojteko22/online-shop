@@ -36,7 +36,7 @@ export class ProductService {
 
   getProductsByCategoryAndPage(shopId: number, categoryId: Number, pageNumber: Number, pageSize: Number) {
     const url = ProductService.url(shopId);
-    return this.http.get<Product[]>(url + '/category/' + categoryId + '/page/'+pageNumber + '/' + pageSize);
+    return this.http.get<Product[]>(url + '/category/' + categoryId + '/page/' + pageNumber + '/' + pageSize);
   }
 
   getProductsAmountInCategory(shopId: number, categoryId: Number) {
@@ -44,8 +44,10 @@ export class ProductService {
     return this.http.get<number>(url + '/category/' + categoryId + '/amount');
   }
 
-  getProduct(productId: Number) {
-    return this.http.get<Product>(this.ownerUrl + '/' + productId);
+  getProduct(productId: number, shopId?: number) {
+    const shopUrlPart = shopId ? ProductService.url(shopId) : this.ownerUrl;
+    const url = shopUrlPart + '/' + productId;
+    return this.http.get<Product>(url);
   }
 
   getCategoryProducts(categoryId: number, shopId: number) {

@@ -69,7 +69,7 @@ const appRoutes: Routes = [
     canActivate: [ShopOwnerGuard],
   },
   {
-    path: 'product/:id',
+    path: 'product/:productId',
     component: ProductComponent,
   },
   {
@@ -84,6 +84,10 @@ const appRoutes: Routes = [
   {
     path: 'shop/:shopId/products',
     component: ShopProductsComponent,
+  },
+  {
+    path: 'shop/:shopId/products/:productId',
+    component: ProductComponent,
   },
   {
     path: 'panel',
