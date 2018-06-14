@@ -26,6 +26,7 @@ export class GmapComponent implements OnInit {
     if (this.markers.length === 0) {
       this.getShops();
     }
+    this.findUser();
   }
 
   mapShopsToMarkers() {
@@ -45,5 +46,16 @@ export class GmapComponent implements OnInit {
         this.shops = shops;
         this.mapShopsToMarkers();
       });
+  }
+
+  findUser() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.centerLat = position.coords.latitude;
+        this.centerLng = position.coords.longitude;
+      });
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
   }
 }
