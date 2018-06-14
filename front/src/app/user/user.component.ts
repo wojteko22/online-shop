@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CredentialsService} from '../-services/credentials.service';
 import {isNullOrUndefined} from 'util';
+import {ShopsService} from "../shops/shops.service";
+import {Shop} from "../shops/shop";
 
 @Component({
   selector: 'app-customer',
@@ -9,14 +11,16 @@ import {isNullOrUndefined} from 'util';
 })
 export class UserComponent implements OnInit {
 
-  constructor(private credentialsService: CredentialsService) {
-  }
+  shopId: number;
 
   email: string;
   name: string;
   role: string;
-  shop: string;
+  shop: Shop;
   id: string;
+
+  constructor(private credentialsService: CredentialsService, private shopService: ShopsService) {
+  }
 
   ngOnInit() {
     this.fillFields();
@@ -30,7 +34,8 @@ export class UserComponent implements OnInit {
       this.name = user.name;
       this.role = user.role;
       if (!isNullOrUndefined(user.shopId)) {
-        this.shop = user.shopId.toString();
+        this.shopId = user.shopId;
+        this.shopService.getShopInfo(this.shopId).subscribe(res => this.shop = res);
       }
     }
   }

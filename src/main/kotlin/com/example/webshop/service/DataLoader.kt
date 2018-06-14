@@ -74,6 +74,7 @@ class DataLoader {
     private val pieczywoShop2 = Category("Pieczywo", shop2)
     private val alkohole = Category("Alkohole", shop1)
     private val piwa = Category("Piwa", shop1, alkohole)
+    private val wysokoprocentowe = Category("Wysokoprocentowe", shop1, alkohole)
     private val nabial = Category("Nabial", shop1)
     private val sery = Category("Sery", shop1, nabial)
     private val bialySer = Category("Biale", shop1, sery)
@@ -94,6 +95,7 @@ class DataLoader {
         repository.save(bialySer)
         repository.save(zoltySer)
         repository.save(piwa)
+        repository.save(wysokoprocentowe)
     }
 
     private val product1 = Product("Heineken", 3, "unit", "status", "description", "http://static.wirtualnemedia.pl/media/images/2013/images/warka-classic-nowaszata-2.png", piwa, shop1, 1)
@@ -105,16 +107,16 @@ class DataLoader {
                 product1, product2,
                 Product("Bułka żytnia", 4, "1 szt", "status", "description", "https://img.e-piotripawel.pl/photos/hd9/49101.jpg", pieczywoShop1, shop1, 3),
                 Product("Bułka pszenna", 1, "1 szt - 100 g", "status", "description", "http://www.delifrance.com/media/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/S/0/S0695_S5896.jpg", pieczywoShop1, shop1, 4),
-                Product("Piwo żytnie", 5, "500ml", "status", "description", "https://res.cloudinary.com/dj484tw6k/f_auto,q_auto,c_pad,b_white,w_360,h_360/v1500521344/bb/99631.png", alkohole, shop1, 5),
-                Product("Piwo pszenne", 10, "500ml", "status", "description", "http://ocen-piwo.pl/upload/witnica-pszeniczne.png", alkohole, shop1, 6),
+                Product("Piwo żytnie", 5, "500ml", "status", "description", "https://res.cloudinary.com/dj484tw6k/f_auto,q_auto,c_pad,b_white,w_360,h_360/v1500521344/bb/99631.png", piwa, shop1, 5),
+                Product("Piwo pszenne", 10, "500ml", "status", "description", "http://ocen-piwo.pl/upload/witnica-pszeniczne.png", piwa, shop1, 6),
                 Product("Chleb pszenny", 5, "600g", "status", "description", "https://akademiasmaku.pl/upload/recipes/13/big/chleb-pszenny-na-zakwasie-z-karmelizowana-cebulka-13.JPG", pieczywoShop1, shop1, 7),
                 Product("Chleb żytni", 7, "700g", "status", "description", "http://jamiprzepisy.pl/wp-content/uploads/2016/06/chleb_zytni_1_1400.jpg", pieczywoShop1, shop1, 8),
                 Product("Rogal", 3, "150g", "status", "description", "https://upload.wikimedia.org/wikipedia/commons/7/73/Rogalik.jpg", pieczywoShop1, shop1, 9),
                 Product("Drożdzówka", 2, "300g", "status", "description", "http://www.sumarex.pl/upload/oferta/drozdzowka_z_budyniem.jpg", pieczywoShop1, shop1, 10),
                 Product("Drożdzówka", 2, "300g", "status", "description", "http://www.sumarex.pl/upload/oferta/drozdzowka_z_budyniem.jpg", pieczywoShop2, shop2, 11),
                 Product("Drożdzówka", 2, "300g", "status", "description", "http://www.sumarex.pl/upload/oferta/drozdzowka_z_budyniem.jpg", pieczywoShop2, shop2, 12),
-                Product("Singleton", 100, "700 ml", "status", "description", "https://img.thewhiskyexchange.com/900/dufob.12yov1.jpg", alkohole, shop1, 13),
-                Product("Soplica", 32, "500 ml", "status", "description", "http://alkohole.efigaro.pl/wp-content/uploads/2014/04/wodka-soplica-500ml.jpg", alkohole, shop1, 14),
+                Product("Singleton", 100, "700 ml", "status", "description", "https://img.thewhiskyexchange.com/900/dufob.12yov1.jpg", wysokoprocentowe, shop1, 13),
+                Product("Soplica", 32, "500 ml", "status", "description", "http://alkohole.efigaro.pl/wp-content/uploads/2014/04/wodka-soplica-500ml.jpg", wysokoprocentowe, shop1, 14),
                 Product("Twaróg wiejski", 3, "200 g", "status", "description", "https://www.polish-shop.ch/580-thickbox_default/ser-bialy-twarog-wiejski-poltlusty.jpg", bialySer, shop1, 15),
                 Product("Mój ulubiony", 3, "200 g", "status", "description", "https://ldrive.lublin.pl/18173-thickbox_default/wielun-moj-ulubiony-twarozek-kanapkowo-sernikowy-200g.jpg", bialySer, shop1, 16),
                 Product("Edamski", 3, "200 g", "status", "description", "https://www.polish-shop.ch/2625-large_default/ser-zolty-edamski-mlekovita-150g-plastry.jpg", zoltySer, shop1, 17),
