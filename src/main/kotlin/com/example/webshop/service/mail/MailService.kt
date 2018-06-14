@@ -10,7 +10,7 @@ class MailService(private val mailSender: JavaMailSender,
                   private val messageFactory: MessageFactory) {
 
     fun sendSignUpMessage(user: User) {
-        val smm: SimpleMailMessage = SimpleMailMessage()
+        val smm = SimpleMailMessage()
         smm.setTo(user.email)
         smm.subject = "Web-Shop rejestracja"
         smm.from = "web-shop@kamo.ovh"

@@ -45,7 +45,7 @@ class SignUpService(private val userRepository: UserRepository,
         val shop: Shop = shopRepository.findById(shopId) ?: throw NoSuchElementException("Shop doesn't exists!")
         shop.sellers.add(user)
         shopRepository.save(shop)
-        mailService.sendSignUpMessage(user);
+        mailService.sendSignUpMessage(user)
         return user.id
     }
 
