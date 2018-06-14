@@ -72,6 +72,7 @@ class DataLoader {
     private val pieczywoShop2 = Category("Pieczywo", shop2)
     private val alkohole = Category("Alkohole", shop1)
     private val piwa = Category("Piwa", shop1, alkohole)
+    private val wysokoprocentowe = Category("Wysokoprocentowe", shop1, alkohole)
     private val nabial = Category("Nabial", shop1)
     private val sery = Category("Sery", shop1, nabial)
     private val bialySer = Category("Biale", shop1, sery)
@@ -92,6 +93,7 @@ class DataLoader {
         repository.save(bialySer)
         repository.save(zoltySer)
         repository.save(piwa)
+        repository.save(wysokoprocentowe)
     }
 
     private val product1 = Product("Heineken", 3, "unit", "status", "description", "http://static.wirtualnemedia.pl/media/images/2013/images/warka-classic-nowaszata-2.png", piwa, shop1, 1)
@@ -111,8 +113,8 @@ class DataLoader {
                 Product("Drożdzówka", 2, "300g", "status", "description", "http://www.sumarex.pl/upload/oferta/drozdzowka_z_budyniem.jpg", pieczywoShop1, shop1, 10),
                 Product("Drożdzówka", 2, "300g", "status", "description", "http://www.sumarex.pl/upload/oferta/drozdzowka_z_budyniem.jpg", pieczywoShop2, shop2, 11),
                 Product("Drożdzówka", 2, "300g", "status", "description", "http://www.sumarex.pl/upload/oferta/drozdzowka_z_budyniem.jpg", pieczywoShop2, shop2, 12),
-                Product("Singleton", 100, "700 ml", "status", "description", "https://img.thewhiskyexchange.com/900/dufob.12yov1.jpg", alkohole, shop1, 13),
-                Product("Soplica", 32, "500 ml", "status", "description", "http://alkohole.efigaro.pl/wp-content/uploads/2014/04/wodka-soplica-500ml.jpg", alkohole, shop1, 14),
+                Product("Singleton", 100, "700 ml", "status", "description", "https://img.thewhiskyexchange.com/900/dufob.12yov1.jpg", wysokoprocentowe, shop1, 13),
+                Product("Soplica", 32, "500 ml", "status", "description", "http://alkohole.efigaro.pl/wp-content/uploads/2014/04/wodka-soplica-500ml.jpg", wysokoprocentowe, shop1, 14),
                 Product("Twaróg wiejski", 3, "200 g", "status", "description", "https://www.polish-shop.ch/580-thickbox_default/ser-bialy-twarog-wiejski-poltlusty.jpg", bialySer, shop1, 15),
                 Product("Mój ulubiony", 3, "200 g", "status", "description", "https://ldrive.lublin.pl/18173-thickbox_default/wielun-moj-ulubiony-twarozek-kanapkowo-sernikowy-200g.jpg", bialySer, shop1, 16),
                 Product("Edamski", 3, "200 g", "status", "description", "https://www.polish-shop.ch/2625-large_default/ser-zolty-edamski-mlekovita-150g-plastry.jpg", zoltySer, shop1, 17),
