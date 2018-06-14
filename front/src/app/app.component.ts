@@ -94,8 +94,8 @@ export class AppComponent {
     return this.credentialsService.isSignedIn();
   }
 
-  logOut() {
-    this.credentialsService.logOut();
+  signOut() {
+    this.credentialsService.signOut();
   }
 }
 

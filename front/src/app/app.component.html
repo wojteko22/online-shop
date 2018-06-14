@@ -20,6 +20,6 @@
       {{link.label}}
     </a>
   </span>
-  <a mat-tab-link *ngIf=signedIn() (click)="logOut()">Wyloguj się</a>
+  <a mat-tab-link *ngIf=signedIn() (click)="signOut()">Wyloguj się</a>
 </nav>
 <router-outlet></router-outlet>

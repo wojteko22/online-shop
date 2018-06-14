@@ -34,4 +34,15 @@ export class UserService {
   deleteUser(id: number) {
     return this.http.delete(this.url + '/' + id);
   }
+
+  isAccountActivated(email: string) {
+    const url = `${this.url}/${email}/isActivated`;
+    return this.http.get<Boolean>(url)
+  }
+
+  activateUser(token: string) {
+    const url = environment.apiUrl+"/user/activate/"+token;
+    console.log("Activate user url:"+url);
+    return this.http.get(url)
+  }
 }

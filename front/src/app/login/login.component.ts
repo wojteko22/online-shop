@@ -18,14 +18,12 @@ import {UserService} from '../-services/user.service';
 export class LoginComponent implements OnInit {
   form: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private loginService: LoginService,
-    private userService: UserService,
-    private snackBar: SnackBarService,
-    private router: Router,
-    private credentialsService: CredentialsService,
-  ) {
+  constructor(private fb: FormBuilder,
+              private loginService: LoginService,
+              private userService: UserService,
+              private snackBar: SnackBarService,
+              private router: Router,
+              private credentialsService: CredentialsService,) {
     this.createForm();
   }
 
@@ -46,9 +44,21 @@ export class LoginComponent implements OnInit {
         this.saveToken(tokenData);
         this.userService.getCurrentUserInfo().subscribe(
           (user) => this.saveUserDetails(user),
-          error => this.snackBar.show(error));
-      },
-      error => this.snackBar.show(error)
+          error => this.snackBar.show(error)
+        );
+      }, error => {
+        if (error != "Username not found") {
+          this.userService.isAccountActivated(credentials.email).subscribe((isActivated) => {
+            if (isActivated == true) {
+              this.snackBar.show(error)
+            } else {
+              this.snackBar.show("Konto nie zostało aktywowane")
+            }
+          })
+        } else {
+          this.snackBar.show(error)
+        }
+      }
     );
   }
 

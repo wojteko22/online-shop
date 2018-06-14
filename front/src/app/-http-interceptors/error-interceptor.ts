@@ -50,7 +50,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 
   private handleTokenExpiration() {
-    this.credentialsService.logOut();
+    this.credentialsService.signOut();
     const emptyObject = {} as HttpEvent<any>;
     return of(emptyObject);
   }

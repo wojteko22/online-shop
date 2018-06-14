@@ -41,6 +41,7 @@ import {CartComponent} from './cart/cart.component';
 import {CartService} from './cart/cart.service';
 import {AdminPanelComponent} from './admin-panel/admin-panel.component';
 import {ShopsService} from "./shops/shops.service";
+import {ActivateUserComponent} from "./user/activate-user/activate-user.component";
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import {ShopsService} from "./shops/shops.service";
     RegisterComponent,
     LoginComponent,
     UserComponent,
+    ActivateUserComponent,
     PasswordComponent,
     NotFoundComponent,
     RegisterUserComponent,

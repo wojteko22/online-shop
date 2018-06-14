@@ -7,8 +7,8 @@ import {AdminService} from './admin.service';
 
 @Injectable()
 export class CredentialsService {
-  tokenCookieName = 'access_token';
-  userStorageKey = 'user';
+  private readonly tokenCookieName = 'access_token';
+  private readonly userStorageKey = 'user';
 
   constructor(private router: Router, private adminService: AdminService) {
   }
@@ -18,19 +18,19 @@ export class CredentialsService {
     Cookie.set(this.tokenCookieName, tokenData.access_token, expireDate);
   }
 
-  logOut() {
+  signOut() {
     this.adminService.clear();
     localStorage.clear();
     Cookie.delete(this.tokenCookieName);
-    this.router.navigate(['/login']);
+    this.router.navigateByUrl('/login');
   }
 
   token() {
-    return Cookie.get('access_token');
+    return Cookie.get(this.tokenCookieName);
   }
 
   isSignedIn() {
-    return Cookie.check('access_token');
+    return Cookie.check(this.tokenCookieName);
   }
 
   saveUser(user: User) {

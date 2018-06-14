@@ -76,7 +76,6 @@ export class ShopProductsComponent implements OnInit {
   loadShopCategories(shopId: number) {
     this.categoriesService.getShopCategories(shopId).subscribe((categories) => {
       this.categories = categories.map((c) => new CategorySimpleDto(c.name, c.id, c.parentCategory));
-      console.log('select categor: ' + this.categories[0].categoryId);
       this.selectCategory.selectCategory(this.categories[0].categoryId);
     });
   }
