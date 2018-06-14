@@ -34,6 +34,16 @@ export class ProductService {
     return this.http.get<Product[]>(url);
   }
 
+  getProductsByCategoryAndPage(shopId: number, categoryId: Number, pageNumber: Number, pageSize: Number) {
+    const url = ProductService.url(shopId);
+    return this.http.get<Product[]>(url + '/category/' + categoryId + '/page/'+pageNumber + '/' + pageSize);
+  }
+
+  getProductsAmountInCategory(shopId: number, categoryId: Number) {
+    const url = ProductService.url(shopId);
+    return this.http.get<number>(url + '/category/' + categoryId + '/amount');
+  }
+
   getProduct(productId: Number) {
     return this.http.get<Product>(this.ownerUrl + '/' + productId);
   }

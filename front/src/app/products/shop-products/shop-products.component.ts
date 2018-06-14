@@ -21,8 +21,14 @@ import {Observable} from 'rxjs';
 export class ShopProductsComponent implements OnInit {
 
   products$: Observable<Product[]>;
+  productsInCategory$: Observable<Number>;
   shop: Shop = new Shop();
   categories: CategorySimpleDto[];
+  page: number = 0;
+  pages: number = 1;
+  productsPerPage: number = 2;
+  productsInCategory: number = -1;
+  selectedCategoryId: number = -1;
 
   constructor(private activatedRoute: ActivatedRoute,
               private productService: ProductService,
@@ -35,20 +41,28 @@ export class ShopProductsComponent implements OnInit {
       const shopId = Number(paramMap.get('shopId'));
       this.shopsService.getShopInfo(shopId).subscribe((shop) => {
         this.shop = shop;
-        this.loadAllProducts();
         this.loadShopCategories(shop.id);
+
+        this.selectCategory.categoryId.subscribe((categoryId) => {
+          this.selectedCategoryId = categoryId;
+          this.page = 0;
+          this.productsPerPage = 2;
+          this.products$ = this.productService.getProductsByCategoryAndPage(this.shop.id, this.selectedCategoryId, this.page, this.productsPerPage);
+          this.productsInCategory$ = this.productService.getProductsAmountInCategory(this.shop.id, this.selectedCategoryId);
+          this.countPages();
+          this.loadProductsInCategory();
+        });
+
       });
 
-      this.selectCategory.categoryId.subscribe((categoryId) => {
-        this.products$ = this.productService.getCategoryProducts(categoryId, shopId);
-      });
     });
-
   }
 
   getProductsByPattern(pattern: string) {
     if (pattern.length > 0) {
       this.products$ = this.productService.getProductsLike(this.shop.id, pattern);
+      this.page=0;
+      this.productsPerPage=0;
     } else {
       this.loadAllProducts();
     }
@@ -61,6 +75,8 @@ export class ShopProductsComponent implements OnInit {
   loadShopCategories(shopId: number) {
     this.categoriesService.getShopCategories(shopId).subscribe((categories) => {
       this.categories = categories.map((c) => new CategorySimpleDto(c.name, c.id, c.parentCategory));
+      console.log("select categor: " + this.categories[0].categoryId);
+      this.selectCategory.selectCategory(this.categories[0].categoryId);
     });
   }
 
@@ -77,6 +93,47 @@ export class ShopProductsComponent implements OnInit {
     dialog.afterClosed().subscribe((result) => {
       this.cartService.addToCart(this.shop, product, result);
     });
+  }
+
+
+  getProductsByPageSize() {
+    this.countPages();
+    this.products$ = this.productService.getProductsByCategoryAndPage(this.shop.id, this.selectedCategoryId, this.page, this.productsPerPage);
+  }
+
+  nextPage() {
+    if ((this.page + 1) < this.productsInCategory / this.productsPerPage) {
+      this.page++;
+      this.getProductsByPageSize();
+    }
+  }
+
+  prevPage() {
+    if (this.page > 0) {
+      this.page--;
+      this.getProductsByPageSize();
+    }
+  }
+
+
+  private loadProductsInCategory() {
+    this.productService.getProductsAmountInCategory(this.shop.id, this.selectedCategoryId).subscribe((amount) => {
+      this.productsInCategory = amount;
+      this.countPages()
+    })
+  }
+
+  private countPages() {
+    const p = this.productsInCategory / this.productsPerPage;
+    if (p < 1) {
+      this.pages = 1;
+    } else {
+      this.pages = Math.ceil(p)
+    }
+
+    if(this.page>=this.pages){
+      this.page=0;
+    }
   }
 
 }

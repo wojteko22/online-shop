@@ -3,6 +3,7 @@ package com.example.webshop.service
 import com.example.webshop.dto.CreateProductDto
 import com.example.webshop.dto.ProductDto
 import com.example.webshop.dto.UpdateProductDto
+import com.example.webshop.entity.Category
 import com.example.webshop.entity.Product
 import com.example.webshop.entity.Shop
 import com.example.webshop.repository.CategoryRepository
@@ -11,6 +12,7 @@ import com.example.webshop.repository.ShopRepository
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.CachePut
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 
 @Service
@@ -65,6 +67,17 @@ class ProductService(
             categoryLackError(categoryId)
         }
         return Product(dto.name, dto.price, dto.unit, dto.status, dto.description, dto.photo, category, shop)
+    }
+
+    fun getByCategoryIdPageable(categoryId: Long, page: Int, pageSize: Int): List<ProductDto> {
+        val category: Category = categoryRepository.findById(categoryId )!!
+        val products = productRepository.findByCategory(category, PageRequest(page, pageSize))
+        return products.map { product -> product.toDto() }
+    }
+
+    fun getProductsAmountInCategory(categoryId: Long): Any {
+        val category: Category = categoryRepository.findById(categoryId)!!
+        return productRepository.countByCategory(category)
     }
 
     private fun shopLackError(shopId: Long): Nothing = throw NoSuchElementException("No shop with id $shopId")

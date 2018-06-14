@@ -51,4 +51,13 @@ class ProductController(private val productService: ProductService, private val 
     @GetMapping("/pattern/{pattern}")
     fun getProductsByPattern(@PathVariable shopId: Long, @PathVariable pattern: String) =
             productService.getByShopIdAndPattern(shopId, pattern)
+
+    @GetMapping("/category/{categoryId}/page/{page}/{pageSize}")
+    fun getProductsByCategoryIdPageable(@PathVariable categoryId: Long,
+                                        @PathVariable page: Int,
+                                        @PathVariable pageSize: Int) = productService.getByCategoryIdPageable(categoryId, page, pageSize)
+
+    @GetMapping("/category/{categoryId}/amount")
+    fun getProductsAmountInCategory(@PathVariable categoryId: Long) = productService.getProductsAmountInCategory(categoryId)
+
 }
