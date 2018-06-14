@@ -8,6 +8,7 @@ import com.example.webshop.dto.CreateUserDto
 import com.example.webshop.repository.UserRepository
 import com.example.webshop.repository.UserRoleRepository
 import com.example.webshop.repository.ShopRepository
+import com.example.webshop.service.mail.MailService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -33,6 +34,7 @@ class SignUpService(private val userRepository: UserRepository,
         val user: User = getUserFromDTOAndRole(owner, role)
         val shop = Shop(shopDto.name, shopDto.city, shopDto.street, shopDto.postCode, user)
         val savedShop =  shopRepository.save(shop)
+        mailService.sendSignUpMessage(shop.user)
         return savedShop.id
     }
 
@@ -43,6 +45,7 @@ class SignUpService(private val userRepository: UserRepository,
         val shop: Shop = shopRepository.findById(shopId) ?: throw NoSuchElementException("Shop doesn't exists!")
         shop.sellers.add(user)
         shopRepository.save(shop)
+        mailService.sendSignUpMessage(user);
         return user.id
     }
 
