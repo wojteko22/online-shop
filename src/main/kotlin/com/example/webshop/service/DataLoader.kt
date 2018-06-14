@@ -72,15 +72,15 @@ class DataLoader {
     private val pieczywoShop2 = Category("Pieczywo", shop2)
     private val alkohole = Category("Alkohole", shop1)
     private val piwa = Category("Piwa", shop1, alkohole)
+    private val nabial = Category("Nabial", shop1)
+    private val sery = Category("Sery", shop1, nabial)
+    private val bialySer = Category("Biale", shop1, sery)
+    private val zoltySer = Category("Zolte", shop1, sery)
+    private val mleko = Category("Mleko", shop1, nabial)
 
     @Bean
     fun initCategories(repository: CategoryRepository, shopRepository: ShopRepository) = CommandLineRunner {
-        val nabial = Category("Nabial", shop1)
-        val sery = Category("Sery", shop1, nabial)
         val maslo = Category("Maslo", shop1, nabial)
-        val mleko = Category("Mleko", shop1, nabial)
-        val bialySer = Category("Biale", shop1, sery)
-        val zoltySer = Category("Zolte", shop1, sery)
 
         repository.save(pieczywoShop1)
         repository.save(pieczywoShop2)
@@ -112,7 +112,12 @@ class DataLoader {
                 Product("Drożdzówka", 2, "300g", "status", "description", "http://www.sumarex.pl/upload/oferta/drozdzowka_z_budyniem.jpg", pieczywoShop2, shop2, 11),
                 Product("Drożdzówka", 2, "300g", "status", "description", "http://www.sumarex.pl/upload/oferta/drozdzowka_z_budyniem.jpg", pieczywoShop2, shop2, 12),
                 Product("Singleton", 100, "700 ml", "status", "description", "https://img.thewhiskyexchange.com/900/dufob.12yov1.jpg", alkohole, shop1, 13),
-                Product("Soplica", 32, "500 ml", "status", "description", "http://alkohole.efigaro.pl/wp-content/uploads/2014/04/wodka-soplica-500ml.jpg", alkohole, shop1, 14)
+                Product("Soplica", 32, "500 ml", "status", "description", "http://alkohole.efigaro.pl/wp-content/uploads/2014/04/wodka-soplica-500ml.jpg", alkohole, shop1, 14),
+                Product("Twaróg wiejski", 3, "200 g", "status", "description", "https://www.polish-shop.ch/580-thickbox_default/ser-bialy-twarog-wiejski-poltlusty.jpg", bialySer, shop1, 15),
+                Product("Mój ulubiony", 3, "200 g", "status", "description", "https://ldrive.lublin.pl/18173-thickbox_default/wielun-moj-ulubiony-twarozek-kanapkowo-sernikowy-200g.jpg", bialySer, shop1, 16),
+                Product("Edamski", 3, "200 g", "status", "description", "https://www.polish-shop.ch/2625-large_default/ser-zolty-edamski-mlekovita-150g-plastry.jpg", zoltySer, shop1, 17),
+                Product("Gouda", 3, "200 g", "status", "description", "https://www.polish-shop.ch/2627-thickbox_default/ser-zolty-gouda-mlekovita-150g-plastry.jpg", zoltySer, shop1, 18),
+                Product("Łaciate", 2, "1 l", "status", "description", "https://secure.ce-tescoassets.com/assets/PL/042/5900820000042/ShotType1_328x328.jpg", mleko, shop1, 19)
         )
         repository.save(products)
     }
