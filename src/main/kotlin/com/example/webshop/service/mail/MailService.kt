@@ -19,6 +19,15 @@ class MailService(private val mailSender: JavaMailSender,
         mailSender.send(smm)
     }
 
+    fun sendReminderToken(email: String, token: String) {
+        val smm = SimpleMailMessage()
+        smm.setTo(email)
+        smm.subject = "Web-Shop przypomnienie hasła"
+        smm.from = "web-shop@kamo.ovh"
+        smm.text = "Witaj! Twój kod : "+token
+        mailSender.send(smm)
+    }
+
     private fun getSignUpMessageType(user: User): SignUpMessageType {
         when(user.role.role) {
             "SHOP_OWNER" -> return SignUpMessageType.SHOP_SIGN_UP

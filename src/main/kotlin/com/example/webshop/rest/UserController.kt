@@ -1,6 +1,7 @@
 package com.example.webshop.rest
 
 import com.example.webshop.dto.UpdatePasswordUserDto
+import com.example.webshop.dto.UpdatePasswordUserUsingTokenDto
 import com.example.webshop.dto.UserDto
 import com.example.webshop.entity.User
 import com.example.webshop.security.Guard
@@ -43,6 +44,13 @@ class UserController(private val userService: UserService, private val guard: Gu
         guard.checkUserId(id, authentication)
         userService.changeUserPassword(id, dto)
     }
+
+    @PostMapping("/password/send-remind-token")
+    fun sendReminderToken(@RequestBody email: String) = userService.sendReminderToken(email)
+
+    @PostMapping("/password/change-using-token")
+    fun changePasswordUsingToken(@RequestBody dto: UpdatePasswordUserUsingTokenDto) = userService.changeUserPassword(dto)
+
 
     @GetMapping("/{email}/isActivated")
     fun isActivated(@PathVariable email: String) : Boolean = userService.isUserActivated(email)

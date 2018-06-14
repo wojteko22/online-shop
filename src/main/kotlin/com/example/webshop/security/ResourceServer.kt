@@ -25,7 +25,15 @@ class ResourceServer : ResourceServerConfigurerAdapter() {
                 .authorizeRequests()
                 //TODO zabezpieczyć endpointy
                 .antMatchers("/oauth/token").permitAll()
-                .antMatchers("/user","/users/*/isActivated", "/user/activate/*", "/user/shop", "/user/vendor", "/shops").permitAll()
+                .antMatchers(
+                        "/user",
+                        "/user/shop",
+                        "/user/vendor",
+                        "/shops",
+                        "/users/*/isActivated",
+                        "/user/activate/*",
+                        "/users/password/send-remind-token",
+                        "/users/password/change-using-token").permitAll()
                 .antMatchers(
                         "/products",
                         "/products/shop/*", "/products/*",

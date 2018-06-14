@@ -72,6 +72,7 @@ class ProductService(
     fun getByCategoryIdPageable(categoryId: Long, page: Int, pageSize: Int): List<ProductDto> {
         val category: Category = categoryRepository.findById(categoryId )!!
         val products = productRepository.findByCategory(category, PageRequest(page, pageSize))
+        
         return products.map { product -> product.toDto() }
     }
 
