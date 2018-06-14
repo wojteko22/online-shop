@@ -40,6 +40,7 @@ import {ProductEditComponent} from './products/product-edit/product-edit.compone
 import {CartComponent} from './cart/cart.component';
 import {CartService} from './cart/cart.service';
 import {AdminPanelComponent} from './admin-panel/admin-panel.component';
+import {ShopsService} from "./shops/shops.service";
 
 
 @NgModule({
@@ -97,6 +98,7 @@ import {AdminPanelComponent} from './admin-panel/admin-panel.component';
     SelectCategoryService,
     ProductService,
     CartService,
+    ShopsService,
   ],
   bootstrap: [AppComponent]
 })

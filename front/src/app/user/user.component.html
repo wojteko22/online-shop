@@ -1,9 +1,21 @@
-
+<mat-card>
+  <mat-card-header>
+    <mat-card-title><h3>Twój profil</h3></mat-card-title>
+    <mat-card-subtitle>{{name}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div>
+      <label>Email:</label> {{email}}
+    </div>
+    <div>
+      <label>Nazwa sklepu:</label> {{shop?.name}}
+    </div>
+    <div>
+      <label>Adres sklepu:</label> {{shop?.city}} {{shop?.street}}
+    </div>
+  </mat-card-content>
+</mat-card>
 <p>
-  email: {{email}}
-  name: {{name}}
-  id: {{id}}
-  role: {{role}}
-  shopId: {{shop}}
+
 </p>
 
