@@ -1,7 +1,7 @@
 <div *ngIf="product$ | async as product">
   <mat-card>
     <h2>{{product.name}} - Szczegóły produktu</h2>
-    <a routerLink="/product/{{product.id}}/edit">
+    <a *ngIf="isOwner" routerLink="/product/{{product.id}}/edit">
       <mat-icon>mode edit</mat-icon>
     </a>
   </mat-card>
