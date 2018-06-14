@@ -15,8 +15,9 @@ export class ProductComponent implements OnInit {
 
   constructor(private productService: ProductService, private activatedRoute: ActivatedRoute) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
-      const id: Number = Number(paramMap.get('id'));
-      this.product$ = this.productService.getProduct(id);
+      const productId = Number(paramMap.get('productId'));
+      const shopId = Number(paramMap.get('shopId'));
+      this.product$ = this.productService.getProduct(productId, shopId);
     });
   }
 

@@ -24,11 +24,11 @@ export class ShopProductsComponent implements OnInit {
   productsInCategory$: Observable<Number>;
   shop: Shop = new Shop();
   categories: CategorySimpleDto[];
-  page: number = 0;
-  pages: number = 1;
-  productsPerPage: number = 2;
-  productsInCategory: number = -1;
-  selectedCategoryId: number = -1;
+  page = 0;
+  pages = 1;
+  productsPerPage = 2;
+  productsInCategory = -1;
+  selectedCategoryId = -1;
 
   constructor(private activatedRoute: ActivatedRoute,
               private productService: ProductService,
@@ -47,7 +47,8 @@ export class ShopProductsComponent implements OnInit {
           this.selectedCategoryId = categoryId;
           this.page = 0;
           this.productsPerPage = 2;
-          this.products$ = this.productService.getProductsByCategoryAndPage(this.shop.id, this.selectedCategoryId, this.page, this.productsPerPage);
+          this.products$ = this.productService.getProductsByCategoryAndPage(this.shop.id, this.selectedCategoryId, this.page,
+            this.productsPerPage);
           this.productsInCategory$ = this.productService.getProductsAmountInCategory(this.shop.id, this.selectedCategoryId);
           this.countPages();
           this.loadProductsInCategory();
@@ -61,8 +62,8 @@ export class ShopProductsComponent implements OnInit {
   getProductsByPattern(pattern: string) {
     if (pattern.length > 0) {
       this.products$ = this.productService.getProductsLike(this.shop.id, pattern);
-      this.page=0;
-      this.productsPerPage=0;
+      this.page = 0;
+      this.productsPerPage = 0;
     } else {
       this.loadAllProducts();
     }
@@ -75,7 +76,7 @@ export class ShopProductsComponent implements OnInit {
   loadShopCategories(shopId: number) {
     this.categoriesService.getShopCategories(shopId).subscribe((categories) => {
       this.categories = categories.map((c) => new CategorySimpleDto(c.name, c.id, c.parentCategory));
-      console.log("select categor: " + this.categories[0].categoryId);
+      console.log('select categor: ' + this.categories[0].categoryId);
       this.selectCategory.selectCategory(this.categories[0].categoryId);
     });
   }
@@ -98,7 +99,8 @@ export class ShopProductsComponent implements OnInit {
 
   getProductsByPageSize() {
     this.countPages();
-    this.products$ = this.productService.getProductsByCategoryAndPage(this.shop.id, this.selectedCategoryId, this.page, this.productsPerPage);
+    this.products$ = this.productService.getProductsByCategoryAndPage(this.shop.id, this.selectedCategoryId, this.page,
+      this.productsPerPage);
   }
 
   nextPage() {
@@ -119,8 +121,8 @@ export class ShopProductsComponent implements OnInit {
   private loadProductsInCategory() {
     this.productService.getProductsAmountInCategory(this.shop.id, this.selectedCategoryId).subscribe((amount) => {
       this.productsInCategory = amount;
-      this.countPages()
-    })
+      this.countPages();
+    });
   }
 
   private countPages() {
@@ -128,11 +130,11 @@ export class ShopProductsComponent implements OnInit {
     if (p < 1) {
       this.pages = 1;
     } else {
-      this.pages = Math.ceil(p)
+      this.pages = Math.ceil(p);
     }
 
-    if(this.page>=this.pages){
-      this.page=0;
+    if (this.page >= this.pages) {
+      this.page = 0;
     }
   }
 
