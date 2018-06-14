@@ -31,7 +31,7 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
         }
     }
 
-    @CacheEvict("categories", "id")
+    @CacheEvict("categories")
     fun deleteById(id: Long) {
         val category: Category = categoryRepository.findById(id) ?: handleLackOfResource(id)
         if (category.subcategories.isNotEmpty()) {
@@ -40,7 +40,7 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
         categoryRepository.delete(category)
     }
 
-    @CachePut("categories", "id")
+    @CachePut("categories")
     fun update(id: Long, dto: UpdateCategoryDto) {
         val category = categoryRepository.findById(id) ?: handleLackOfResource(id)
         val newParentOrNull = newParentOrNull(dto.parentId, category)
@@ -70,7 +70,7 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
     private fun getForbiddenParentCategories(category: Category): Set<Category> =
             category.subcategories + category.subcategories.flatMap { getForbiddenParentCategories(it) }
 
-    @Cacheable("shop_categories", key = "shopId")
+    @Cacheable("shop_categories")
     fun findByShopId(shopId: Long): Iterable<CategoryDto> {
         val shop = shopRepository.findById(shopId)!!
         val categories = categoryRepository.findByShop(shop)

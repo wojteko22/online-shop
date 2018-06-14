@@ -12,7 +12,7 @@ class ShopService(private val shopRepository: ShopRepository) {
         return shopRepository.findAll().map { it.toDto() }
     }
 
-    @Cacheable("shops", key = "shopId")
+    @Cacheable("shops")
     fun getById(shopId: Long): ShopDto? {
         return shopRepository.findById(shopId)?.toDto()
     }
