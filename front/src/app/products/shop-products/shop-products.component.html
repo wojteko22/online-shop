@@ -7,6 +7,13 @@
   <app-category-item *ngFor="let category of categories" [category]="category"></app-category-item>
 </div>
 <div class="products">
+  <mat-form-field>
+    <mat-select [(value)]="productsPerPage" (valueChange)="getProductsByPageSize()" >
+      <mat-option value="1">1</mat-option>
+      <mat-option value="2" selected="true">2</mat-option>
+      <mat-option value="6">6</mat-option>
+    </mat-select>
+  </mat-form-field>
   <mat-grid-list cols="4">
     <mat-grid-tile *ngFor="let product of products$ | async">
       <mat-card class="product">
@@ -30,4 +37,9 @@
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
+  <br>
+  <br>
+  <button mat-raised-button color="primary" (click)="prevPage()">Poprzednia strona</button>
+  Strona : {{page+1}}/{{pages}}
+  <button mat-raised-button color="primary" (click)="nextPage()">Następna strona</button>
 </div>
