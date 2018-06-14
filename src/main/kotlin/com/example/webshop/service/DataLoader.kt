@@ -71,6 +71,7 @@ class DataLoader {
     private val pieczywoShop1 = Category("Pieczywo", shop1)
     private val pieczywoShop2 = Category("Pieczywo", shop2)
     private val alkohole = Category("Alkohole", shop1)
+    private val piwa = Category("Piwa", shop1, alkohole)
 
     @Bean
     fun initCategories(repository: CategoryRepository, shopRepository: ShopRepository) = CommandLineRunner {
@@ -80,7 +81,6 @@ class DataLoader {
         val mleko = Category("Mleko", shop1, nabial)
         val bialySer = Category("Biale", shop1, sery)
         val zoltySer = Category("Zolte", shop1, sery)
-        val piwa = Category("Piwa", shop1, alkohole)
 
         repository.save(pieczywoShop1)
         repository.save(pieczywoShop2)
@@ -94,39 +94,31 @@ class DataLoader {
         repository.save(piwa)
     }
 
-    private val product1 = Product("Heineken", 3, "unit", "status", "description", "http://static.wirtualnemedia.pl/media/images/2013/images/warka-classic-nowaszata-2.png", alkohole, shop1, 1)
-    private val product2 = Product("Warka", 2, "unit", "status", "description", "http://static.wirtualnemedia.pl/media/images/2013/images/warka-classic-nowaszata-2.png ", alkohole, shop1, 2)
-    private val product3 = Product("Bułka żytnia", 4, "1 szt", "status", "description", "https://img.e-piotripawel.pl/photos/hd9/49101.jpg", pieczywoShop1, shop1, 3)
-    private val product4 = Product("Bułka pszenna", 1, "1 szt - 100 g", "status", "description", "http://www.delifrance.com/media/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/S/0/S0695_S5896.jpg", pieczywoShop1, shop1, 4)
-    private val product5 = Product("Piwo żytnie", 5, "500ml", "status", "description", "https://res.cloudinary.com/dj484tw6k/f_auto,q_auto,c_pad,b_white,w_360,h_360/v1500521344/bb/99631.png", alkohole, shop1, 5)
-    private val product6 = Product("Piwo pszenne", 10, "500ml", "status", "description", "http://ocen-piwo.pl/upload/witnica-pszeniczne.png", alkohole, shop1, 6)
-    private val product7 = Product("Chleb pszenny", 5, "600g", "status", "description", "https://akademiasmaku.pl/upload/recipes/13/big/chleb-pszenny-na-zakwasie-z-karmelizowana-cebulka-13.JPG", pieczywoShop1, shop1, 7)
-    private val product8 = Product("Chleb żytni", 7, "700g", "status", "description", "http://jamiprzepisy.pl/wp-content/uploads/2016/06/chleb_zytni_1_1400.jpg", pieczywoShop1, shop1, 8)
-    private val product9 = Product("Rogal", 3, "150g", "status", "description", "https://upload.wikimedia.org/wikipedia/commons/7/73/Rogalik.jpg", pieczywoShop1, shop1, 9)
-    private val product10 = Product("Drożdzówka", 2, "300g", "status", "description", "http://www.sumarex.pl/upload/oferta/drozdzowka_z_budyniem.jpg", pieczywoShop1, shop1, 10)
-    private val product11 = Product("Drożdzówka", 2, "300g", "status", "description", "http://www.sumarex.pl/upload/oferta/drozdzowka_z_budyniem.jpg", pieczywoShop2, shop2, 11)
-    private val product12 = Product("Drożdzówka", 2, "300g", "status", "description", "http://www.sumarex.pl/upload/oferta/drozdzowka_z_budyniem.jpg", pieczywoShop2, shop2, 12)
+    private val product1 = Product("Heineken", 3, "unit", "status", "description", "http://static.wirtualnemedia.pl/media/images/2013/images/warka-classic-nowaszata-2.png", piwa, shop1, 1)
+    private val product2 = Product("Warka", 2, "unit", "status", "description", "http://static.wirtualnemedia.pl/media/images/2013/images/warka-classic-nowaszata-2.png ", piwa, shop1, 2)
 
     @Bean
     fun initProducts(repository: ProductRepository) = CommandLineRunner {
-        repository.save(product1)
-        repository.save(product2)
-        repository.save(product3)
-        repository.save(product4)
-        repository.save(product5)
-        repository.save(product6)
-        repository.save(product7)
-        repository.save(product8)
-        repository.save(product9)
-        repository.save(product10)
-        repository.save(product11)
-        repository.save(product12)
-
-        //haystack sphinx
+        val products = listOf(
+                product1, product2,
+                Product("Bułka żytnia", 4, "1 szt", "status", "description", "https://img.e-piotripawel.pl/photos/hd9/49101.jpg", pieczywoShop1, shop1, 3),
+                Product("Bułka pszenna", 1, "1 szt - 100 g", "status", "description", "http://www.delifrance.com/media/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/S/0/S0695_S5896.jpg", pieczywoShop1, shop1, 4),
+                Product("Piwo żytnie", 5, "500ml", "status", "description", "https://res.cloudinary.com/dj484tw6k/f_auto,q_auto,c_pad,b_white,w_360,h_360/v1500521344/bb/99631.png", alkohole, shop1, 5),
+                Product("Piwo pszenne", 10, "500ml", "status", "description", "http://ocen-piwo.pl/upload/witnica-pszeniczne.png", alkohole, shop1, 6),
+                Product("Chleb pszenny", 5, "600g", "status", "description", "https://akademiasmaku.pl/upload/recipes/13/big/chleb-pszenny-na-zakwasie-z-karmelizowana-cebulka-13.JPG", pieczywoShop1, shop1, 7),
+                Product("Chleb żytni", 7, "700g", "status", "description", "http://jamiprzepisy.pl/wp-content/uploads/2016/06/chleb_zytni_1_1400.jpg", pieczywoShop1, shop1, 8),
+                Product("Rogal", 3, "150g", "status", "description", "https://upload.wikimedia.org/wikipedia/commons/7/73/Rogalik.jpg", pieczywoShop1, shop1, 9),
+                Product("Drożdzówka", 2, "300g", "status", "description", "http://www.sumarex.pl/upload/oferta/drozdzowka_z_budyniem.jpg", pieczywoShop1, shop1, 10),
+                Product("Drożdzówka", 2, "300g", "status", "description", "http://www.sumarex.pl/upload/oferta/drozdzowka_z_budyniem.jpg", pieczywoShop2, shop2, 11),
+                Product("Drożdzówka", 2, "300g", "status", "description", "http://www.sumarex.pl/upload/oferta/drozdzowka_z_budyniem.jpg", pieczywoShop2, shop2, 12),
+                Product("Singleton", 100, "700 ml", "status", "description", "https://img.thewhiskyexchange.com/900/dufob.12yov1.jpg", alkohole, shop1, 13),
+                Product("Soplica", 32, "500 ml", "status", "description", "http://alkohole.efigaro.pl/wp-content/uploads/2014/04/wodka-soplica-500ml.jpg", alkohole, shop1, 14)
+        )
+        repository.save(products)
     }
 
-    private val order1 = Order("przyjęte",  shop1, owner2, 1)
-    private val order2 = Order("przyjęte",  shop1, owner2, 2)
+    private val order1 = Order("przyjęte", shop1, owner2, 1)
+    private val order2 = Order("przyjęte", shop1, owner2, 2)
 
     @Bean
     fun initOrders(repository: OrderRepository) = CommandLineRunner {
