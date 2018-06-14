@@ -1,5 +1,7 @@
 package com.example.webshop.dto
 
+import java.util.*
+
 class UserDto(
         val id: Long,
         val name: String,
@@ -28,4 +30,16 @@ class UpdatePasswordUserDto(
         val oldPassword: String,
         val password: String,
         val passwordConfirmation: String
+)
+
+class UpdatePasswordUserUsingTokenDto(
+        val email: String,
+        val token: String,
+        val password: String
+)
+
+class UserTokenDto(
+        val email: String,
+        val token: String?,
+        val expiration: Date?
 )

@@ -30,6 +30,7 @@ class DataLoader {
     private val owner5 = User("test5@test.pl", BCryptPasswordEncoder().encode("test"), "Janusz Swawolny", owner, 5)
     private val owner6 = User("test6@test.pl", BCryptPasswordEncoder().encode("test"), "Milosz Laty", owner, 6)
     private val owner7 = User("test7@test.pl", BCryptPasswordEncoder().encode("test"), "Mikolaj Wasik", owner, 7)
+    private val owner8 = User("jradlica@gmail.com", BCryptPasswordEncoder().encode("test"), "Mikolaj Wasik", owner, 8)
 
     @Bean
     fun initUser(userRepository: UserRepository) = CommandLineRunner {
@@ -40,10 +41,11 @@ class DataLoader {
         userRepository.save(owner5)
         userRepository.save(owner6)
         userRepository.save(owner7)
-        val admin1 = User("admin@test.pl", BCryptPasswordEncoder().encode("test"), "Ada Adminka", admin, 8)
+        userRepository.save(owner8)
+        val admin1 = User("admin@test.pl", BCryptPasswordEncoder().encode("test"), "Ada Adminka", admin, 9)
         userRepository.save(admin1)
-        val user = User("user@test.pl", BCryptPasswordEncoder().encode("test"), "Andrzej Tan", customer, 9)
-        val user2 = User("user2@test.pl", BCryptPasswordEncoder().encode("test"), "Ewa Tan", customer, 10)
+        val user = User("user@test.pl", BCryptPasswordEncoder().encode("test"), "Andrzej Tan", customer, 10)
+        val user2 = User("user2@test.pl", BCryptPasswordEncoder().encode("test"), "Ewa Tan", customer, 11)
         userRepository.save(user)
         userRepository.save(user2)
     }

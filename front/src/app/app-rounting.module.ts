@@ -21,6 +21,7 @@ import {CartComponent} from "./cart/cart.component";
 import {AdminGuard} from './-guards/admin-guard/admin-guard.service';
 import {AdminPanelComponent} from './admin-panel/admin-panel.component';
 import {ActivateUserComponent} from "./user/activate-user/activate-user.component";
+import {PasswordReminderComponent} from "./password-reminder/password-reminder/password-reminder.component";
 
 const appRoutes: Routes = [
   {
@@ -42,6 +43,9 @@ const appRoutes: Routes = [
     path: 'password',
     component: PasswordComponent,
     canActivate: [SignedInGuard]
+  },
+  {path: 'remind-password',
+    component: PasswordReminderComponent,
   },
   {
     path: 'orders',
