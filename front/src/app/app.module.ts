@@ -40,6 +40,7 @@ import {ProductEditComponent} from './products/product-edit/product-edit.compone
 import {CartComponent} from './cart/cart.component';
 import {CartService} from './cart/cart.service';
 import {AdminPanelComponent} from './admin-panel/admin-panel.component';
+import {ShopsService} from "./shops/shops.service";
 import {ActivateUserComponent} from "./user/activate-user/activate-user.component";
 
 
@@ -99,6 +100,7 @@ import {ActivateUserComponent} from "./user/activate-user/activate-user.componen
     SelectCategoryService,
     ProductService,
     CartService,
+    ShopsService,
   ],
   bootstrap: [AppComponent]
 })
