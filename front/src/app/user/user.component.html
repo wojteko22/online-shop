@@ -7,11 +7,13 @@
     <div>
       <label>Email:</label> {{email}}
     </div>
-    <div>
-      <label>Nazwa sklepu:</label> {{shop?.name}}
-    </div>
-    <div>
-      <label>Adres sklepu:</label> {{shop?.city}} {{shop?.street}}
+    <div *ngIf="shop">
+      <div>
+        <label>Nazwa sklepu:</label> {{shop?.name}}
+      </div>
+      <div>
+        <label>Adres sklepu:</label> {{shop?.city}} {{shop?.street}}
+      </div>
     </div>
   </mat-card-content>
 </mat-card>
