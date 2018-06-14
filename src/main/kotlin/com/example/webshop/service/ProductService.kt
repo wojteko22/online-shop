@@ -8,6 +8,9 @@ import com.example.webshop.entity.Shop
 import com.example.webshop.repository.CategoryRepository
 import com.example.webshop.repository.ProductRepository
 import com.example.webshop.repository.ShopRepository
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.CachePut
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
 @Service
@@ -17,6 +20,7 @@ class ProductService(
         private val categoryRepository: CategoryRepository
 ) {
 
+    @Cacheable("products")
     fun getProduct(productId: Long, shopId: Long): ProductDto {
         val product = productRepository.findById(productId) ?: productLackError(productId)
         if (product.shop.id != shopId) {
@@ -31,6 +35,7 @@ class ProductService(
         return products.map { product -> product.toDto() }
     }
 
+    @Cacheable("categories_products", key = "categoryId")
     fun getByCategoryId(categoryId: Long, shopId: Long): List<ProductDto> {
         val category = categoryRepository.findById(categoryId)
         if (category == null || category.shop.id != shopId) {
@@ -67,6 +72,7 @@ class ProductService(
     private fun categoryLackError(categoryId: Long): Nothing =
             throw IllegalArgumentException("No category with id $categoryId")
 
+    @CachePut("products", key = "productId")
     fun updateProduct(productId: Long, dto: UpdateProductDto, shopId: Long): Long {
         val product = productRepository.findById(productId) ?: productLackError(productId)
         if (product.shop.id != shopId) {
@@ -101,6 +107,7 @@ class ProductService(
         return updatedProduct.id
     }
 
+    @CacheEvict("products", key = "productId")
     fun deleProduct(productId: Long, shopId: Long) {
         val product = productRepository.findById(productId)
         if (product == null || product.shop.id != shopId) {

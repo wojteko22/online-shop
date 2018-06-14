@@ -7,6 +7,9 @@ import com.example.webshop.dto.CreateCategoryDto
 import com.example.webshop.dto.UpdateCategoryDto
 import com.example.webshop.repository.CategoryRepository
 import com.example.webshop.repository.ShopRepository
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.CachePut
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
 @Service
@@ -28,6 +31,7 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
         }
     }
 
+    @CacheEvict("categories", "id")
     fun deleteById(id: Long) {
         val category: Category = categoryRepository.findById(id) ?: handleLackOfResource(id)
         if (category.subcategories.isNotEmpty()) {
@@ -36,6 +40,7 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
         categoryRepository.delete(category)
     }
 
+    @CachePut("categories", "id")
     fun update(id: Long, dto: UpdateCategoryDto) {
         val category = categoryRepository.findById(id) ?: handleLackOfResource(id)
         val newParentOrNull = newParentOrNull(dto.parentId, category)
@@ -65,6 +70,7 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
     private fun getForbiddenParentCategories(category: Category): Set<Category> =
             category.subcategories + category.subcategories.flatMap { getForbiddenParentCategories(it) }
 
+    @Cacheable("shop_categories", key = "shopId")
     fun findByShopId(shopId: Long): Iterable<CategoryDto> {
         val shop = shopRepository.findById(shopId)!!
         val categories = categoryRepository.findByShop(shop)
@@ -91,7 +97,7 @@ class CategoryService(private val categoryRepository: CategoryRepository, privat
         val parentCategory: Category = categoryRepository.findById(category_id)!!
         val categories = this.categoryRepository.findByParentCategory(parentCategory)
         val categoriesDto = mutableSetOf<CategorySimpleDto>()
-        categories.forEach { categoriesDto.add(it.toSimpleDto())}
+        categories.forEach { categoriesDto.add(it.toSimpleDto()) }
         return categoriesDto
     }
 }
