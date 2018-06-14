@@ -13,7 +13,9 @@ import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.CachePut
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+
 
 @Service
 class ProductService(
@@ -71,7 +73,7 @@ class ProductService(
 
     fun getByCategoryIdPageable(categoryId: Long, page: Int, pageSize: Int): List<ProductDto> {
         val category: Category = categoryRepository.findById(categoryId )!!
-        val products = productRepository.findByCategory(category, PageRequest(page, pageSize))
+        val products = getAllProductsFromCategory(category, PageRequest(page, pageSize))
         return products.map { product -> product.toDto() }
     }
 
@@ -130,4 +132,15 @@ class ProductService(
     }
 
     private fun productLackError(productId: Long): Nothing = throw NoSuchElementException("No product with id $productId")
+
+    private fun getAllProductsFromCategory(category: Category, pageable: Pageable): List<Product> {
+        val products = mutableListOf<Product>()
+        products.addAll(productRepository.findByCategory(category, pageable))
+        if (!category.subcategories.isEmpty()) {
+            for (subcategory in category.subcategories) {
+                products.addAll(getAllProductsFromCategory(subcategory, pageable))
+            }
+        }
+        return products
+    }
 }
