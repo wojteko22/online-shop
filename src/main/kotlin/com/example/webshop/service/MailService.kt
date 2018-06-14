@@ -11,9 +11,9 @@ class MailService(private val mailSender: JavaMailSender) {
     fun sendSignUpMessage(user: User) {
         val smm: SimpleMailMessage = SimpleMailMessage()
         smm.setTo(user.email)
-        smm.setSubject("Web-Shop rejestracja")
-        smm.setFrom("web-shop@kamo.ovh")
-        smm.setText("Witaj! Twoje konto w serwisie web-shop zostało utworzone!")
+        smm.subject = "Web-Shop rejestracja"
+        smm.from = "web-shop@kamo.ovh"
+        smm.text = "Witaj! Twoje konto w serwisie web-shop zostało utworzone!"
         mailSender.send(smm)
     }
 
