@@ -87,7 +87,7 @@ class ProductService(
     private fun categoryLackError(categoryId: Long): Nothing =
             throw IllegalArgumentException("No category with id $categoryId")
 
-    @CachePut("products")
+    @CacheEvict("products", allEntries=true)
     fun updateProduct(productId: Long, dto: UpdateProductDto, shopId: Long): Long {
         val product = productRepository.findById(productId) ?: productLackError(productId)
         if (product.shop.id != shopId) {
