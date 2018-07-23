@@ -25,10 +25,10 @@ class Application {
     @Bean
     fun javaMailSender(): JavaMailSender {
         val mailSender = JavaMailSenderImpl()
-        mailSender.host = "webh.email"
+        mailSender.host = ""
         mailSender.port = 587
-        mailSender.username = "web-shop@kamo.ovh"
-        mailSender.password = "Y0u7D0s4"
+        mailSender.username = ""
+        mailSender.password = ""
 
         val props = mailSender.javaMailProperties
         props["mail.transport.protocol"] = "smtp"
